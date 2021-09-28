@@ -1,0 +1,30 @@
+FROM php:8.0-fpm-alpine
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN apk --no-cache add \
+        git \
+        icu-dev && \
+    docker-php-ext-install \
+        intl \
+        opcache \
+        pdo_mysql \
+        > /dev/null
+
+# install apcu & xDebug
+ENV XDEBUG_MODE=off
+ENV XDEBUG_CONFIG=""
+RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
+        && pecl install apcu \
+        && docker-php-ext-enable apcu \
+        && pecl install xdebug \
+        && docker-php-ext-enable xdebug \
+        && pecl clear-cache \
+        && apk del .build-dependencies
+
+RUN curl -sS https://getcomposer.org/installer | php -- --2 --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /var/www
+
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser
