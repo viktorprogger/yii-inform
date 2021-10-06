@@ -3,37 +3,33 @@
 declare(strict_types=1);
 
 use Cycle\ORM\PromiseFactoryInterface;
-use Yiisoft\Yii\Cycle\Command\Schema;
-use Yiisoft\Yii\Cycle\Command\Migration;
+use Psr\Log\LoggerInterface;
+use Spiral\Database\Driver\MySQL\MySQLDriver;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
+use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
+use Yiisoft\Yii\Cycle\Schema\Provider\SimpleCacheSchemaProvider;
 use Yiisoft\Yii\Cycle\Schema\SchemaProviderInterface;
 
 return [
-    // Console commands
-    'yiisoft/yii-console' => [
-        'commands' => [
-            'cycle/schema' => Schema\SchemaCommand::class,
-            'cycle/schema/php' => Schema\SchemaPhpCommand::class,
-            'cycle/schema/clear' => Schema\SchemaClearCommand::class,
-            'cycle/schema/rebuild' => Schema\SchemaRebuildCommand::class,
-            'migrate/create' => Migration\CreateCommand::class,
-            'migrate/generate' => Migration\GenerateCommand::class,
-            'migrate/up' => Migration\UpCommand::class,
-            'migrate/down' => Migration\DownCommand::class,
-            'migrate/list' => Migration\ListCommand::class,
-        ],
-    ],
-
     'yiisoft/yii-cycle' => [
         // DBAL config
         'dbal' => [
             // SQL query logger. Definition of Psr\Log\LoggerInterface
-            'query-logger' => null,
+            'query-logger' => LoggerInterface::class,
             // Default database
-            'default' => null,
+            'default' => 'default',
             'aliases' => [],
-            'databases' => [],
-            'connections' => [],
+            'databases' => [
+                'default' => ['connection' => 'default']
+            ],
+            'connections' => [
+                'default' => [
+                    'driver' => MySQLDriver::class,
+                    'connection' => 'mysql:dbname=' . getenv('DB_NAME') . ';host=db',
+                    'username' => getenv('DB_LOGIN'),
+                    'password' => getenv('DB_PASSWORD'),
+                ],
+            ],
         ],
 
         // Cycle migration config
@@ -70,13 +66,21 @@ return [
          *     ],
          * ]
          */
-        'schema-providers' => [],
+        'schema-providers' => [
+            // Uncomment next line to enable schema cache
+            // SimpleCacheSchemaProvider::class => ['key' => 'cycle-orm-cache-key'],
+            FromConveyorSchemaProvider::class => [
+                'generators' => [
+                    Cycle\Schema\Generator\SyncTables::class, // sync table changes to database
+                ],
+            ],
+        ],
 
         /**
          * Annotated/attributed entity directories list.
          * {@see \Yiisoft\Aliases\Aliases} are also supported.
          */
-        'entity-paths' => [],
+        'entity-paths' => ['@root/src'],
         'conveyor' => CompositeSchemaConveyor::class,
 
         /** @deprecated use `entity-paths` key instead */

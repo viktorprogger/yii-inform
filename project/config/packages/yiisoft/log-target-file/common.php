@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LoggerInterface;
 use Yiisoft\Aliases\Aliases;
+use Yiisoft\Log\Logger;
 use Yiisoft\Log\Target\File\FileRotator;
 use Yiisoft\Log\Target\File\FileRotatorInterface;
 use Yiisoft\Log\Target\File\FileTarget;
@@ -10,6 +12,8 @@ use Yiisoft\Log\Target\File\FileTarget;
 /* @var $params array */
 
 return [
+    LoggerInterface::class => Logger::class,
+    Logger::class => static fn(FileTarget $target) => new Logger([$target]),
     FileRotatorInterface::class => [
         'class' => FileRotator::class,
         '__construct()' => [

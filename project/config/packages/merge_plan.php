@@ -7,7 +7,7 @@ return [
     '/' => [
         'common' => [
             '/' => [
-                'config/common/*.php',
+                'config/common.php',
             ],
             'yiisoft/log-target-file' => [
                 'common.php',
@@ -73,18 +73,11 @@ return [
             ],
         ],
         'events' => [
-            '/' => [
-                'config/events.php',
-            ],
             'yiisoft/yii-event' => [
                 'events.php',
             ],
         ],
         'events-console' => [
-            '/' => [
-                '$events',
-                'config/events-console.php',
-            ],
             'yiisoft/yii-cycle' => [
                 'events-console.php',
             ],
@@ -103,10 +96,6 @@ return [
             ],
         ],
         'events-web' => [
-            '/' => [
-                '$events',
-                'config/events-web.php',
-            ],
             'yiisoft/yii-debug' => [
                 'events-web.php',
             ],
@@ -154,26 +143,13 @@ return [
             ],
         ],
         'providers' => [
-            '/' => [
-                'config/providers.php',
-            ],
             'yiisoft/yii-debug' => [
                 'providers.php',
             ],
         ],
         'providers-console' => [
-            '/' => [
-                '$providers',
-                'config/providers-console.php',
-            ],
             'yiisoft/yii-console' => [
                 'providers-console.php',
-            ],
-        ],
-        'providers-web' => [
-            '/' => [
-                '$providers',
-                'config/providers-web.php',
             ],
         ],
         'routes' => [

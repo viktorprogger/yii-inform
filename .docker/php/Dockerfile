@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine
+FROM php:8.1-rc-cli-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
@@ -17,7 +17,7 @@ ENV XDEBUG_CONFIG=""
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
         && pecl install apcu \
         && docker-php-ext-enable apcu \
-        && pecl install xdebug \
+        && pecl install xdebug-beta \
         && docker-php-ext-enable xdebug \
         && pecl clear-cache \
         && apk del .build-dependencies

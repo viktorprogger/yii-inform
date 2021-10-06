@@ -69,9 +69,4 @@ return [
             '/assets/*',
         ],
     ],
-    'yiisoft/yii-console' => [
-        'commands' => [
-            'debug/reset' => ResetCommand::class,
-        ],
-    ],
 ];

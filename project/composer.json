@@ -20,7 +20,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0.0",
+        "php": "^8.1",
         "ext-apcu": "*",
         "ext-pdo": "*",
         "httpsoft/http-message": "^1.0.5",
@@ -30,8 +30,9 @@
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
         "psr/log": "^1.1",
-        "ramsey/uuid": "^4.1",
+        "ramsey/uuid": "^4.2",
         "sentry/sdk": "^3.1",
+        "symfony/http-client": "^5.3",
         "yiisoft/aliases": "^1.0",
         "yiisoft/arrays": "^1.0.0",
         "yiisoft/auth": "^3.0",
@@ -89,7 +90,7 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "common": "common/*.php",
+            "common": "common.php",
             "web": [
                 "$common",
                 "web/*.php"
@@ -97,24 +98,6 @@
             "console": [
                 "$common",
                 "console/*.php"
-            ],
-            "events": "events.php",
-            "events-web": [
-                "$events",
-                "events-web.php"
-            ],
-            "events-console": [
-                "$events",
-                "events-console.php"
-            ],
-            "providers": "providers.php",
-            "providers-web": [
-                "$providers",
-                "providers-web.php"
-            ],
-            "providers-console": [
-                "$providers",
-                "providers-console.php"
             ],
             "routes": "routes.php"
         }

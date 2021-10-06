@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
+use Yiisoft\Yii\Console\ErrorListener;
 use Yiisoft\Yii\Console\Event\ApplicationShutdown;
 use Yiisoft\Yii\Console\Event\ApplicationStartup;
 use Yiisoft\Yii\Debug\Collector\CommandCollector;
@@ -29,8 +30,6 @@ return [
     ],
     ConsoleErrorEvent::class => [
         [CommandCollector::class, 'collect'],
-    ],
-    ConsoleTerminateEvent::class => [
-        [CommandCollector::class, 'collect'],
+        [ErrorListener::class, 'onError'],
     ],
 ];
