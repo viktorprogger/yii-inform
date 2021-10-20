@@ -30,11 +30,13 @@ final class TelegramMessage
             $result['parse_mode'] = 'HTML';
         }
 
-        foreach ($this->inlineKeyboard as $button) {
-            $result['reply_markup']['inline_keyboard'][0][] = [
-                'text' => $button->getLabel(),
-                'callback_data' => $button->getCallbackData(),
-            ];
+        foreach ($this->inlineKeyboard as $i => $row) {
+            foreach ($row as $button) {
+                $result['reply_markup']['inline_keyboard'][$i][] = [
+                    'text' => $button->getLabel(),
+                    'callback_data' => $button->getCallbackData(),
+                ];
+            }
         }
 
         return $result;

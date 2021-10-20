@@ -8,6 +8,7 @@ use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 use DateTimeImmutable;
 use DateTimeZone;
+use Github\Client;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,6 +18,8 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
@@ -74,6 +77,16 @@ final class GetUpdatesCommand extends Command
 
             if (in_array(trim($data), ['/start'], true)) {
                 $action = $this->container->get(HelloAction::class);
+                $response = $action->handle($request, $response);
+            }
+
+            if (in_array(trim($data), ['/realtime'], true)) {
+                $action = $this->container->get(RealtimeAction::class);
+                $response = $action->handle($request, $response);
+            }
+
+            if (in_array(trim($data), ['/summary'], true)) {
+                $action = $this->container->get(SummaryAction::class);
                 $response = $action->handle($request, $response);
             }
 

@@ -14,7 +14,8 @@ class HelloAction implements ActionInterface
     public function handle(TelegramRequest $request, Response $response): Response
     {
         $text = 'Добро пожаловать\! Нажмите /realtime для настройки получения обновлений из репозиториев ' .
-            'в реальном времени или /summary для настройки периодического получения обновлений';
+            'в реальном времени или /summary для настройки периодического получения обновлений\. ' .
+            'Вы также можете использовать команду /list, чтобы увидеть список активных подписок\.';
 
         return $response->withMessage(
             new TelegramMessage(
