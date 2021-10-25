@@ -9,6 +9,9 @@ return [
             '/' => [
                 'config/common.php',
             ],
+            'yiisoft/cache-file' => [
+                'common.php',
+            ],
             'yiisoft/log-target-file' => [
                 'common.php',
             ],
@@ -111,6 +114,9 @@ return [
             ],
         ],
         'params' => [
+            'yiisoft/cache-file' => [
+                'params.php',
+            ],
             'yiisoft/data-response' => [
                 'params.php',
             ],

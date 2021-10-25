@@ -13,6 +13,11 @@
         "version": "1.0.1",
         "common.php": "46175aab966be00c21b0d8424fab2f30"
     },
+    "yiisoft/cache-file": {
+        "version": "1.0.1",
+        "common.php": "cab74307fa6d3af175dae285be910a47",
+        "params.php": "c60b7d1813b3dde2a43e433f8d6fed5a"
+    },
     "yiisoft/data-response": {
         "version": "1.0.1",
         "params.php": "38fd0f20b9ba45cdc4c6cfaacab4fb02",
