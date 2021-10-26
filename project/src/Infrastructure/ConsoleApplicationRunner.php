@@ -9,6 +9,9 @@ use ErrorException;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Yiisoft\Config\Config;
+use Yiisoft\Config\ConfigPaths;
+use Yiisoft\Config\Modifier\RecursiveMerge;
+use Yiisoft\Config\Modifier\ReverseMerge;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotFoundException;
@@ -37,15 +40,18 @@ final class ConsoleApplicationRunner
      */
     public function run(): void
     {
+        $eventGroups = [
+            'events',
+            'events-web',
+            'events-console',
+        ];
+
         $config = new Config(
-            dirname(__DIR__, 2),
-            '/config/packages', // Configs path.
+            new ConfigPaths(dirname(__DIR__, 2), 'config', 'vendor'),
             $this->environment,
             [
-                'params',
-                'events',
-                'events-web',
-                'events-console',
+                ReverseMerge::groups(...$eventGroups),
+                RecursiveMerge::groups('params', ...$eventGroups),
             ],
         );
 

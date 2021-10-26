@@ -35,7 +35,7 @@
         "sentry/sdk": "^3.1",
         "symfony/http-client": "^5.3",
         "yiisoft/aliases": "^1.0",
-        "yiisoft/arrays": "^1.0.0",
+        "yiisoft/arrays": "^2.0",
         "yiisoft/auth": "^3.0",
         "yiisoft/cache": "^1.0.0",
         "yiisoft/cache-apcu": "^1.0.0",
@@ -93,13 +93,14 @@
         },
         "config-plugin": {
             "common": "common.php",
+            "params": "params.php",
             "web": [
                 "$common",
-                "web/*.php"
+                "web.php"
             ],
             "console": [
                 "$common",
-                "console/*.php"
+                "console.php"
             ],
             "routes": "routes.php"
         }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
 use Symfony\Component\HttpClient\HttpClient;
@@ -13,6 +14,8 @@ use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
+use Yiisoft\Log\Logger;
+use Yiisoft\Log\Target\File\FileTarget;
 
 return [
     TelegramClientInterface::class => TelegramClientSymfony::class,
@@ -21,4 +24,6 @@ return [
     SubscriberIdFactoryInterface::class => SubscriberIdFactory::class,
     SubscriberRepositoryInterface::class => SubscriberRepository::class,
     UuidFactoryInterface::class => UuidFactory::class,
+    LoggerInterface::class => Logger::class,
+    Logger::class => static fn(FileTarget $target) => new Logger([$target]),
 ];
