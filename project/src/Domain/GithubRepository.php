@@ -25,6 +25,8 @@ final class GithubRepository
             $this->cache->set(self::CACHE_KEY, $result);
         }
 
+        sort($result); // TODO remove
+
         return $result;
     }
 
@@ -40,6 +42,8 @@ final class GithubRepository
                 }
             }
         } while ($repositories !== []);
+
+        sort($result);
 
         return $result;
     }

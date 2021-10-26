@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Yiisoft\Cache\File\FileCache;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
@@ -26,4 +28,5 @@ return [
     UuidFactoryInterface::class => UuidFactory::class,
     LoggerInterface::class => Logger::class,
     Logger::class => static fn(FileTarget $target) => new Logger([$target]),
+    CacheInterface::class => FileCache::class,
 ];

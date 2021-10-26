@@ -24,18 +24,26 @@ final class RealtimeAction implements ActionInterface
     {
         $keyboard = [];
         $perLine = 3;
-        $count = 1;
+        $count = 0;
         $line = 0;
-        // TODO их надо сортировать по имени
+
         foreach ($this->repos->getYii3Packages() as $repository) {
             // TODO Нужен чекбокс или крестик для опознавания: удалить или добавить
             // TODO То же самое нужно и в callbackData
-            if ($count % $perLine === 0) {
-                $count++;
+            if ($count !== 0 && $count % $perLine === 0) {
                 $line++;
             }
+            $count++;
 
-            $keyboard[$line][] = new InlineKeyboardButton($repository, "/realtime:$repository");
+            if (in_array($repository, $request->subscriber->settings->realtimeRepositories, true)) {
+                $emoji = '➖';
+                $sign = '-';
+            } else {
+                $emoji = '➕';
+                $sign = '+';
+            }
+
+            $keyboard[$line][] = new InlineKeyboardButton("$emoji $repository", "/realtime:$sign:$repository");
         }
 
         $text = 'Вы можете подписаться на следующие репозитории:';

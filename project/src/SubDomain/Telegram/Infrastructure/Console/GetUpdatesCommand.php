@@ -67,13 +67,15 @@ final class GetUpdatesCommand extends Command
 
             $message = $update['message'] ?? $update['callback_query'];
             $subscriberId = $this->subscriberIdFactory->create('tg-' . $message['from']['id']);
-            if ($this->subscriberRepository->find($subscriberId) === null) {
-                $this->subscriberRepository->create(new Subscriber($subscriberId, new Settings()));
+            $subscriber = $this->subscriberRepository->find($subscriberId);
+            if ($subscriber === null) {
+                $subscriber = new Subscriber($subscriberId, new Settings());
+                $this->subscriberRepository->create($subscriber);
             }
 
             $data = trim($message['text'] ?? $message['data']);
             $chatId = (string) ($message['chat']['id'] ?? $message['message']['chat']['id']);
-            $request = new TelegramRequest($chatId, $data);
+            $request = new TelegramRequest($chatId, $data, $subscriber);
 
             if (in_array(trim($data), ['/start'], true)) {
                 $action = $this->container->get(HelloAction::class);
