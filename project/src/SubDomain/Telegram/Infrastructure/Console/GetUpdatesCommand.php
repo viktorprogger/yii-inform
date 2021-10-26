@@ -92,6 +92,11 @@ final class GetUpdatesCommand extends Command
                 $response = $action->handle($request, $response);
             }
 
+            if (preg_match("/realtime:[+-]:[\w-_]+]/")) {
+                $action = $this->container->get(Realtime);
+                $response = $action->handle($request, $response);
+            }
+
             /*if (strpos($data, '/create_wallet ') === 0) {
                 $walletName = trim(explode(' ', $data, 2)[1] ?? '');
                 if ($walletName === '') {

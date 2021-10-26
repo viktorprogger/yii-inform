@@ -43,7 +43,7 @@ final class RealtimeAction implements ActionInterface
                 $sign = '+';
             }
 
-            $keyboard[$line][] = new InlineKeyboardButton("$emoji $repository", "/realtime:$sign:$repository");
+            $keyboard[$line][] = new InlineKeyboardButton("$emoji $repository", "realtime:$sign:$repository");
         }
 
         $text = 'Вы можете подписаться на следующие репозитории:';
