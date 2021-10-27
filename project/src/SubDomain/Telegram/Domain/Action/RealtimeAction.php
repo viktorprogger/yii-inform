@@ -6,7 +6,8 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
 
 use Github\Client;
 use Symfony\Component\VarDumper\VarDumper;
-use Yiisoft\Inform\Domain\GithubRepository;
+use Yiisoft\Inform\Domain\GithubRepository\GithubRepositoryInterface;
+use Yiisoft\Inform\Domain\GithubService;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
@@ -16,7 +17,7 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 final class RealtimeAction implements ActionInterface
 {
     public function __construct(
-        private GithubRepository $repos,
+        private GithubRepositoryInterface $repos,
     ) {
     }
 
@@ -27,7 +28,7 @@ final class RealtimeAction implements ActionInterface
         $count = 0;
         $line = 0;
 
-        foreach ($this->repos->getYii3Packages() as $repository) {
+        foreach ($this->repos->all() as $repository) {
             // TODO Нужен чекбокс или крестик для опознавания: удалить или добавить
             // TODO То же самое нужно и в callbackData
             if ($count !== 0 && $count % $perLine === 0) {

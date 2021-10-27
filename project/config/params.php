@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
+use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
@@ -18,6 +19,7 @@ return [
     'yiisoft/yii-console' => [
         'commands' => [
             'inform/updates' => GetUpdatesCommand::class,
+            'inform/load-repos' => LoadRepositoriesCommand::class,
         ],
     ],
     'yiisoft/yii-cycle' => [

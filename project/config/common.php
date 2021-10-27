@@ -11,6 +11,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Yiisoft\Cache\File\FileCache;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Yiisoft\Inform\Domain\GithubRepository\GithubRepositoryInterface;
+use Yiisoft\Inform\Infrastructure\Entity\GithubRepository\GithubRepository;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
@@ -29,4 +31,5 @@ return [
     LoggerInterface::class => Logger::class,
     Logger::class => static fn(FileTarget $target) => new Logger([$target]),
     CacheInterface::class => FileCache::class,
+    GithubRepositoryInterface::class => GithubRepository::class
 ];
