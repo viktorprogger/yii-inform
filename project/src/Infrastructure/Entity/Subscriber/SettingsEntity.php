@@ -10,6 +10,12 @@ use Cycle\Annotated\Annotation\Embeddable;
 #[Embeddable(columnPrefix: 'settings_')]
 final class SettingsEntity
 {
-    #[Column(type: 'string', nullable: true)]
-    public ?string $dummy = null;
+    public function __construct(
+        #[Column(type: 'json', nullable: false)]
+        public string $realtime = '[]',
+
+        #[Column(type: 'json', nullable: false)]
+        public string $summary = '[]',
+    ) {
+    }
 }

@@ -19,6 +19,7 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeEditAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
@@ -92,8 +93,8 @@ final class GetUpdatesCommand extends Command
                 $response = $action->handle($request, $response);
             }
 
-            if (preg_match("/realtime:[+-]:[\w-_]+]/")) {
-                $action = $this->container->get(Realtime);
+            if (preg_match("/^realtime:[+-]:[\w_-]+$/", $data)) {
+                $action = $this->container->get(RealtimeEditAction::class);
                 $response = $action->handle($request, $response);
             }
 
@@ -108,11 +109,6 @@ final class GetUpdatesCommand extends Command
             }
             dump($response);*/
 
-            $updateEntity = new TelegramUpdateEntity();
-            $updateEntity->contents = json_encode($update);
-            $updateEntity->created_at = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
-            $updateEntity->id = $update['update_id'];
-            (new Transaction($this->orm))->persist($updateEntity)->run();
 
             foreach ($response->getCallbackQueries() as $callbackQuery) {
                 $this->client->send(
@@ -127,8 +123,14 @@ final class GetUpdatesCommand extends Command
                 );
             }
 
+            $updateEntity = new TelegramUpdateEntity();
+            $updateEntity->contents = json_encode($update);
+            $updateEntity->created_at = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
+            $updateEntity->id = $update['update_id'];
+
+            (new Transaction($this->orm))->persist($updateEntity)->run();
             foreach ($response->getMessages() as $message) {
-                dump($this->client->sendMessage($message));
+                $this->client->sendMessage($message);
             }
         }
 

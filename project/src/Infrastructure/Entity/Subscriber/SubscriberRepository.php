@@ -35,16 +35,22 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
 
     public function find(SubscriberId $id): ?Subscriber
     {
+        /** @var SubscriberEntity|null $entity */
         $entity = $this->cycleRepository->findByPK($id->value);
         if ($entity === null) {
             return null;
         }
 
-        return new Subscriber($id, new Settings());
+        $decoded = json_decode($entity->settings->realtime ?? '[]', true, 512, JSON_THROW_ON_ERROR);
+
+        return new Subscriber($id, new Settings($decoded));
     }
 
     public function updateSettings(SubscriberId $id, Settings $settings): void
     {
-        // TODO
+        /** @var SubscriberEntity $entity */
+        $entity = $this->cycleRepository->findByPK($id->value);
+        $entity->settings->realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
+        (new Transaction($this->orm))->persist($entity)->run();
     }
 }

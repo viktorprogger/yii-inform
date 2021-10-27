@@ -2,6 +2,7 @@
 
 namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
 
+use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
@@ -29,11 +30,19 @@ class RealtimeEditAction implements ActionInterface
 
     private function add(string $repository, Subscriber $subscriber): void
     {
-        $this->subscriberRepository->updateSettings(); // TODO
+        $repoList = $subscriber->settings->realtimeRepositories;
+        if (!in_array($repository, $repoList, true)) {
+            $repoList[] = $repository;
+        }
+
+        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
     }
 
     private function remove(string $repository, Subscriber $subscriber): void
     {
-        $this->subscriberRepository->updateSettings(); // TODO
+        $repoList = $subscriber->settings->realtimeRepositories;
+        $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
+
+        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
     }
 }
