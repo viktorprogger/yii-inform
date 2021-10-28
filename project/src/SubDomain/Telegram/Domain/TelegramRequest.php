@@ -11,7 +11,7 @@ final class TelegramRequest
     public function __construct(
         public readonly string $chatId,
         public readonly string $messageId,
-        public readonly string $request,
+        public readonly string $requestData,
         public readonly Subscriber $subscriber,
         public readonly ?string $callbackQueryId = null,
     ) {

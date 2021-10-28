@@ -26,6 +26,7 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequestFactory;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Entity\TelegramUpdateEntity;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Entity\TgUpdateEntityCycleRepository;
 use Yiisoft\Yii\Console\ExitCode;
@@ -37,11 +38,11 @@ final class GetUpdatesCommand extends Command
     public function __construct(
         private TelegramClientInterface $client,
 //        private Client $sentry,
-        private SubscriberIdFactoryInterface $subscriberIdFactory,
-        private SubscriberRepositoryInterface $subscriberRepository,
         private ContainerInterface $container,
         private ORM $orm,
         private TgUpdateEntityCycleRepository $tgUpdateEntityCycleRepository,
+
+        private readonly TelegramRequestFactory $telegramRequestFactory,
         string $name = null,
     ) {
         parent::__construct($name);
@@ -61,64 +62,36 @@ final class GetUpdatesCommand extends Command
         }
         foreach ($this->client->send('getUpdates', $data)['result'] ?? [] as $update) {
             // dump($update);
+            $request = $this->telegramRequestFactory->create($update);
             $response = new Response();
 
-            $message = $update['message'] ?? $update['callback_query'];
-            $subscriberId = $this->subscriberIdFactory->create('tg-' . $message['from']['id']);
-            $subscriber = $this->subscriberRepository->find($subscriberId);
-            if ($subscriber === null) {
-                $subscriber = new Subscriber($subscriberId, new Settings());
-                $this->subscriberRepository->create($subscriber);
-            }
-
-            $data = trim($message['text'] ?? $message['data']);
-            $chatId = (string) ($message['chat']['id'] ?? $message['message']['chat']['id']);
-            $messageId = (string) ($message['message_id'] ?? $message['message']['message_id']);
-            $request = new TelegramRequest(
-                $chatId,
-                $messageId,
-                $data,
-                $subscriber,
-                $update['callback_query']['id'] ?? null
-            );
-
-            if (trim($data) === '/start') {
+            // TODO routing
+            if ($request->requestData === '/start') {
                 $action = $this->container->get(HelloAction::class);
                 $response = $action->handle($request, $response);
             }
 
-            if (trim($data) === '/realtime') {
+            if ($request->requestData === '/realtime') {
                 $action = $this->container->get(RealtimeAction::class);
                 $response = $action->handle($request, $response);
             }
 
-            if (trim($data) === '/summary') {
+            if ($request->requestData === '/summary') {
                 $action = $this->container->get(SummaryAction::class);
                 $response = $action->handle($request, $response);
             }
 
             $type = SubscriptionType::REALTIME->value;
-            if (preg_match("/^$type:[+-]:[\w_-]+$/", $data)) {
+            if (preg_match("/^$type:[+-]:[\w_-]+$/", $request->requestData)) {
                 $action = $this->container->get(RealtimeEditAction::class);
                 $response = $action->handle($request, $response);
             }
 
             $type = SubscriptionType::SUMMARY->value;
-            if (preg_match("/^$type:[+-]:[\w_-]+$/", $data)) {
+            if (preg_match("/^$type:[+-]:[\w_-]+$/", $request->requestData)) {
                 $action = $this->container->get(RealtimeEditAction::class);
                 $response = $action->handle($request, $response);
             }
-
-            /*if (strpos($data, '/create_wallet ') === 0) {
-                $walletName = trim(explode(' ', $data, 2)[1] ?? '');
-                if ($walletName === '') {
-                    // TODO send error message
-                } else {
-                    $action = $this->container->get(GetWalletsAction::class);
-                    $response = $action->handle(new TelegramRequest($subscriberId, $chatId), $response);
-                }
-            }
-            dump($response);*/
 
             if ($request->callbackQueryId !== null) {
                 $callbackResponse = $response->getCallbackResponse() ?? new TelegramCallbackResponse($request->callbackQueryId);

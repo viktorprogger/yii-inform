@@ -20,7 +20,7 @@ final class SummaryEditAction implements ActionInterface
 
     public function handle(TelegramRequest $request, Response $response): Response
     {
-        [, $sign, $repository] = explode(':', $request->request);
+        [, $sign, $repository] = explode(':', $request->requestData);
         if ($sign === '+') {
             $this->add($repository, $request->subscriber);
         } else {

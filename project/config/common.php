@@ -16,10 +16,13 @@ use Yiisoft\Inform\Infrastructure\Entity\GithubRepository\GithubRepository;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Router;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
 use Yiisoft\Log\Logger;
 use Yiisoft\Log\Target\File\FileTarget;
+
+/** @var array $params */
 
 return [
     TelegramClientInterface::class => TelegramClientSymfony::class,
@@ -31,5 +34,8 @@ return [
     LoggerInterface::class => Logger::class,
     Logger::class => static fn(FileTarget $target) => new Logger([$target]),
     CacheInterface::class => FileCache::class,
-    GithubRepositoryInterface::class => GithubRepository::class
+    GithubRepositoryInterface::class => GithubRepository::class,
+    Router::class => [
+        '__construct()' => ['routes' => $params['telegram routes']]
+    ]
 ];

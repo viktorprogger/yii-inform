@@ -5,12 +5,40 @@ declare(strict_types=1);
 use Psr\Log\LoggerInterface;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
 use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeEditAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryEditAction;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
 use Yiisoft\Yii\Cycle\Schema\Provider\PhpFileSchemaProvider;
 
 return [
+    'telegram routes' => [
+        [
+            'rule' => static fn (string $data) => $data === '/start',
+            'action' => HelloAction::class,
+        ],
+        [
+            'rule' => static fn (string $data) => $data === '/realtime',
+            'action' => RealtimeAction::class,
+        ],
+        [
+            'rule' => static fn (string $data) => $data === '/summary',
+            'action' => SummaryAction::class,
+        ],
+        [
+            'rule' => static fn (string $data) => preg_match("/^realtime:[+-]:[\w_-]+$/", $data),
+            'action' => RealtimeEditAction::class,
+        ],
+        [
+            'rule' => static fn (string $data) => preg_match("/^summary:[+-]:[\w_-]+$/", $data),
+            'action' => SummaryEditAction::class,
+        ],
+    ],
+
     'yiisoft/aliases' => [
         'aliases' => [
             '@root' => dirname(__DIR__),
