@@ -16,8 +16,8 @@ final class SubscriberEntity
     public string $id;
 
     #[Column(type: 'text', nullable: true)]
-    public ?string $settings_realtime;
+    public ?string $settings_realtime = null;
 
     #[Column(type: 'text', nullable: true)]
-    public ?string $settings_summary;
+    public ?string $settings_summary = null;
 }
