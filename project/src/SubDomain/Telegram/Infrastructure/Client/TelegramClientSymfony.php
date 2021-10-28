@@ -25,7 +25,6 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
     public function updateKeyboard(TelegramKeyboardUpdate $message): ?array
     {
-        dump($message->getArray());
         return $this->send('editMessageReplyMarkup', $message->getArray());
     }
 

@@ -20,6 +20,7 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeEditAction;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
@@ -81,22 +82,29 @@ final class GetUpdatesCommand extends Command
                 $update['callback_query']['id'] ?? null
             );
 
-            if (in_array(trim($data), ['/start'], true)) {
+            if (trim($data) === '/start') {
                 $action = $this->container->get(HelloAction::class);
                 $response = $action->handle($request, $response);
             }
 
-            if (in_array(trim($data), ['/realtime'], true)) {
+            if (trim($data) === '/realtime') {
                 $action = $this->container->get(RealtimeAction::class);
                 $response = $action->handle($request, $response);
             }
 
-            if (in_array(trim($data), ['/summary'], true)) {
+            if (trim($data) === '/summary') {
                 $action = $this->container->get(SummaryAction::class);
                 $response = $action->handle($request, $response);
             }
 
-            if (preg_match("/^realtime:[+-]:[\w_-]+$/", $data)) {
+            $type = SubscriptionType::REALTIME->value;
+            if (preg_match("/^$type:[+-]:[\w_-]+$/", $data)) {
+                $action = $this->container->get(RealtimeEditAction::class);
+                $response = $action->handle($request, $response);
+            }
+
+            $type = SubscriptionType::SUMMARY->value;
+            if (preg_match("/^$type:[+-]:[\w_-]+$/", $data)) {
                 $action = $this->container->get(RealtimeEditAction::class);
                 $response = $action->handle($request, $response);
             }
@@ -127,7 +135,7 @@ final class GetUpdatesCommand extends Command
             }
 
             foreach ($response->getKeyboardUpdates() as $message) {
-                dump($this->client->updateKeyboard($message));
+                $this->client->updateKeyboard($message);
             }
 
             foreach ($response->getMessages() as $message) {

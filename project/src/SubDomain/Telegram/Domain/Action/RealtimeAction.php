@@ -24,7 +24,7 @@ final class RealtimeAction implements ActionInterface
             $text,
             MessageFormat::markdown(),
             $request->chatId,
-            $this->buttonService->createKeyboard($request->subscriber),
+            $this->buttonService->createKeyboard($request->subscriber, SubscriptionType::REALTIME),
         );
 
         return $response->withMessage($message);

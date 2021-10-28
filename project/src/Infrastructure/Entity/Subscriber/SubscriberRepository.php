@@ -45,9 +45,10 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
             return null;
         }
 
-        $decoded = json_decode($entity->settings_realtime ?? '[]', true, 512, JSON_THROW_ON_ERROR);
+        $decodedRealtime = json_decode($entity->settings_realtime ?? '[]', true, flags: JSON_THROW_ON_ERROR);
+        $decodedSummary = json_decode($entity->settings_summary ?? '[]', true, flags: JSON_THROW_ON_ERROR);
 
-        return new Subscriber($id, new Settings($decoded));
+        return new Subscriber($id, new Settings($decodedRealtime, $decodedSummary));
     }
 
     public function updateSettings(SubscriberId $id, Settings $settings): void
@@ -55,6 +56,7 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         /** @var SubscriberEntity $entity */
         $entity = $this->cycleRepository->findByPK($id->value);
         $entity->settings_realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
+        $entity->settings_summary = json_encode($settings->summaryRepositories, JSON_THROW_ON_ERROR);
         (new Transaction($this->orm))->persist($entity)->run();
     }
 }

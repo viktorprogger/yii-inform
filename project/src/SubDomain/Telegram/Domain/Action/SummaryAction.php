@@ -4,22 +4,29 @@ declare(strict_types=1);
 
 namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
 
-use Github\Client;
-use Symfony\Component\VarDumper\VarDumper;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 
 class SummaryAction implements ActionInterface
 {
     public function __construct(
-        private Client $github,
+        private readonly RepositoryButtonService $buttonService,
     ) {
     }
 
     public function handle(TelegramRequest $request, Response $response): Response
     {
-        foreach ($this->github->repositories()->org('yiisoft') as $repoInfo) {
-            VarDumper::dump($repoInfo);
-        }
+        $text = 'Вы можете подписаться на следующие репозитории:';
+
+        $message = new TelegramMessage(
+            $text,
+            MessageFormat::markdown(),
+            $request->chatId,
+            $this->buttonService->createKeyboard($request->subscriber, SubscriptionType::SUMMARY),
+        );
+
+        return $response->withMessage($message);
     }
 }

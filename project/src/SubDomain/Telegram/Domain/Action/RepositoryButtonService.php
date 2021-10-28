@@ -12,9 +12,14 @@ final class RepositoryButtonService
     {
     }
 
-    public function createButton(string $repository, Subscriber $subscriber): InlineKeyboardButton
+    public function createButton(string $repository, Subscriber $subscriber, SubscriptionType $type): InlineKeyboardButton
     {
-        if (in_array($repository, $subscriber->settings->realtimeRepositories, true)) {
+        $currentSettings = match($type) {
+            SubscriptionType::REALTIME => $subscriber->settings->realtimeRepositories,
+            SubscriptionType::SUMMARY => $subscriber->settings->summaryRepositories,
+        };
+
+        if (in_array($repository, $currentSettings, true)) {
             $emoji = '➖';
             $sign = '-';
         } else {
@@ -22,10 +27,10 @@ final class RepositoryButtonService
             $sign = '+';
         }
 
-        return new InlineKeyboardButton("$emoji $repository", "realtime:$sign:$repository");
+        return new InlineKeyboardButton("$emoji $repository", "$type->value:$sign:$repository");
     }
 
-    public function createKeyboard(Subscriber $subscriber): array
+    public function createKeyboard(Subscriber $subscriber, SubscriptionType $type): array
     {
         $keyboard = [];
         $perLine = 3;
@@ -38,7 +43,7 @@ final class RepositoryButtonService
             }
             $count++;
 
-            $keyboard[$line][] = $this->createButton($repository, $subscriber);
+            $keyboard[$line][] = $this->createButton($repository, $subscriber, $type);
         }
 
         return $keyboard;

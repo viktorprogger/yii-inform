@@ -10,7 +10,7 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 
-final class RealtimeEditAction implements ActionInterface
+final class SummaryEditAction implements ActionInterface
 {
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
@@ -37,7 +37,7 @@ final class RealtimeEditAction implements ActionInterface
             $response = $response->withCallbackResponse($callbackResponse);
         }
 
-        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id), SubscriptionType::REALTIME);
+        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id), SubscriptionType::SUMMARY);
         $message = new TelegramKeyboardUpdate(
             $request->chatId,
             $request->messageId,
@@ -54,8 +54,7 @@ final class RealtimeEditAction implements ActionInterface
             $repoList[] = $repository;
         }
 
-        $settings = new Settings($subscriber->settings->realtimeRepositories, $repoList);
-        $this->subscriberRepository->updateSettings($subscriber->id, $settings);
+        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
     }
 
     private function remove(string $repository, Subscriber $subscriber): void
