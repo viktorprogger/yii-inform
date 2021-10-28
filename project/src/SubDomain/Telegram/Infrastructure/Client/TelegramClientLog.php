@@ -6,6 +6,7 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client;
 
 use Psr\Log\LoggerInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 
 final class TelegramClientLog implements TelegramClientInterface
@@ -15,6 +16,13 @@ final class TelegramClientLog implements TelegramClientInterface
     }
 
     public function sendMessage(TelegramMessage $message): ?array
+    {
+        $this->send('sendMessage', $message->getArray());
+
+        return null;
+    }
+
+    public function updateKeyboard(TelegramKeyboardUpdate $message): ?array
     {
         $this->send('sendMessage', $message->getArray());
 

@@ -6,12 +6,16 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 
-class RealtimeEditAction implements ActionInterface
+final class RealtimeEditAction implements ActionInterface
 {
-    public function __construct(private readonly SubscriberRepositoryInterface $subscriberRepository)
-    {
+    public function __construct(
+        private readonly SubscriberRepositoryInterface $subscriberRepository,
+        private readonly RepositoryButtonService $buttonService,
+    ) {
     }
 
     public function handle(TelegramRequest $request, Response $response): Response
@@ -23,9 +27,24 @@ class RealtimeEditAction implements ActionInterface
             $this->remove($repository, $request->subscriber);
         }
 
-        // TODO Send a callback response and update the message on which the button was clicked
+        if ($request->callbackQueryId !== null) {
+            $text = match ($sign) {
+                '+' => "Вы начали отслеживать $repository",
+                '-' => "Вы больше не отслеживаете $repository",
+            };
 
-        return $response;
+            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text, true);
+            $response = $response->withCallbackResponse($callbackResponse);
+        }
+
+        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id));
+        $message = new TelegramKeyboardUpdate(
+            $request->chatId,
+            $request->messageId,
+            $keyboard,
+        );
+
+        return $response->withKeyboardUpdate($message);
     }
 
     private function add(string $repository, Subscriber $subscriber): void

@@ -59,7 +59,7 @@ final class GetUpdatesCommand extends Command
             $data['offset'] = $lastUpdate->id + 1;
         }
         foreach ($this->client->send('getUpdates', $data)['result'] ?? [] as $update) {
-            dump($update);
+            // dump($update);
             $response = new Response();
 
             $message = $update['message'] ?? $update['callback_query'];
@@ -72,7 +72,14 @@ final class GetUpdatesCommand extends Command
 
             $data = trim($message['text'] ?? $message['data']);
             $chatId = (string) ($message['chat']['id'] ?? $message['message']['chat']['id']);
-            $request = new TelegramRequest($chatId, $data, $subscriber, $update['callback_query']['id'] ?? null);
+            $messageId = (string) ($message['message_id'] ?? $message['message']['message_id']);
+            $request = new TelegramRequest(
+                $chatId,
+                $messageId,
+                $data,
+                $subscriber,
+                $update['callback_query']['id'] ?? null
+            );
 
             if (in_array(trim($data), ['/start'], true)) {
                 $action = $this->container->get(HelloAction::class);
@@ -119,15 +126,19 @@ final class GetUpdatesCommand extends Command
                 );
             }
 
+            foreach ($response->getKeyboardUpdates() as $message) {
+                dump($this->client->updateKeyboard($message));
+            }
+
+            foreach ($response->getMessages() as $message) {
+                $this->client->sendMessage($message);
+            }
+
             $updateEntity = new TelegramUpdateEntity();
             $updateEntity->contents = json_encode($update);
             $updateEntity->created_at = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
             $updateEntity->id = $update['update_id'];
-
             (new Transaction($this->orm))->persist($updateEntity)->run();
-            foreach ($response->getMessages() as $message) {
-                $this->client->sendMessage($message);
-            }
         }
 
         return ExitCode::OK;

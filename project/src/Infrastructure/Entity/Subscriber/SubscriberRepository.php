@@ -45,7 +45,7 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
             return null;
         }
 
-        $decoded = json_decode($entity->settings->realtime ?? '[]', true, 512, JSON_THROW_ON_ERROR);
+        $decoded = json_decode($entity->settings_realtime ?? '[]', true, 512, JSON_THROW_ON_ERROR);
 
         return new Subscriber($id, new Settings($decoded));
     }

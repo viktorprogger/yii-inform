@@ -11,8 +11,8 @@ final class Response
 
     private ?TelegramCallbackResponse $callbackResponse = null;
 
-    /** @var TelegramMessageUpdate[] */
-    private array $messageUpdates = [];
+    /** @var TelegramKeyboardUpdate[] */
+    private array $keyboardUpdates = [];
 
     public function withMessage(TelegramMessage $message): self
     {
@@ -30,10 +30,10 @@ final class Response
         return $instance;
     }
 
-    public function withMessageUpdate(TelegramMessageUpdate $update): self
+    public function withKeyboardUpdate(TelegramKeyboardUpdate $update): self
     {
         $instance = clone $this;
-        $instance->messageUpdates[] = $update;
+        $instance->keyboardUpdates[] = $update;
 
         return $instance;
     }
@@ -48,8 +48,8 @@ final class Response
         return $this->callbackResponse;
     }
 
-    public function getMessageUpdates(): array
+    public function getKeyboardUpdates(): array
     {
-        return $this->messageUpdates;
+        return $this->keyboardUpdates;
     }
 }

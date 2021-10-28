@@ -7,6 +7,7 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 
 final class TelegramClientSymfony implements TelegramClientInterface
@@ -20,6 +21,12 @@ final class TelegramClientSymfony implements TelegramClientInterface
     public function sendMessage(TelegramMessage $message): ?array
     {
         return $this->send('sendMessage', $message->getArray());
+    }
+
+    public function updateKeyboard(TelegramKeyboardUpdate $message): ?array
+    {
+        dump($message->getArray());
+        return $this->send('editMessageReplyMarkup', $message->getArray());
     }
 
     public function send(string $apiEndpoint, array $data = []): ?array
