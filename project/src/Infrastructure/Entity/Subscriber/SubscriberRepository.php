@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Inform\Infrastructure\Entity\Subscriber;
 
 use Cycle\ORM\ORM;
+use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use RuntimeException;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
@@ -14,11 +15,14 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 
 final class SubscriberRepository implements SubscriberRepositoryInterface
 {
+    private Repository $cycleRepository;
 
     public function __construct(
         private ORM $orm,
-        private SubscriberCycleRepository $cycleRepository,
+
     ) {
+        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+        $this->cycleRepository = $this->orm->getRepository(SubscriberEntity::class);
     }
 
     public function create(Subscriber $subscriber): void
@@ -50,7 +54,7 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
     {
         /** @var SubscriberEntity $entity */
         $entity = $this->cycleRepository->findByPK($id->value);
-        $entity->settings->realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
+        $entity->settings_realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
         (new Transaction($this->orm))->persist($entity)->run();
     }
 }

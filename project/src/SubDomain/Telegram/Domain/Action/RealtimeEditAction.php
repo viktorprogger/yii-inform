@@ -23,7 +23,7 @@ class RealtimeEditAction implements ActionInterface
             $this->remove($repository, $request->subscriber);
         }
 
-        // TODO Send a tooltip and update the message on which the button was clicked
+        // TODO Send a callback response and update the message on which the button was clicked
 
         return $response;
     }

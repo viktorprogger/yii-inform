@@ -15,11 +15,9 @@ final class SubscriberEntity
     #[Column(type: 'string', primary: true)]
     public string $id;
 
-    #[Embedded(target: SettingsEntity::class, load: 'lazy')]
-    public SettingsEntity|Reference $settings;
+    #[Column(type: 'text', nullable: true)]
+    public ?string $settings_realtime;
 
-    public function __construct()
-    {
-        $this->settings = new SettingsEntity();
-    }
+    #[Column(type: 'text', nullable: true)]
+    public ?string $settings_summary;
 }

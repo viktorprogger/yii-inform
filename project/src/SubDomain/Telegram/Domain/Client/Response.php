@@ -9,8 +9,7 @@ final class Response
     /** @var TelegramMessage[] */
     private array $messages = [];
 
-    /** @var TelegramCallbackResponse[] */
-    private array $callbackQueries = [];
+    private ?TelegramCallbackResponse $callbackResponse = null;
 
     /** @var TelegramMessageUpdate[] */
     private array $messageUpdates = [];
@@ -26,7 +25,7 @@ final class Response
     public function withCallbackResponse(TelegramCallbackResponse $callbackResponse): self
     {
         $instance = clone $this;
-        $instance->callbackQueries[] = $callbackResponse;
+        $instance->callbackResponse = $callbackResponse;
 
         return $instance;
     }
@@ -44,9 +43,9 @@ final class Response
         return $this->messages;
     }
 
-    public function getCallbackQueries(): array
+    public function getCallbackResponse(): ?TelegramCallbackResponse
     {
-        return $this->callbackQueries;
+        return $this->callbackResponse;
     }
 
     public function getMessageUpdates(): array

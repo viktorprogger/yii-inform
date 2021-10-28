@@ -8,6 +8,7 @@ use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
+use Yiisoft\Yii\Cycle\Schema\Provider\PhpFileSchemaProvider;
 
 return [
     'yiisoft/aliases' => [
@@ -80,6 +81,10 @@ return [
         'schema-providers' => [
             // Uncomment next line to enable schema cache
             // SimpleCacheSchemaProvider::class => ['key' => 'cycle-orm-cache-key'],
+            PhpFileSchemaProvider::class => [
+                'file' => '@runtime/schema.php',
+                'mode' => PhpFileSchemaProvider::MODE_WRITE_ONLY,
+            ],
             FromConveyorSchemaProvider::class => [
                 'generators' => [
                     Cycle\Schema\Generator\SyncTables::class, // sync table changes to database

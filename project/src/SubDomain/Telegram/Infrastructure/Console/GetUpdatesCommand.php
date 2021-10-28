@@ -62,10 +62,6 @@ final class GetUpdatesCommand extends Command
             dump($update);
             $response = new Response();
 
-            if (isset($update['callback_query'])) {
-                $response = $response->withCallbackResponse(new TelegramCallbackResponse($update['callback_query']['id']));
-            }
-
             $message = $update['message'] ?? $update['callback_query'];
             $subscriberId = $this->subscriberIdFactory->create('tg-' . $message['from']['id']);
             $subscriber = $this->subscriberRepository->find($subscriberId);
@@ -76,7 +72,7 @@ final class GetUpdatesCommand extends Command
 
             $data = trim($message['text'] ?? $message['data']);
             $chatId = (string) ($message['chat']['id'] ?? $message['message']['chat']['id']);
-            $request = new TelegramRequest($chatId, $data, $subscriber);
+            $request = new TelegramRequest($chatId, $data, $subscriber, $update['callback_query']['id'] ?? null);
 
             if (in_array(trim($data), ['/start'], true)) {
                 $action = $this->container->get(HelloAction::class);
@@ -109,16 +105,16 @@ final class GetUpdatesCommand extends Command
             }
             dump($response);*/
 
-
-            foreach ($response->getCallbackQueries() as $callbackQuery) {
+            if ($request->callbackQueryId !== null) {
+                $callbackResponse = $response->getCallbackResponse() ?? new TelegramCallbackResponse($request->callbackQueryId);
                 $this->client->send(
                     'answerCallbackQuery',
                     [
-                        'callback_query_id' => $callbackQuery->getId(),
-                        'text' => $callbackQuery->getText(),
-                        'show_alert' => $callbackQuery->isShowAlert(),
-                        'url' => $callbackQuery->getUrl(),
-                        'cache_time' => $callbackQuery->getCacheTime(),
+                        'callback_query_id' => $callbackResponse->getId(),
+                        'text' => $callbackResponse->getText(),
+                        'show_alert' => $callbackResponse->isShowAlert(),
+                        'url' => $callbackResponse->getUrl(),
+                        'cache_time' => $callbackResponse->getCacheTime(),
                     ],
                 );
             }

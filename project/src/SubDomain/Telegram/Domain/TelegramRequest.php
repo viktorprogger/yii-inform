@@ -12,6 +12,7 @@ final class TelegramRequest
         public readonly string $chatId,
         public readonly string $request,
         public readonly Subscriber $subscriber,
+        public readonly ?string $callbackQueryId = null,
     ) {
     }
 }

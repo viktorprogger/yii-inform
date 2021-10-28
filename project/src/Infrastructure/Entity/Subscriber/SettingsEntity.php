@@ -11,10 +11,10 @@ use Cycle\Annotated\Annotation\Embeddable;
 final class SettingsEntity
 {
     public function __construct(
-        #[Column(type: 'json', nullable: false)]
+        #[Column(type: 'text', nullable: false)]
         public string $realtime = '[]',
 
-        #[Column(type: 'json', nullable: false)]
+        #[Column(type: 'text', nullable: false)]
         public string $summary = '[]',
     ) {
     }
