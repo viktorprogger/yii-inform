@@ -37,7 +37,7 @@ final class RealtimeEditAction implements ActionInterface
             $response = $response->withCallbackResponse($callbackResponse);
         }
 
-        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id), SubscriptionType::REALTIME);
+        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id), SubscriptionType::SUMMARY);
         $message = new TelegramKeyboardUpdate(
             $request->chatId,
             $request->messageId,
