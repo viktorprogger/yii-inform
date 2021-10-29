@@ -16,7 +16,7 @@ final class Router
     /**
      * @psalm-param $routes list<array{rule: callable, action: class-string}>
      */
-    public function __construct(private readonly ContainerInterface $container, array ...$routes)
+    public function __construct(private readonly ContainerInterface $container, array $routes)
     {
         $this->routes = $routes;
     }

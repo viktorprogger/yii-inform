@@ -15,8 +15,7 @@ class LoadRepositoriesCommand extends Command
         private readonly GithubService $service,
         private readonly GithubRepositoryInterface $repository,
         string $name = null,
-    )
-    {
+    ) {
         parent::__construct($name);
     }
 

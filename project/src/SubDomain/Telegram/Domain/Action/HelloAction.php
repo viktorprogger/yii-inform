@@ -13,9 +13,13 @@ class HelloAction implements ActionInterface
 {
     public function handle(TelegramRequest $request, Response $response): Response
     {
-        $text = 'Добро пожаловать\! Нажмите /realtime для настройки получения обновлений из репозиториев ' .
-            'в реальном времени или /summary для настройки периодического получения обновлений\. ' .
-            'Вы также можете использовать команду /list, чтобы увидеть список активных подписок\.';
+        $text = <<<'TXT'
+            Добро пожаловать\! Этот бот позволит вам отслеживать обновления Yii3 прямо в Telegram\.
+            Доступные команды:
+            \- /realtime \- настройка получения обновлений из репозиториев в реальном времени
+            \- /summary \- настройка периодического получения обновлений \(раз в сутки\)\.
+            TXT;
+
 
         return $response->withMessage(
             new TelegramMessage(
