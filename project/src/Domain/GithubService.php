@@ -2,16 +2,27 @@
 
 namespace Yiisoft\Inform\Domain;
 
+use DateTimeImmutable;
 use Github\Client;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
+use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
+use Yiisoft\Inform\Domain\Entity\Event\EventType;
+use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
 
 final class GithubService
 {
-    private const CACHE_KEY = 'gh-yii3-repo-list';
+    private const BOTS = [
+        'dependabot[bot]',
+    ];
 
     public function __construct(
         private readonly Client $api,
         private readonly HttpClientInterface $httpClient,
+        private readonly EventIdFactoryInterface $eventIdFactory,
+        private readonly EventRepositoryInterface $eventRepository,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -33,10 +44,10 @@ final class GithubService
         return $result;
     }
 
-    public function loadEvents(string ...$repositories): array
+    public function loadEvents(string ...$repositories): void
     {
         if ($repositories === []) {
-            return [];
+            return;
         }
 
         $events = $this->httpClient
@@ -44,19 +55,61 @@ final class GithubService
             ->getContent();
         $events = json_decode($events, true, flags: JSON_THROW_ON_ERROR);
 
-        foreach ($events as $event) {
-            $repo = str_replace('yiisoft/', '', $event['repo']['name']);
+        foreach ($events as $eventData) {
+            $repo = str_replace('yiisoft/', '', $eventData['repo']['name']);
 
             if (in_array($repo, $repositories, true) === false) {
                 continue;
             }
 
-            if (in_array($repo, $repositories, true) === false) {
+            if (in_array($repo, self::BOTS, true)) {
                 continue;
             }
 
+            $this->logger->debug($eventData);
+
+            $id = $this->eventIdFactory->create((string) $eventData['id']);
+            if ($this->eventRepository->exists($id)) {
+                continue;
+            }
+
+            $type = $this->getEventType($eventData);
+            if ($type !== null) {
+                $event = new SubscriptionEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
+                $this->eventRepository->create($event);
+            }
         }
+    }
 
-        return [];
+    private function getEventType(array $data): ?EventType
+    {
+        return match ($data['type']) {
+            'IssuesEvent' => match ($data['payload']['action']) {
+                'opened' => EventType::ISSUE_OPENED,
+                'closed' => EventType::ISSUE_CLOSED,
+                'reopened' => EventType::ISSUE_REOPENED,
+                default => null,
+            },
+            'IssueCommentEvent' => match ($data['payload']['action']) {
+                'created' => EventType::ISSUE_COMMENTED,
+                default => null,
+            },
+            'PullRequestEvent' => match ($data['payload']['action']) {
+                'opened' => EventType::PR_OPENED,
+                'closed' => EventType::PR_CLOSED, // TODO add merge check https://docs.github.com/en/rest/reference/pulls#check-if-a-pull-request-has-been-merged
+                'reopened' => EventType::PR_REOPENED,
+                'edited' => EventType::PR_CHANGED,
+                default => null,
+            },
+            'PullRequestReviewEvent' => match ($data['payload']['review']['state']) {
+                'APPROVED' => EventType::PR_MERGE_APPROVED,
+                default => EventType::PR_MERGE_DECLINED,
+            },
+            'PullRequestReviewCommentEvent' => match ($data['payload']['action']) {
+                'created' => EventType::PR_COMMENTED,
+                default => null,
+            },
+            default => null,
+        };
     }
 }

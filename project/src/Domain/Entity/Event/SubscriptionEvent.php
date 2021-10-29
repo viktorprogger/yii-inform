@@ -12,6 +12,7 @@ final class SubscriptionEvent
         public readonly EventId $id,
         public readonly EventType $type,
         public readonly string $repo,
+        public readonly array $payload,
         public readonly DateTimeImmutable $created,
     ) {
     }

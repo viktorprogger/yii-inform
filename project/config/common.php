@@ -9,15 +9,18 @@ use Ramsey\Uuid\UuidFactoryInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Yiisoft\Cache\File\FileCache;
+use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
+use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\Domain\GithubRepository\GithubRepositoryInterface;
+use Yiisoft\Inform\Infrastructure\Entity\Event\EventIdFactory;
+use Yiisoft\Inform\Infrastructure\Entity\Event\EventRepository;
 use Yiisoft\Inform\Infrastructure\Entity\GithubRepository\GithubRepository;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
 use Yiisoft\Inform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Router;
-use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
 use Yiisoft\Log\Logger;
 use Yiisoft\Log\Target\File\FileTarget;
@@ -37,5 +40,7 @@ return [
     GithubRepositoryInterface::class => GithubRepository::class,
     Router::class => [
         '__construct()' => ['routes' => $params['telegram routes']]
-    ]
+    ],
+    EventIdFactoryInterface::class => EventIdFactory::class,
+    EventRepositoryInterface::class => EventRepository::class,
 ];

@@ -8,7 +8,16 @@ use DateTimeImmutable;
 
 interface EventRepositoryInterface
 {
+    /**
+     * Persists a new event to a DB and sends a corresponding event to the EventDispatcher
+     *
+     * @param SubscriptionEvent $event
+     *
+     * @return void
+     */
     public function create(SubscriptionEvent $event): void;
+
+    public function exists(EventId $id): bool;
 
     /**
      * @return SubscriptionEvent[]

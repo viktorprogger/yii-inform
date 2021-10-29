@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
+use Yiisoft\Inform\Infrastructure\Console\LoadEventsCommand;
 use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
@@ -49,6 +50,7 @@ return [
         'commands' => [
             'inform/updates' => GetUpdatesCommand::class,
             'inform/load-repos' => LoadRepositoriesCommand::class,
+            'inform/load-events' => LoadEventsCommand::class,
         ],
     ],
     'yiisoft/yii-cycle' => [
