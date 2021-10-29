@@ -2,10 +2,8 @@
 
 namespace Yiisoft\Inform\Domain;
 
-// TODO: divide into interface and infrastructure
 use Github\Client;
-use Psr\SimpleCache\CacheInterface;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class GithubService
 {
@@ -13,6 +11,7 @@ final class GithubService
 
     public function __construct(
         private readonly Client $api,
+        private readonly HttpClientInterface $httpClient,
     ) {
     }
 
@@ -32,5 +31,32 @@ final class GithubService
         sort($result);
 
         return $result;
+    }
+
+    public function loadEvents(string ...$repositories): array
+    {
+        if ($repositories === []) {
+            return [];
+        }
+
+        $events = $this->httpClient
+            ->request('GET', 'https://api.github.com/orgs/yiisoft/events?per_page=100&page=1')
+            ->getContent();
+        $events = json_decode($events, true, flags: JSON_THROW_ON_ERROR);
+
+        foreach ($events as $event) {
+            $repo = str_replace('yiisoft/', '', $event['repo']['name']);
+
+            if (in_array($repo, $repositories, true) === false) {
+                continue;
+            }
+
+            if (in_array($repo, $repositories, true) === false) {
+                continue;
+            }
+
+        }
+
+        return [];
     }
 }
