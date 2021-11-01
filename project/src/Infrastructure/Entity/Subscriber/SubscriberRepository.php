@@ -48,13 +48,14 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         $decodedRealtime = json_decode($entity->settings_realtime ?? '[]', true, flags: JSON_THROW_ON_ERROR);
         $decodedSummary = json_decode($entity->settings_summary ?? '[]', true, flags: JSON_THROW_ON_ERROR);
 
-        return new Subscriber($id, new Settings($decodedRealtime, $decodedSummary));
+        return new Subscriber($id, $entity->telegram_chat_id, new Settings($decodedRealtime, $decodedSummary));
     }
 
-    public function updateSettings(SubscriberId $id, Settings $settings): void
+    public function updateSettings(Subscriber $subscriber, Settings $settings): void
     {
         /** @var SubscriberEntity $entity */
-        $entity = $this->cycleRepository->findByPK($id->value);
+        $entity = $this->cycleRepository->findByPK($subscriber->id->value);
+        $entity->telegram_chat_id = $subscriber->chatId;
         $entity->settings_realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
         $entity->settings_summary = json_encode($settings->summaryRepositories, JSON_THROW_ON_ERROR);
         (new Transaction($this->orm))->persist($entity)->run();

@@ -54,7 +54,7 @@ final class SummaryEditAction implements ActionInterface
             $repoList[] = $repository;
         }
 
-        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
+        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
     }
 
     private function remove(string $repository, Subscriber $subscriber): void
@@ -62,6 +62,6 @@ final class SummaryEditAction implements ActionInterface
         $repoList = $subscriber->settings->realtimeRepositories;
         $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
-        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
+        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
     }
 }

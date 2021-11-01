@@ -55,7 +55,7 @@ final class RealtimeEditAction implements ActionInterface
         }
 
         $settings = new Settings($subscriber->settings->realtimeRepositories, $repoList);
-        $this->subscriberRepository->updateSettings($subscriber->id, $settings);
+        $this->subscriberRepository->updateSettings($subscriber, $settings);
     }
 
     private function remove(string $repository, Subscriber $subscriber): void
@@ -63,6 +63,6 @@ final class RealtimeEditAction implements ActionInterface
         $repoList = $subscriber->settings->realtimeRepositories;
         $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
-        $this->subscriberRepository->updateSettings($subscriber->id, new Settings($repoList));
+        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
     }
 }

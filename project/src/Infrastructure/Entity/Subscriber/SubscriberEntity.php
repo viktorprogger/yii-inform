@@ -15,6 +15,9 @@ final class SubscriberEntity
     #[Column(type: 'string', primary: true)]
     public string $id;
 
+    #[Column(type: 'string', primary: true)]
+    public string $telegram_chat_id;
+
     #[Column(type: 'text', nullable: true)]
     public ?string $settings_realtime = null;
 

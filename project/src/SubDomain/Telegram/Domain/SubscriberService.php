@@ -21,12 +21,12 @@ final class SubscriberService
      *
      * @return void
      */
-    public function getSubscriber(string $telegramId): Subscriber
+    public function getSubscriber(string $telegramId, string $chatId): Subscriber
     {
         $subscriberId = $this->subscriberIdFactory->create("tg-$telegramId");
         $subscriber = $this->subscriberRepository->find($subscriberId);
         if ($subscriber === null) {
-            $subscriber = new Subscriber($subscriberId, new Settings());
+            $subscriber = new Subscriber($subscriberId, $chatId, new Settings());
             $this->subscriberRepository->create($subscriber);
         }
 

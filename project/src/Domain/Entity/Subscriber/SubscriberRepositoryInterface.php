@@ -17,5 +17,5 @@ interface SubscriberRepositoryInterface
      */
     public function findForRealtimeRepo(string $repo): array;
 
-    public function updateSettings(SubscriberId $id, Settings $settings): void;
+    public function updateSettings(Subscriber $subscriber, Settings $settings): void;
 }
