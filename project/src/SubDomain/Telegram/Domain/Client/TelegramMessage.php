@@ -7,7 +7,7 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Client;
 final class TelegramMessage
 {
     /**
-     * @param InlineKeyboardButton[] $inlineKeyboard
+     * @param InlineKeyboardButton[][] $inlineKeyboard
      */
     public function __construct(
         private string $text,
