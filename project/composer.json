@@ -56,9 +56,11 @@
         "yiisoft/router": "^3.0@dev",
         "yiisoft/router-fastroute": "^3.0@dev",
         "yiisoft/validator": "^3.0@dev",
-        "yiisoft/yii-console": "^3.0@dev",
+        "yiisoft/yii-console": "^1.0",
         "yiisoft/yii-cycle": "3.0.x-dev",
         "yiisoft/yii-event": "^1.0",
+        "yiisoft/yii-queue": "3.0.x-dev",
+        "yiisoft/yii-queue-amqp": "3.0.x-dev",
         "yiisoft/yii-web": "^3.0.x-dev"
     },
     "require-dev": {
@@ -70,7 +72,6 @@
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "^3.6",
         "vimeo/psalm": "^4.10",
-        "yiisoft/yii-debug": "^3.0.x-dev",
         "symfony/var-dumper": "^5.3"
     },
     "autoload": {

@@ -23,4 +23,6 @@ interface EventRepositoryInterface
      * @return SubscriptionEvent[]
      */
     public function read(DateTimeImmutable $since): iterable;
+
+    public function find(EventId $id);
 }

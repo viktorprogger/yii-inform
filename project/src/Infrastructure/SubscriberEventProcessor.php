@@ -1,10 +1,13 @@
 <?php
 
-namespace Yiisoft\Inform\Domain;
+namespace Yiisoft\Inform\Infrastructure;
 
 use Yiisoft\Inform\Domain\Entity\Event\EventCreatedEvent;
 use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Yiisoft\Inform\Domain\TelegramMessageGenerator;
+use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventMessage;
+use Yiisoft\Yii\Queue\Queue;
 
 final class SubscriberEventProcessor
 {
@@ -14,6 +17,7 @@ final class SubscriberEventProcessor
     public function __construct(
         private readonly TelegramMessageGenerator $messageGenerator,
         private readonly SubscriberRepositoryInterface $subscriberRepository,
+        private readonly Queue $queue,
     ) {
     }
 
@@ -26,9 +30,7 @@ final class SubscriberEventProcessor
     {
         try {
             foreach ($this->getSubscribers($subscriptionEvent->repo) as $subscriber) {
-                // TODO save chat id to DB
-                $message = $this->messageGenerator->generateForEvent($subscriptionEvent, '', $subscriber);
-                // TODO send it
+                $this->queue->push(new RealtimeEventMessage($subscriptionEvent->id->id, $subscriber->id->value));
             }
         } finally {
             $this->repositories = [];

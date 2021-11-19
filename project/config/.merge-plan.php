@@ -6,6 +6,9 @@ declare(strict_types=1);
 return [
     '/' => [
         'common' => [
+            'yiisoft/cache' => [
+                'config/common.php',
+            ],
             'yiisoft/cache-file' => [
                 'config/common.php',
             ],
@@ -24,7 +27,10 @@ return [
             'yiisoft/yii-event' => [
                 'config/common.php',
             ],
-            'yiisoft/yii-debug' => [
+            'yiisoft/yii-queue-amqp' => [
+                'config/common.php',
+            ],
+            'yiisoft/aliases' => [
                 'config/common.php',
             ],
             'yiisoft/validator' => [
@@ -33,19 +39,7 @@ return [
             'yiisoft/router' => [
                 'config/common.php',
             ],
-            'yiisoft/profiler' => [
-                'config/common.php',
-            ],
-            'yiisoft/view' => [
-                'config/common.php',
-            ],
-            'yiisoft/yii-filesystem' => [
-                'config/common.php',
-            ],
-            'yiisoft/aliases' => [
-                'config/common.php',
-            ],
-            'yiisoft/cache' => [
+            'yiisoft/yii-queue' => [
                 'config/common.php',
             ],
             '/' => [
@@ -68,22 +62,13 @@ return [
             'yiisoft/yii-cycle' => [
                 'config/params.php',
             ],
-            'yiisoft/yii-debug' => [
+            'yiisoft/aliases' => [
                 'config/params.php',
             ],
             'yiisoft/yii-console' => [
                 'config/params.php',
             ],
-            'yiisoft/assets' => [
-                'config/params.php',
-            ],
-            'yiisoft/profiler' => [
-                'config/params.php',
-            ],
-            'yiisoft/view' => [
-                'config/params.php',
-            ],
-            'yiisoft/aliases' => [
+            'yiisoft/yii-queue' => [
                 'config/params.php',
             ],
             '/' => [
@@ -103,16 +88,7 @@ return [
             'yiisoft/yii-event' => [
                 'config/web.php',
             ],
-            'yiisoft/yii-debug' => [
-                'config/web.php',
-            ],
             'yiisoft/middleware-dispatcher' => [
-                'config/web.php',
-            ],
-            'yiisoft/assets' => [
-                'config/web.php',
-            ],
-            'yiisoft/view' => [
                 'config/web.php',
             ],
             '/' => [
@@ -125,9 +101,6 @@ return [
                 'config/console.php',
             ],
             'yiisoft/yii-event' => [
-                'config/console.php',
-            ],
-            'yiisoft/yii-debug' => [
                 'config/console.php',
             ],
             'yiisoft/yii-console' => [
@@ -144,9 +117,6 @@ return [
             ],
             'yiisoft/yii-event' => [
                 '$events',
-                'config/events-console.php',
-            ],
-            'yiisoft/yii-debug' => [
                 'config/events-console.php',
             ],
             'yiisoft/log' => [
@@ -171,24 +141,8 @@ return [
                 '$events',
                 'config/events-web.php',
             ],
-            'yiisoft/yii-debug' => [
-                'config/events-web.php',
-            ],
             'yiisoft/log' => [
                 'config/events-web.php',
-            ],
-            'yiisoft/profiler' => [
-                'config/events-web.php',
-            ],
-        ],
-        'tests' => [
-            'yiisoft/yii-debug' => [
-                'config/tests.php',
-            ],
-        ],
-        'providers' => [
-            'yiisoft/yii-debug' => [
-                'config/providers.php',
             ],
         ],
         'providers-console' => [

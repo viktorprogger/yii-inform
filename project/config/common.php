@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use PhpAmqpLib\Connection\AbstractConnection;
+use PhpAmqpLib\Connection\AMQPLazyConnection;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Ramsey\Uuid\UuidFactory;
@@ -24,6 +26,15 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\Router;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
 use Yiisoft\Log\Logger;
 use Yiisoft\Log\Target\File\FileTarget;
+use Yiisoft\Yii\Queue\Adapter\AdapterInterface;
+use Yiisoft\Yii\Queue\AMQP\Adapter;
+use Yiisoft\Yii\Queue\AMQP\MessageSerializer;
+use Yiisoft\Yii\Queue\AMQP\MessageSerializerInterface;
+use Yiisoft\Yii\Queue\AMQP\QueueProvider;
+use Yiisoft\Yii\Queue\AMQP\QueueProviderInterface;
+use Yiisoft\Yii\Queue\AMQP\Settings\Queue as QueueSettings;
+use Yiisoft\Yii\Queue\Queue;
+use Yiisoft\Yii\Queue\QueueInterface;
 
 /** @var array $params */
 
@@ -43,4 +54,20 @@ return [
     ],
     EventIdFactoryInterface::class => EventIdFactory::class,
     EventRepositoryInterface::class => EventRepository::class,
+    QueueInterface::class => Queue::class,
+    AdapterInterface::class => Adapter::class,
+    MessageSerializerInterface::class => MessageSerializer::class,
+    AbstractConnection::class => AMQPLazyConnection::class,
+    AMQPLazyConnection::class => [
+        '__construct()' => [ // TODO move to params
+            'host' => 'amqp',
+            'port' => 5672,
+            'user' => getenv('AMQP_USER'),
+            'password' => getenv('AMQP_PASSWORD'),
+            'keepalive' => true,
+        ],
+    ],
+    QueueSettings::class => [
+        '__construct()' => ['queueName' => 'yii-queue'],
+    ],
 ];

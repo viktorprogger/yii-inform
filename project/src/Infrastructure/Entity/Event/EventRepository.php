@@ -9,15 +9,20 @@ use DateTimeImmutable;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Yiisoft\Inform\Domain\Entity\Event\EventCreatedEvent;
 use Yiisoft\Inform\Domain\Entity\Event\EventId;
+use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
+use Yiisoft\Inform\Domain\Entity\Event\EventType;
 use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
 
 final class EventRepository implements EventRepositoryInterface
 {
     private readonly Repository $repository;
 
-    public function __construct(private readonly ORM $orm, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly ORM $orm,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly EventIdFactoryInterface $idFactory,
+    ) {
         /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
         $this->repository = $this->orm->getRepository(SubscriberEventEntity::class);
     }
@@ -43,5 +48,22 @@ final class EventRepository implements EventRepositoryInterface
     public function read(DateTimeImmutable $since): iterable
     {
         // TODO: Implement read() method.
+    }
+
+    public function find(EventId $id): ?SubscriptionEvent
+    {
+        /** @var SubscriberEventEntity|null $entity */
+        $entity = $this->repository->findByPK($id->id);
+        if ($entity === null) {
+            return null;
+        }
+
+        return new SubscriptionEvent(
+            $this->idFactory->create($entity->id),
+            EventType::from($entity->type),
+            $entity->repo,
+            json_decode($entity->payload, true, flags: JSON_THROW_ON_ERROR),
+            $entity->created,
+        );
     }
 }

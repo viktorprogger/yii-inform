@@ -15,9 +15,10 @@ RUN apk --no-cache add \
 ENV XDEBUG_MODE=off
 ENV XDEBUG_CONFIG=""
 RUN apk add --update --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
+        && docker-php-ext-install pcntl sockets \
         && pecl install apcu \
         && docker-php-ext-enable apcu \
-        && pecl install xdebug-beta \
+        && pecl install xdebug \
         && docker-php-ext-enable xdebug \
         && pecl clear-cache \
         && apk del .build-dependencies

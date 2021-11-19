@@ -6,6 +6,8 @@ use Psr\Log\LoggerInterface;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
 use Yiisoft\Inform\Infrastructure\Console\LoadEventsCommand;
 use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
+use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventHandler;
+use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventMessage;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeEditAction;
@@ -131,5 +133,11 @@ return [
 
         /** @deprecated use `entity-paths` key instead */
         'annotated-entity-paths' => [],
+    ],
+    'yiisoft/yii-queue' => [
+        'handlers' => [
+            RealtimeEventMessage::NAME => RealtimeEventHandler::class,
+        ],
+        'channel-definitions' => [],
     ],
 ];

@@ -48,3 +48,14 @@ services:
       MYSQL_USER: ${DB_LOGIN}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+
+  amqp:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${AMQP_USER}
+      RABBITMQ_DEFAULT_PASS: ${AMQP_PASSWORD}
+    expose:
+      - 5672
+    ports:
+      - 15674:15672

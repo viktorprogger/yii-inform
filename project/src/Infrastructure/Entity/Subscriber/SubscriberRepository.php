@@ -60,4 +60,9 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         $entity->settings_summary = json_encode($settings->summaryRepositories, JSON_THROW_ON_ERROR);
         (new Transaction($this->orm))->persist($entity)->run();
     }
+
+    public function findForRealtimeRepo(string $repo): array
+    {
+        // TODO
+    }
 }

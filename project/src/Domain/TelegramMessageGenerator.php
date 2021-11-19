@@ -4,7 +4,6 @@ namespace Yiisoft\Inform\Domain;
 
 use Yiisoft\Inform\Domain\Entity\Event\EventType;
 use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RepositoryButtonService;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
@@ -16,7 +15,7 @@ final class TelegramMessageGenerator
     {
     }
 
-    public function generateForEvent(SubscriptionEvent $subscriptionEvent, string $chatId, Subscriber $subscriber): TelegramMessage
+    public function generateForEvent(SubscriptionEvent $subscriptionEvent, string $chatId): TelegramMessage
     {
         return match ($subscriptionEvent->type) {
             EventType::ISSUE_OPENED => $this->issueCreated($subscriptionEvent->payload, $chatId),
