@@ -15,7 +15,7 @@ interface SubscriberRepositoryInterface
      *
      * @return SubscriberId[]
      */
-    public function findForRealtimeRepo(string $repo): array;
+    public function findForRealtimeRepo(string $repo): iterable;
 
     public function updateSettings(Subscriber $subscriber, Settings $settings): void;
 }

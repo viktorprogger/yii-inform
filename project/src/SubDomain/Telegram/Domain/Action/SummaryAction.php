@@ -7,12 +7,13 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 
 class SummaryAction implements ActionInterface
 {
     public function __construct(
-        private readonly RepositoryButtonService $buttonService,
+        private readonly RepositoryButtonRepository $buttonService,
     ) {
     }
 

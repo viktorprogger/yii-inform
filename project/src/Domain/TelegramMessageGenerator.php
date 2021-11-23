@@ -4,14 +4,14 @@ namespace Yiisoft\Inform\Domain;
 
 use Yiisoft\Inform\Domain\Entity\Event\EventType;
 use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RepositoryButtonService;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
 
 final class TelegramMessageGenerator
 {
-    public function __construct(private readonly RepositoryButtonService $buttonService)
+    public function __construct(private readonly RepositoryButtonRepository $buttonService)
     {
     }
 

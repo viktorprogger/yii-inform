@@ -8,13 +8,14 @@ use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
 
 final class SummaryEditAction implements ActionInterface
 {
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
-        private readonly RepositoryButtonService $buttonService,
+        private readonly RepositoryButtonRepository $buttonService,
     ) {
     }
 

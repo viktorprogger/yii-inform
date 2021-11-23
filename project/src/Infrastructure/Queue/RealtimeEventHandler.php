@@ -2,6 +2,7 @@
 
 namespace Yiisoft\Inform\Infrastructure\Queue;
 
+use RuntimeException;
 use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
@@ -26,5 +27,13 @@ final class RealtimeEventHandler
         $eventId = $this->eventIdFactory->create($eventId);
         $subscriberId = $this->subscriberIdFactory->create($subscriberId);
         $event = $this->eventRepository->find($eventId);
+        $subscriber = $this->subscriberRepository->find($subscriberId);
+
+        if ($event === null || $subscriber === null) {
+            // TODO throw two specific exceptions
+            throw new RuntimeException('Entity not found');
+        }
+
+        $this->eventSender->send($event, $subscriber);
     }
 }

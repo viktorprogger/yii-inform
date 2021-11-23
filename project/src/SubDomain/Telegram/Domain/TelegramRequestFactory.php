@@ -24,11 +24,10 @@ final class TelegramRequestFactory
     public function create(array $update): TelegramRequest
     {
         $message = $update['message'] ?? $update['callback_query'];
-        $subscriber = $this->subscriberService->getSubscriber($message['from']['id']);
-
         $data = trim($message['text'] ?? $message['data']);
         $chatId = (string) ($message['chat']['id'] ?? $message['message']['chat']['id']);
         $messageId = (string) ($message['message_id'] ?? $message['message']['message_id']);
+        $subscriber = $this->subscriberService->getSubscriber($message['from']['id'], $chatId);
 
         return new TelegramRequest(
             $chatId,
