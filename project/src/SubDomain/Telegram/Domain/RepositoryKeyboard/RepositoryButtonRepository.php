@@ -4,9 +4,8 @@ namespace Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard;
 
 use Psr\Log\LoggerInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\Domain\GithubRepository\GithubRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 
 final class RepositoryButtonRepository
 {

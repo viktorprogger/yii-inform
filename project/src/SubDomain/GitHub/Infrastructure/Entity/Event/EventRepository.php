@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
@@ -24,12 +24,12 @@ final class EventRepository implements EventRepositoryInterface
         private readonly EventIdFactoryInterface $idFactory,
     ) {
         /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-        $this->repository = $this->orm->getRepository(SubscriberEventEntity::class);
+        $this->repository = $this->orm->getRepository(EventEntity::class);
     }
 
     public function create(SubscriptionEvent $event): void
     {
-        $entity = new SubscriberEventEntity(
+        $entity = new EventEntity(
             $event->id->id,
             $event->type->value,
             $event->repo,
@@ -52,7 +52,7 @@ final class EventRepository implements EventRepositoryInterface
 
     public function find(EventId $id): ?SubscriptionEvent
     {
-        /** @var SubscriberEventEntity|null $entity */
+        /** @var EventEntity|null $entity */
         $entity = $this->repository->findByPK($id->id);
         if ($entity === null) {
             return null;

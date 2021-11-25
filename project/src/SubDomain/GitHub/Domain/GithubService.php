@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\Domain;
+namespace Yiisoft\Inform\SubDomain\GitHub\Domain;
 
 use DateTimeImmutable;
 use Github\Client;
@@ -10,6 +10,8 @@ use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Inform\Domain\Entity\Event\EventType;
 use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
+
+use function Yiisoft\Inform\Domain\sort;
 
 final class GithubService
 {

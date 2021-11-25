@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
 use Yiisoft\Inform\Domain\Entity\Event\EventId;
 use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;

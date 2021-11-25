@@ -35,7 +35,7 @@ final class Emitter
         }
 
         foreach ($response->getMessages() as $message) {
-            dump($this->client->sendMessage($message));
+            $this->client->sendMessage($message);
         }
     }
 }

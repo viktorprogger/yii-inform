@@ -31,7 +31,6 @@ final class Application
      */
     public function handle(array $update): void
     {
-        // dump($update);
         $request = $this->telegramRequestFactory->create($update);
         $response = $this->router->match($request)->handle($request, new Response());
         $this->emitter->emit($response, $request->callbackQueryId);

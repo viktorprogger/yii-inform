@@ -1,13 +1,13 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 use DateTimeImmutable;
 
-#[Entity(table: 'event')]
-final class SubscriberEventEntity
+#[Entity(table: 'github_event')]
+final class EventEntity
 {
     public function __construct(
         #[Column(type: 'string', primary: true)]

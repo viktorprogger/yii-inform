@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Entity\GithubRepository;
+namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository;
 
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
