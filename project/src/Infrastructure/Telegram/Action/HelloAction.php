@@ -10,7 +10,7 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
-class HelloAction implements ActionInterface
+final class HelloAction implements ActionInterface
 {
     public function handle(TelegramRequest $request, Response $response): Response
     {

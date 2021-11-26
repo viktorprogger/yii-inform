@@ -6,7 +6,7 @@ use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 
 #[Entity(table: 'repository')]
-class GithubRepositoryEntity
+final class GithubRepositoryEntity
 {
     public function __construct(
         #[Column(type: 'string', primary: true)]

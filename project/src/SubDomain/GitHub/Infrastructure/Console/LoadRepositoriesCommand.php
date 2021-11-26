@@ -9,7 +9,7 @@ use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubService;
 use Yiisoft\Yii\Console\ExitCode;
 
-class LoadRepositoriesCommand extends Command
+final class LoadRepositoriesCommand extends Command
 {
     protected static $defaultName = 'inform/github/load-repos';
 

@@ -12,7 +12,7 @@ use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
-class SummaryAction implements ActionInterface
+final class SummaryAction implements ActionInterface
 {
     public function __construct(
         private readonly RepositoryButtonRepository $buttonService,

@@ -7,7 +7,7 @@ use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 
-class GithubRepository implements GithubRepositoryInterface
+final class GithubRepository implements GithubRepositoryInterface
 {
     private readonly Repository $repo;
 
