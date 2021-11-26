@@ -16,6 +16,6 @@ final class EventSender
 
     public function send(GithubEvent $event, Subscriber $subscriber): void
     {
-        $this->client->sendMessage($this->generator->generateForEvent($event, $subscriber->chatId));
+        $this->client->sendMessage($this->generator->generateForEvent($event, $subscriber));
     }
 }

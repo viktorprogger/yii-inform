@@ -35,6 +35,18 @@ final class RepositoryKeyboard implements Iterator
         return new self(...array_filter($this->buttons, static fn (RepositoryButton $button) => $button->action === $action));
     }
 
+    public function has(string $repository)
+    {
+        return in_array(
+            $repository,
+            array_map(
+                static fn(RepositoryButton $button) => $button->name,
+                $this->buttons
+            ),
+            true,
+        );
+    }
+
     public function current(): bool|RepositoryButton
     {
         return current($this->buttons);

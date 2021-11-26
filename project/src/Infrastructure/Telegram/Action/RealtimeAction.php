@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
 
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButton;
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryKeyboard;
@@ -20,6 +21,7 @@ final class RealtimeAction implements ActionInterface
 {
     public function __construct(
         private readonly RepositoryButtonRepository $buttonService,
+        private readonly Formatter $formatter,
     ) {
     }
 
@@ -34,45 +36,12 @@ final class RealtimeAction implements ActionInterface
                 "$text\n\n*Часть $key*",
                 MessageFormat::markdown(),
                 $request->chatId,
-                $this->formatKeyboard($subKeyboard),
+                $this->formatter->format($subKeyboard, SubscriptionType::REALTIME),
             );
 
             $response = $response->withMessage($message);
         }
 
-        // TODO проверить. А то отрефакторил наугад)
         return $response;
-    }
-
-    private function formatKeyboard(RepositoryKeyboard $subKeyboard): array
-    {
-        $result = [];
-        $perLine = 3;
-        $count = 0;
-        $line = 0;
-
-        /** @var RepositoryButton $button */
-        foreach ($subKeyboard as $button) {
-            if ($count !== 0 && $count % $perLine === 0) {
-                $line++;
-            }
-            $count++;
-
-            if ($button->action === ButtonAction::REMOVE) {
-                $emoji = '➖';
-                $sign = '-';
-            } else {
-                $emoji = '➕';
-                $sign = '+';
-            }
-
-            $type = SubscriptionType::REALTIME->value;
-            $text = "$emoji $button->name";
-            $callbackData = "$type:$sign:$button->name";
-
-            $result[$line][] = new InlineKeyboardButton($text, $callbackData);
-        }
-
-        return $result;
     }
 }

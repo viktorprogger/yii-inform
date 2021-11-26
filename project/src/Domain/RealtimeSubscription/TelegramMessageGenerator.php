@@ -2,36 +2,39 @@
 
 namespace Yiisoft\Inform\Domain\RealtimeSubscription;
 
-use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 
 final class TelegramMessageGenerator
 {
-    public function __construct(private readonly RepositoryButtonRepository $buttonService)
+    public function __construct(private readonly Formatter $formatter)
     {
     }
 
-    public function generateForEvent(GithubEvent $subscriptionEvent, string $chatId): TelegramMessage
+    public function generateForEvent(GithubEvent $subscriptionEvent, Subscriber $subscriber): TelegramMessage
     {
         // FIXME take a Subscriber instead of chatId to get method newRepoCreated() done
         return match ($subscriptionEvent->type) {
-            EventType::ISSUE_OPENED => $this->issueCreated($subscriptionEvent->payload, $chatId),
-            EventType::ISSUE_CLOSED => $this->issueClosed($subscriptionEvent->payload, $chatId),
-            EventType::ISSUE_REOPENED => $this->issueReopened($subscriptionEvent->payload, $chatId),
-            EventType::ISSUE_COMMENTED => $this->issueCommented($subscriptionEvent->payload, $chatId),
-            EventType::PR_OPENED => $this->prOpened($subscriptionEvent->payload, $chatId),
-            EventType::PR_CLOSED => $this->prClosed($subscriptionEvent->payload, $chatId),
-            EventType::PR_MERGED => $this->prMerged($subscriptionEvent->payload, $chatId),
-            EventType::PR_REOPENED => $this->prReopened($subscriptionEvent->payload, $chatId),
-            EventType::PR_CHANGED => $this->prChanged($subscriptionEvent->payload, $chatId),
-            EventType::PR_COMMENTED => $this->prCommented($subscriptionEvent->payload, $chatId),
-            EventType::PR_MERGE_APPROVED => $this->prMergeApproved($subscriptionEvent->payload, $chatId),
-            EventType::PR_MERGE_DECLINED => $this->prMergeDeclined($subscriptionEvent->payload, $chatId),
-            EventType::NEW_REPO => $this->newRepoCreated($subscriptionEvent->payload, $chatId),
+            EventType::ISSUE_OPENED => $this->issueCreated($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::ISSUE_CLOSED => $this->issueClosed($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::ISSUE_REOPENED => $this->issueReopened($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::ISSUE_COMMENTED => $this->issueCommented($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_OPENED => $this->prOpened($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_CLOSED => $this->prClosed($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_MERGED => $this->prMerged($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_REOPENED => $this->prReopened($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_CHANGED => $this->prChanged($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_COMMENTED => $this->prCommented($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_MERGE_APPROVED => $this->prMergeApproved($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::PR_MERGE_DECLINED => $this->prMergeDeclined($subscriptionEvent->payload, $subscriber->chatId),
+            EventType::NEW_REPO => $this->newRepoCreated($subscriptionEvent->payload, $subscriber->chatId),
         };
     }
 
@@ -132,10 +135,10 @@ final class TelegramMessageGenerator
     {
         $text = "Создан новый репозиторий: {repo_name}";
         $keyboard = [[
-            $this->buttonService->createButton('{repo_name}', $subscriber, SubscriptionType::REALTIME),
-            $this->buttonService->createButton('{repo_name}', $subscriber, SubscriptionType::SUMMARY),
+            $this->formatter->createInlineButton('{repo_name}', ButtonAction::ADD, SubscriptionType::REALTIME, 'Подписаться realtime'),
+            $this->formatter->createInlineButton('{repo_name}', ButtonAction::ADD, SubscriptionType::SUMMARY, 'Подписаться на summary'),
         ]];
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
+        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, $keyboard);
     }
 }

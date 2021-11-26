@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
 
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
@@ -16,6 +17,7 @@ final class SummaryAction implements ActionInterface
 {
     public function __construct(
         private readonly RepositoryButtonRepository $buttonService,
+        private readonly Formatter $formatter,
     ) {
     }
 
@@ -23,13 +25,19 @@ final class SummaryAction implements ActionInterface
     {
         $text = 'Вы можете подписаться на следующие репозитории:';
 
-        $message = new TelegramMessage(
-            $text,
-            MessageFormat::markdown(),
-            $request->chatId,
-            $this->buttonService->createKeyboard($request->subscriber, SubscriptionType::SUMMARY),
-        );
+        $keyboard = $this->buttonService->createKeyboard($request->subscriber, SubscriptionType::SUMMARY);
+        foreach ($keyboard->iterateBunch(100) as $key => $subKeyboard) {
+            $key++;
+            $message = new TelegramMessage(
+                "$text\n\n*Часть $key*",
+                MessageFormat::markdown(),
+                $request->chatId,
+                $this->formatter->format($subKeyboard, SubscriptionType::SUMMARY),
+            );
 
-        return $response->withMessage($message);
+            $response = $response->withMessage($message);
+        }
+
+        return $response;
     }
 }

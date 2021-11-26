@@ -5,6 +5,7 @@ namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
@@ -18,6 +19,7 @@ final class RealtimeEditAction implements ActionInterface
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
         private readonly RepositoryButtonRepository $buttonService,
+        private readonly Formatter $formatter,
     ) {
     }
 
@@ -30,24 +32,9 @@ final class RealtimeEditAction implements ActionInterface
             $this->remove($repository, $request->subscriber);
         }
 
-        if ($request->callbackQueryId !== null) {
-            $text = match ($sign) {
-                '+' => "Вы начали отслеживать $repository",
-                '-' => "Вы больше не отслеживаете $repository",
-            };
+        $response = $this->sendCallbackResponse($request, $sign, $repository, $response);
 
-            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text, true);
-            $response = $response->withCallbackResponse($callbackResponse);
-        }
-
-        $keyboard = $this->buttonService->createKeyboard($this->subscriberRepository->find($request->subscriber->id), SubscriptionType::SUMMARY);
-        $message = new TelegramKeyboardUpdate(
-            $request->chatId,
-            $request->messageId,
-            $keyboard,
-        );
-
-        return $response->withKeyboardUpdate($message);
+        return $this->sendKeyboardUpdate($request, $response, $repository);
     }
 
     private function add(string $repository, Subscriber $subscriber): void
@@ -67,5 +54,62 @@ final class RealtimeEditAction implements ActionInterface
         $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
         $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
+    }
+
+    /**
+     * @param TelegramRequest $request
+     * @param mixed $sign
+     * @param string $repository
+     * @param Response $response
+     *
+     * @return Response
+     */
+    private function sendCallbackResponse(
+        TelegramRequest $request,
+        mixed $sign,
+        string $repository,
+        Response $response
+    ): Response {
+        if ($request->callbackQueryId !== null) {
+            $text = match ($sign) {
+                '+' => "Вы начали отслеживать $repository",
+                '-' => "Вы больше не отслеживаете $repository",
+            };
+
+            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text, true);
+            $response = $response->withCallbackResponse($callbackResponse);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param TelegramRequest $request
+     * @param Response $response
+     *
+     * @return Response
+     */
+    private function sendKeyboardUpdate(TelegramRequest $request, Response $response, string $repository): Response
+    {
+        $keyboard = $this->buttonService->createKeyboard(
+            $this->subscriberRepository->find($request->subscriber->id),
+            SubscriptionType::SUMMARY
+        );
+
+        foreach ($keyboard->iterateBunch(100) as $subKeyboard) {
+            if ($keyboard->has($repository)) {
+                $message = new TelegramKeyboardUpdate(
+                    $request->chatId,
+                    $request->messageId,
+                    $this->formatter->format($subKeyboard, SubscriptionType::REALTIME),
+                );
+
+                $response = $response->withKeyboardUpdate($message);
+                break;
+            }
+        }
+
+        // TODO What to do if there was no such button in the keyboard??
+        return $response;
     }
 }
