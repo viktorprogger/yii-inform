@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Domain\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event;
 
 final class EventId
 {

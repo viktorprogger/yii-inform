@@ -1,13 +1,13 @@
 <?php
 
-namespace Yiisoft\Inform\Domain;
+namespace Yiisoft\Inform\Domain\RealtimeSubscription;
 
-use Yiisoft\Inform\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
 
 final class TelegramMessageGenerator
 {
@@ -15,8 +15,9 @@ final class TelegramMessageGenerator
     {
     }
 
-    public function generateForEvent(SubscriptionEvent $subscriptionEvent, string $chatId): TelegramMessage
+    public function generateForEvent(GithubEvent $subscriptionEvent, string $chatId): TelegramMessage
     {
+        // FIXME take a Subscriber instead of chatId to get method newRepoCreated() done
         return match ($subscriptionEvent->type) {
             EventType::ISSUE_OPENED => $this->issueCreated($subscriptionEvent->payload, $chatId),
             EventType::ISSUE_CLOSED => $this->issueClosed($subscriptionEvent->payload, $chatId),
@@ -131,8 +132,8 @@ final class TelegramMessageGenerator
     {
         $text = "Создан новый репозиторий: {repo_name}";
         $keyboard = [[
-            $this->buttonService->createButton('repo_name', $subscriber, SubscriptionType::REALTIME, 'repo_name'),
-            $this->buttonService->createButton('repo_name', $subscriber, SubscriptionType::SUMMARY, 'repo_name'),
+            $this->buttonService->createButton('{repo_name}', $subscriber, SubscriptionType::REALTIME),
+            $this->buttonService->createButton('{repo_name}', $subscriber, SubscriptionType::SUMMARY),
         ]];
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);

@@ -2,9 +2,9 @@
 
 namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
-use Yiisoft\Inform\Domain\Entity\Event\EventId;
-use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
 use Yiisoft\Inform\Infrastructure\Entity\UuidFactory;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventId;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 
 final class EventIdFactory implements EventIdFactoryInterface
 {

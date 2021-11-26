@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard;
+namespace Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard;
 
 final class RepositoryButton
 {

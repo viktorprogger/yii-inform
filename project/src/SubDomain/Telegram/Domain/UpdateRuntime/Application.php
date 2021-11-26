@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain;
+namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;

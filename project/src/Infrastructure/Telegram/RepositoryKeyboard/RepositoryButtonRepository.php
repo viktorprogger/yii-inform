@@ -1,10 +1,10 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard;
+namespace Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard;
 
 use Psr\Log\LoggerInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 
 final class RepositoryButtonRepository
@@ -19,7 +19,6 @@ final class RepositoryButtonRepository
         string $repository,
         Subscriber $subscriber,
         SubscriptionType $type,
-        ?string $text = null
     ): RepositoryButton {
         $currentSettings = match ($type) {
             SubscriptionType::REALTIME => $subscriber->settings->realtimeRepositories,

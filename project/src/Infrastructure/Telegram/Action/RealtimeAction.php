@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
+namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
 
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButton;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryKeyboard;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\ButtonAction;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButton;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryKeyboard;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
 final class RealtimeAction implements ActionInterface
 {

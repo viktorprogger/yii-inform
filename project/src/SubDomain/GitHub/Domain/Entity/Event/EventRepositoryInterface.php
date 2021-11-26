@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Domain\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event;
 
 use DateTimeImmutable;
 
@@ -11,16 +11,16 @@ interface EventRepositoryInterface
     /**
      * Persists a new event to a DB and sends a corresponding event to the EventDispatcher
      *
-     * @param SubscriptionEvent $event
+     * @param GithubEvent $event
      *
      * @return void
      */
-    public function create(SubscriptionEvent $event): void;
+    public function create(GithubEvent $event): void;
 
     public function exists(EventId $id): bool;
 
     /**
-     * @return SubscriptionEvent[]
+     * @return GithubEvent[]
      */
     public function read(DateTimeImmutable $since): iterable;
 

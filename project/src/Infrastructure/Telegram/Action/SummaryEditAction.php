@@ -1,15 +1,17 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
+namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
 
 use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\RepositoryKeyboard\RepositoryButtonRepository;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\TelegramRequest;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
 final class SummaryEditAction implements ActionInterface
 {

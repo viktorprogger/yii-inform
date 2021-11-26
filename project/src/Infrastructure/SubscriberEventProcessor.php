@@ -2,11 +2,10 @@
 
 namespace Yiisoft\Inform\Infrastructure;
 
-use Yiisoft\Inform\Domain\Entity\Event\EventCreatedEvent;
-use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
-use Yiisoft\Inform\Domain\TelegramMessageGenerator;
 use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventMessage;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Yii\Queue\Queue;
 
 final class SubscriberEventProcessor
@@ -15,7 +14,6 @@ final class SubscriberEventProcessor
     private array $subscribers = [];
 
     public function __construct(
-        private readonly TelegramMessageGenerator $messageGenerator,
         private readonly SubscriberRepositoryInterface $subscriberRepository,
         private readonly Queue $queue,
     ) {
@@ -26,7 +24,7 @@ final class SubscriberEventProcessor
         $this->sendRealtimeSubscribers($event->subscriptionEvent);
     }
 
-    public function sendRealtimeSubscribers(SubscriptionEvent $subscriptionEvent): void
+    public function sendRealtimeSubscribers(GithubEvent $subscriptionEvent): void
     {
         try {
             foreach ($this->getSubscribers($subscriptionEvent->repo) as $subscriber) {

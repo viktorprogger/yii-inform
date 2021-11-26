@@ -1,12 +1,12 @@
 <?php
 
-namespace Yiisoft\Inform\Domain;
+namespace Yiisoft\Inform\Domain\RealtimeSubscription;
 
-use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
 use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 
-class RealtimeEventSender
+final class EventSender
 {
     public function __construct(
         private readonly TelegramMessageGenerator $generator,
@@ -14,7 +14,7 @@ class RealtimeEventSender
     ) {
     }
 
-    public function send(SubscriptionEvent $event, Subscriber $subscriber): void
+    public function send(GithubEvent $event, Subscriber $subscriber): void
     {
         $this->client->sendMessage($this->generator->generateForEvent($event, $subscriber->chatId));
     }

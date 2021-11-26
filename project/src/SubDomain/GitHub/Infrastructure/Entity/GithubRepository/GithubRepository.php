@@ -5,7 +5,7 @@ namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository
 use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 
 class GithubRepository implements GithubRepositoryInterface
 {

@@ -3,11 +3,11 @@
 namespace Yiisoft\Inform\Infrastructure\Queue;
 
 use RuntimeException;
-use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
-use Yiisoft\Inform\Domain\RealtimeEventSender;
+use Yiisoft\Inform\Domain\RealtimeSubscription\EventSender;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 
 final class RealtimeEventHandler
@@ -17,7 +17,7 @@ final class RealtimeEventHandler
         private readonly SubscriberIdFactoryInterface $subscriberIdFactory,
         private readonly EventRepositoryInterface $eventRepository,
         private readonly SubscriberRepositoryInterface $subscriberRepository,
-        private readonly RealtimeEventSender $eventSender,
+        private readonly EventSender $eventSender,
     ) {
     }
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain;
+namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
+use Yiisoft\Inform\SubDomain\Telegram\Domain\SubscriberService;
 
 final class TelegramRequestFactory
 {

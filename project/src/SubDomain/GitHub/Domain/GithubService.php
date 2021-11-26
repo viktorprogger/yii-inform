@@ -6,12 +6,10 @@ use DateTimeImmutable;
 use Github\Client;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
-
-use function Yiisoft\Inform\Domain\sort;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 
 final class GithubService
 {
@@ -77,7 +75,7 @@ final class GithubService
 
             $type = $this->getEventType($eventData);
             if ($type !== null) {
-                $event = new SubscriptionEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
+                $event = new GithubEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
                 $this->eventRepository->create($event);
             }
         }

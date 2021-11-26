@@ -7,12 +7,12 @@ use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use DateTimeImmutable;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventCreatedEvent;
-use Yiisoft\Inform\Domain\Entity\Event\EventId;
-use Yiisoft\Inform\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventRepositoryInterface;
-use Yiisoft\Inform\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\Domain\Entity\Event\SubscriptionEvent;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventId;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 
 final class EventRepository implements EventRepositoryInterface
 {
@@ -27,7 +27,7 @@ final class EventRepository implements EventRepositoryInterface
         $this->repository = $this->orm->getRepository(EventEntity::class);
     }
 
-    public function create(SubscriptionEvent $event): void
+    public function create(GithubEvent $event): void
     {
         $entity = new EventEntity(
             $event->id->id,
@@ -50,7 +50,7 @@ final class EventRepository implements EventRepositoryInterface
         // TODO: Implement read() method.
     }
 
-    public function find(EventId $id): ?SubscriptionEvent
+    public function find(EventId $id): ?GithubEvent
     {
         /** @var EventEntity|null $entity */
         $entity = $this->repository->findByPK($id->id);
@@ -58,7 +58,7 @@ final class EventRepository implements EventRepositoryInterface
             return null;
         }
 
-        return new SubscriptionEvent(
+        return new GithubEvent(
             $this->idFactory->create($entity->id),
             EventType::from($entity->type),
             $entity->repo,

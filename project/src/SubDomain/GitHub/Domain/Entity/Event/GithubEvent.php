@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Domain\Entity\Event;
+namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event;
 
 use DateTimeImmutable;
 
-final class SubscriptionEvent
+final class GithubEvent
 {
     public function __construct(
         public readonly EventId $id,

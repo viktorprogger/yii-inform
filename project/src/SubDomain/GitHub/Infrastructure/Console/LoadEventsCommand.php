@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure\Console;
+namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubRepositoryInterface;
+use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubService;
 use Yiisoft\Yii\Console\ExitCode;
 
 class LoadEventsCommand extends Command
 {
-    protected static $defaultName = 'load-events';
+    protected static $defaultName = 'inform/github/load-events';
     protected static $defaultDescription = 'Loading events from GitHub';
 
     public function __construct(

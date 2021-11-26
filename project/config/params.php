@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
-use Yiisoft\Inform\Infrastructure\Console\LoadEventsCommand;
-use Yiisoft\Inform\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventHandler;
 use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventMessage;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\HelloAction;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeAction;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\RealtimeEditAction;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryAction;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SummaryEditAction;
+use Yiisoft\Inform\Infrastructure\Telegram\Action\HelloAction;
+use Yiisoft\Inform\Infrastructure\Telegram\Action\RealtimeAction;
+use Yiisoft\Inform\Infrastructure\Telegram\Action\RealtimeEditAction;
+use Yiisoft\Inform\Infrastructure\Telegram\Action\SummaryAction;
+use Yiisoft\Inform\Infrastructure\Telegram\Action\SummaryEditAction;
+use Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Console\LoadEventsCommand;
+use Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
@@ -50,9 +50,9 @@ return [
     ],
     'yiisoft/yii-console' => [
         'commands' => [
-            'inform/updates' => GetUpdatesCommand::class,
-            'inform/load-repos' => LoadRepositoriesCommand::class,
-            'inform/load-events' => LoadEventsCommand::class,
+            'inform/tg/updates' => GetUpdatesCommand::class,
+            'inform/github/load-repos' => LoadRepositoriesCommand::class,
+            'inform/github/load-events' => LoadEventsCommand::class,
         ],
     ],
     'yiisoft/yii-cycle' => [

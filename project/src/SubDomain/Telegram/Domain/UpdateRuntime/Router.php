@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain;
+namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
 
 use Psr\Container\ContainerInterface;
 use RuntimeException;
