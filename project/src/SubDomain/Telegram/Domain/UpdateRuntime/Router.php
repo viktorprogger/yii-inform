@@ -1,10 +1,10 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime;
 
 use Psr\Container\ContainerInterface;
 use RuntimeException;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
 
 final class Router
 {

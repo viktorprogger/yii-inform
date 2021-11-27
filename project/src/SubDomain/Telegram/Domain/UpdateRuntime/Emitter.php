@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime;
 
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 
 final class Emitter
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action;
 
 enum SubscriptionType: string
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use DateTimeImmutable;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventId;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventId;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 
 final class EventRepository implements EventRepositoryInterface
 {

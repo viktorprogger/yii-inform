@@ -1,13 +1,13 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Queue;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Queue;
 
 use RuntimeException;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
-use Yiisoft\Inform\Domain\RealtimeSubscription\EventSender;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\RealtimeSubscription\EventSender;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Yiisoft\Yii\Queue\Message\MessageInterface;
 
 final class RealtimeEventHandler

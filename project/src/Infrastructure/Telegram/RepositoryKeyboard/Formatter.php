@@ -1,9 +1,9 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard;
 
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 
 final class Formatter
 {

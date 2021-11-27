@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Queue;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Queue;
 
 use Yiisoft\Yii\Queue\Message\AbstractMessage;
 

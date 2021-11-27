@@ -76,7 +76,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\Inform\\": "src",
+            "Viktorprogger\\YiisoftInform\\": "src",
             "Yiisoft\\Inform\\Migration\\": "migrations"
         }
     },

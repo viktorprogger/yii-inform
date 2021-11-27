@@ -1,11 +1,11 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 
 final class GithubRepository implements GithubRepositoryInterface
 {

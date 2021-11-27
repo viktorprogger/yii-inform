@@ -1,11 +1,11 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure;
+namespace Viktorprogger\YiisoftInform\Infrastructure;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
-use Yiisoft\Inform\Infrastructure\Queue\RealtimeEventMessage;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventMessage;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Yii\Queue\Queue;
 
 final class SubscriberEventProcessor

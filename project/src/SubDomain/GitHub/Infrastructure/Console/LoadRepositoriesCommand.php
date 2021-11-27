@@ -1,12 +1,12 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Console;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\GithubService;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\GithubService;
 use Yiisoft\Yii\Console\ExitCode;
 
 final class LoadRepositoriesCommand extends Command

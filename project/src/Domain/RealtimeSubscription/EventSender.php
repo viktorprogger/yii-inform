@@ -1,10 +1,10 @@
 <?php
 
-namespace Yiisoft\Inform\Domain\RealtimeSubscription;
+namespace Viktorprogger\YiisoftInform\Domain\RealtimeSubscription;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 
 final class EventSender
 {

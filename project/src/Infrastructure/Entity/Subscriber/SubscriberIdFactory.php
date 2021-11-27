@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure\Entity\Subscriber;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberId;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
-use Yiisoft\Inform\Infrastructure\Entity\UuidFactory;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberId;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
+use Viktorprogger\YiisoftInform\Infrastructure\Entity\UuidFactory;
 
 final class SubscriberIdFactory implements SubscriberIdFactoryInterface
 {

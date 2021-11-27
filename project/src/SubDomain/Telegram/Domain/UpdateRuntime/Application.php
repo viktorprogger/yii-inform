@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 use DateTimeImmutable;
 use DateTimeZone;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
-use Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Entity\TelegramUpdateEntity;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Entity\TelegramUpdateEntity;
 
 final class Application
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event;
 
 use DateTimeImmutable;
 

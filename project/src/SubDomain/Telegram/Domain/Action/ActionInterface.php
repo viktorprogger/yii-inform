@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\Action;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action;
 
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
 interface ActionInterface
 {

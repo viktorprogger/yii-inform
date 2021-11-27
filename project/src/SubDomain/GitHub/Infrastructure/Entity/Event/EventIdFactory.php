@@ -1,10 +1,10 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Infrastructure\Entity\Event;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event;
 
-use Yiisoft\Inform\Infrastructure\Entity\UuidFactory;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventId;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Viktorprogger\YiisoftInform\Infrastructure\Entity\UuidFactory;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventId;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 
 final class EventIdFactory implements EventIdFactoryInterface
 {

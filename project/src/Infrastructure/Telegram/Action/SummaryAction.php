@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure\Telegram\Action;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action;
 
-use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
-use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\ActionInterface;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\Response;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
 
 final class SummaryAction implements ActionInterface
 {

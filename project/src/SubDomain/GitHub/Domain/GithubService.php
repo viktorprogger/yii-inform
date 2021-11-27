@@ -1,15 +1,15 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Domain;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain;
 
 use DateTimeImmutable;
 use Github\Client;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 
 final class GithubService
 {

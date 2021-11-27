@@ -1,11 +1,11 @@
 <?php
 
-namespace Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard;
 
 use Psr\Log\LoggerInterface;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 
 final class RepositoryButtonRepository
 {

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure\Entity\Subscriber;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber;
 
 use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use RuntimeException;
 use Spiral\Database\Injection\Expression;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberId;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Settings;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberId;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 
 final class SubscriberRepository implements SubscriberRepositoryInterface
 {

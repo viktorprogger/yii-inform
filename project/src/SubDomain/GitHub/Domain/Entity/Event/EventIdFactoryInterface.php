@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event;
 
 interface EventIdFactoryInterface
 {

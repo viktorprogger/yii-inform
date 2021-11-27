@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure;
+namespace Viktorprogger\YiisoftInform\Infrastructure;
 
 use Error;
 use ErrorException;

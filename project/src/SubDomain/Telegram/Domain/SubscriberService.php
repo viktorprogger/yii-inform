@@ -1,11 +1,11 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\Settings;
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
-use Yiisoft\Inform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Settings;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 
 final class SubscriberService
 {

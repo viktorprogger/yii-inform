@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Infrastructure\Entity;
+namespace Viktorprogger\YiisoftInform\Infrastructure\Entity;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Exception\UnableToBuildUuidException;

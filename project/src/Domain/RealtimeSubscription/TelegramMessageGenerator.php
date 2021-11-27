@@ -1,16 +1,16 @@
 <?php
 
-namespace Yiisoft\Inform\Domain\RealtimeSubscription;
+namespace Viktorprogger\YiisoftInform\Domain\RealtimeSubscription;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
-use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
-use Yiisoft\Inform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\EventType;
-use Yiisoft\Inform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Yiisoft\Inform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 
 final class TelegramMessageGenerator
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Domain\UpdateRuntime;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime;
 
-use Yiisoft\Inform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 
 final class TelegramRequest
 {

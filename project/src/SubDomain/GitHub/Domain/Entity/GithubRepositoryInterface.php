@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\Inform\SubDomain\GitHub\Domain\Entity;
+namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity;
 
 interface GithubRepositoryInterface
 {

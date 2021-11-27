@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\SubDomain\Telegram\Infrastructure\Entity;
+namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Entity;
 
 use Cycle\ORM\Select\Repository;
 

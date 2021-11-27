@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Inform\Domain\Entity\Subscriber;
+namespace Viktorprogger\YiisoftInform\Domain\Entity\Subscriber;
 
 interface SubscriberIdFactoryInterface
 {
