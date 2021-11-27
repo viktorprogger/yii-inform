@@ -8,7 +8,7 @@ use Cycle\ORM\ORM;
 use Cycle\ORM\Select\Repository;
 use Cycle\ORM\Transaction;
 use RuntimeException;
-use Spiral\Database\Injection\Expression;
+use Spiral\Database\Injection\Fragment;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Settings;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberId;
@@ -61,17 +61,14 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         (new Transaction($this->orm))->persist($entity)->run();
     }
 
-    public function findForRealtimeRepo(string $repo): iterable
+    public function findForRealtimeRepo(string $repo): array
     {
-        /** @var SubscriberEntity[] $entities */
         $entities = $this->cycleRepository
             ->select()
-            ->where(1, '=', new Expression("JSON_CONTAINS(settings_realtime, '$repo', '$')"))
-            ->fetchAll();
+            ->where(new Fragment("JSON_CONTAINS(settings_realtime, '\"$repo\"', '$')"))
+            ->fetchData();
 
-        foreach ($entities as $entity) {
-            yield $this->makeSubscriber($entity);
-        }
+        return array_map(fn(array $entity) => $this->idFactory->create($entity['id']), $entities);
     }
 
     private function makeSubscriber(?SubscriberEntity $entity): ?Subscriber
@@ -85,5 +82,14 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         $decodedSummary = json_decode($entity->settings_summary ?? '[]', true, flags: JSON_THROW_ON_ERROR);
 
         return new Subscriber($id, $entity->telegram_chat_id, new Settings($decodedRealtime, $decodedSummary));
+    }
+
+    public function getAllIds(): array
+    {
+        $entities = $this->cycleRepository
+            ->select()
+            ->fetchData();
+
+        return array_map(fn(array $entity) => $this->idFactory->create($entity['id']), $entities);
     }
 }

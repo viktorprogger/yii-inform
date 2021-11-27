@@ -6,7 +6,7 @@ namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event;
 
 final class EventId
 {
-    public function __construct(public readonly string $id)
+    public function __construct(public readonly string $value)
     {
     }
 }

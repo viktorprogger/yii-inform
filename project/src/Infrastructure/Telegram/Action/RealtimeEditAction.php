@@ -44,7 +44,7 @@ final class RealtimeEditAction implements ActionInterface
             $repoList[] = $repository;
         }
 
-        $settings = new Settings($subscriber->settings->realtimeRepositories, $repoList);
+        $settings = new Settings($repoList, $subscriber->settings->summaryRepositories);
         $this->subscriberRepository->updateSettings($subscriber, $settings);
     }
 
@@ -53,7 +53,7 @@ final class RealtimeEditAction implements ActionInterface
         $repoList = $subscriber->settings->realtimeRepositories;
         $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
-        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
+        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList, $subscriber->settings->summaryRepositories));
     }
 
     /**
@@ -98,7 +98,7 @@ final class RealtimeEditAction implements ActionInterface
         );
 
         foreach ($keyboard->iterateBunch(100) as $subKeyboard) {
-            if ($keyboard->has($repository)) {
+            if ($subKeyboard->has($repository)) {
                 $message = new TelegramKeyboardUpdate(
                     $request->chatId,
                     $request->messageId,

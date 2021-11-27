@@ -10,7 +10,7 @@ use Iterator;
 final class RepositoryKeyboard implements Iterator
 {
     /** @var RepositoryButton[] */
-    private readonly array $buttons;
+    private array $buttons;
 
     public function __construct(RepositoryButton ...$buttons)
     {

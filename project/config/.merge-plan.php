@@ -135,6 +135,9 @@ return [
             'yiisoft/yii-event' => [
                 'config/events.php',
             ],
+            '/' => [
+                'events.php',
+            ],
         ],
         'events-web' => [
             'yiisoft/yii-event' => [

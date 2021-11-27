@@ -30,7 +30,7 @@ final class EventRepository implements EventRepositoryInterface
     public function create(GithubEvent $event): void
     {
         $entity = new EventEntity(
-            $event->id->id,
+            $event->id->value,
             $event->type->value,
             $event->repo,
             json_encode($event->payload, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR), // TODO remove pretty print
@@ -42,7 +42,7 @@ final class EventRepository implements EventRepositoryInterface
 
     public function exists(EventId $id): bool
     {
-        return $this->repository->select()->wherePK($id->id)->count('id') > 0;
+        return $this->repository->select()->wherePK($id->value)->count('id') > 0;
     }
 
     public function read(DateTimeImmutable $since): iterable
@@ -53,7 +53,7 @@ final class EventRepository implements EventRepositoryInterface
     public function find(EventId $id): ?GithubEvent
     {
         /** @var EventEntity|null $entity */
-        $entity = $this->repository->findByPK($id->id);
+        $entity = $this->repository->findByPK($id->value);
         if ($entity === null) {
             return null;
         }

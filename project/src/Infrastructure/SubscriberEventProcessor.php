@@ -2,16 +2,17 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure;
 
+use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberId;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventMessage;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventCreatedEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Yiisoft\Yii\Queue\Queue;
 
 final class SubscriberEventProcessor
 {
     private array $repositories = [];
-    private array $subscribers = [];
 
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
@@ -27,27 +28,31 @@ final class SubscriberEventProcessor
     public function sendRealtimeSubscribers(GithubEvent $subscriptionEvent): void
     {
         try {
-            foreach ($this->getSubscribers($subscriptionEvent->repo) as $subscriber) {
-                $this->queue->push(new RealtimeEventMessage($subscriptionEvent->id->id, $subscriber->id->value));
+            if ($subscriptionEvent->type === EventType::NEW_REPO) {
+                $ids = $this->subscriberRepository->getAllIds();
+            } else {
+                $ids = $this->getSubscribers($subscriptionEvent->repo);
+            }
+
+            foreach ($ids as $subscriberId) {
+                $this->queue->push(new RealtimeEventMessage($subscriptionEvent->id->value, $subscriberId->value));
             }
         } finally {
             $this->repositories = [];
-            $this->subscribers = [];
         }
     }
 
-    private function getSubscribers(string $repo): iterable
+    /**
+     * @param string $repo
+     *
+     * @return SubscriberId[]
+     */
+    private function getSubscribers(string $repo): array
     {
         if (!isset($this->repositories[$repo])) {
             $this->repositories[$repo] = $this->subscriberRepository->findForRealtimeRepo($repo);
         }
 
-        foreach ($this->repositories[$repo] as $id) {
-            if (!isset($this->subscribers[$id->value])) {
-                $this->subscribers[$id->value] = $this->subscriberRepository->find($id);
-            }
-
-            yield $this->subscribers[$id->value];
-        }
+        return $this->repositories[$repo];
     }
 }

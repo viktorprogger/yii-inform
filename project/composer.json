@@ -103,7 +103,8 @@
                 "$common",
                 "console.php"
             ],
-            "routes": "routes.php"
+            "routes": "routes.php",
+            "events": "events.php"
         }
     },
     "config": {

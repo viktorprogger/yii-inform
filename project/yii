@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Inform\Infrastructure\ConsoleApplicationRunner;
+use Viktorprogger\YiisoftInform\Infrastructure\ConsoleApplicationRunner;
 
 require_once __DIR__ . '/preload.php';
 

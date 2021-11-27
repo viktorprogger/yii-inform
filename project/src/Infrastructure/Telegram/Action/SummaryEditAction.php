@@ -39,7 +39,7 @@ final class SummaryEditAction implements ActionInterface
 
     private function add(string $repository, Subscriber $subscriber): void
     {
-        $repoList = $subscriber->settings->realtimeRepositories;
+        $repoList = $subscriber->settings->summaryRepositories;
         if (!in_array($repository, $repoList, true)) {
             $repoList[] = $repository;
         }
@@ -50,10 +50,10 @@ final class SummaryEditAction implements ActionInterface
 
     private function remove(string $repository, Subscriber $subscriber): void
     {
-        $repoList = $subscriber->settings->realtimeRepositories;
+        $repoList = $subscriber->settings->summaryRepositories;
         $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
-        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList));
+        $this->subscriberRepository->updateSettings($subscriber, new Settings($subscriber->settings->realtimeRepositories, $repoList));
     }
 
     /**
@@ -98,7 +98,7 @@ final class SummaryEditAction implements ActionInterface
         );
 
         foreach ($keyboard->iterateBunch(100) as $subKeyboard) {
-            if ($keyboard->has($repository)) {
+            if ($subKeyboard->has($repository)) {
                 $message = new TelegramKeyboardUpdate(
                     $request->chatId,
                     $request->messageId,
