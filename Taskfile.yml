@@ -102,6 +102,12 @@ tasks:
 
   composer:rm:
     cmds:
-      - task: php:exec
+      - task: php:run
         vars:
           c: composer remove {{.c}}
+
+  composer:yii-cfg:
+    cmds:
+      - task: php:run
+        vars:
+          c: composer yii-config-rebuild
