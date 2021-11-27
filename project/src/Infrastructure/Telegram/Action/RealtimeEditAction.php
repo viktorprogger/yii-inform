@@ -86,6 +86,7 @@ final class RealtimeEditAction implements ActionInterface
     /**
      * @param TelegramRequest $request
      * @param Response $response
+     * @param string $repository
      *
      * @return Response
      */
@@ -93,7 +94,7 @@ final class RealtimeEditAction implements ActionInterface
     {
         $keyboard = $this->buttonService->createKeyboard(
             $this->subscriberRepository->find($request->subscriber->id),
-            SubscriptionType::SUMMARY
+            SubscriptionType::REALTIME
         );
 
         foreach ($keyboard->iterateBunch(100) as $subKeyboard) {
