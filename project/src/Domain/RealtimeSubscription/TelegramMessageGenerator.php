@@ -40,24 +40,24 @@ final class TelegramMessageGenerator
 
     private function issueCreated(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Был создан тикет [{issue_name}]({issue_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Был создан тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function issueClosed(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Закрыт тикет [{issue_name}]({issue_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Закрыт тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function issueReopened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Заново открыт тикет [{issue_name}]({issue_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Заново открыт тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
@@ -65,9 +65,11 @@ final class TelegramMessageGenerator
     private function issueCommented(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = <<<MD
-            #$event->repo
-            В тикет [{issue_name}]({issue_link}) добавлен комментарий
-            _{comment_text}_
+            \#$event->repo
+            В тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']}) добавлен комментарий:
+            Автор: [{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})
+            Текст:
+            {$event->payload['comment']['body']}
             MD;
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
@@ -75,32 +77,32 @@ final class TelegramMessageGenerator
 
     private function prOpened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Открыт PR [{pr_name}]({pr_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Открыт PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function prClosed(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Закрыт PR [{pr_name}]({pr_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Закрыт PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function prMerged(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Смержили PR [{pr_name}]({pr_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Смержили PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function prReopened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Заново открыт PR [{pr_name}]({pr_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Заново открыт PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
@@ -108,8 +110,8 @@ final class TelegramMessageGenerator
     private function prChanged(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = <<<MD
-            #$event->repo
-             В PR [{pr_name}]({pr_link}) произошли изменения.
+            \#$event->repo
+             В PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) произошли изменения\.
             {changes_summary}
             MD;
 
@@ -119,8 +121,8 @@ final class TelegramMessageGenerator
     private function prCommented(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = <<<MD
-            #$event->repo
-             В PR [{pr_name}]({pr_link}) добавлен комментарий
+            \#$event->repo
+             В PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) добавлен комментарий
             {PR_comment}
             MD;
 
@@ -129,16 +131,16 @@ final class TelegramMessageGenerator
 
     private function prMergeApproved(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Одобрен мёрж пулл реквеста [{pr_name}]({pr_link}).";
+        $text = "\#$event->repo\n";
+        $text .= "Одобрен мёрж пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
 
     private function prMergeDeclined(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $text = "#$event->repo\n";
-        $text .= "Для пулл реквеста [{pr_name}]({pr_link}) требуются изменения.";
+        $text = "\#$event->repo\n";
+        $text .= "Для пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) требуются изменения\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }

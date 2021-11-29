@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client;
 
+use RuntimeException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
@@ -38,7 +39,12 @@ final class TelegramClientSymfony implements TelegramClientInterface
             )->getContent(false);
 
             if (!empty($response)) {
-                return json_decode($response, true, flags: JSON_THROW_ON_ERROR);
+                $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);
+                if ($response['ok'] === false && $response['description'] !== 'Bad Request: query is too old and response timeout expired or query ID is invalid') {
+                    throw new RuntimeException($response['description']);
+                }
+
+                return $response;
             }
         /*} catch (ClientExceptionInterface) {
             // TODO

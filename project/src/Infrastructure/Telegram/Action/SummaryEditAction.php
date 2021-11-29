@@ -76,7 +76,7 @@ final class SummaryEditAction implements ActionInterface
                 '-' => "Вы больше не отслеживаете $repository",
             };
 
-            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text, true);
+            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text);
             $response = $response->withCallbackResponse($callbackResponse);
         }
 

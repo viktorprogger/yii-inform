@@ -27,33 +27,51 @@ final class RealtimeEditAction implements ActionInterface
     {
         [, $sign, $repository] = explode(':', $request->requestData);
         if ($sign === '+') {
-            $this->add($repository, $request->subscriber);
+            $keyboardChanged = $this->add($repository, $request->subscriber);
         } else {
-            $this->remove($repository, $request->subscriber);
+            $keyboardChanged = $this->remove($repository, $request->subscriber);
         }
 
         $response = $this->sendCallbackResponse($request, $sign, $repository, $response);
+        if ($keyboardChanged) {
+            $response = $this->sendKeyboardUpdate($request, $response, $repository);
+        }
 
-        return $this->sendKeyboardUpdate($request, $response, $repository);
+        return $response;
     }
 
-    private function add(string $repository, Subscriber $subscriber): void
+    private function add(string $repository, Subscriber $subscriber): bool
     {
         $repoList = $subscriber->settings->realtimeRepositories;
         if (!in_array($repository, $repoList, true)) {
             $repoList[] = $repository;
+            $settings = new Settings($repoList, $subscriber->settings->summaryRepositories);
+            $this->subscriberRepository->updateSettings($subscriber, $settings);
+
+            return true;
         }
 
-        $settings = new Settings($repoList, $subscriber->settings->summaryRepositories);
-        $this->subscriberRepository->updateSettings($subscriber, $settings);
+        return false;
     }
 
-    private function remove(string $repository, Subscriber $subscriber): void
+    private function remove(string $repository, Subscriber $subscriber): bool
     {
         $repoList = $subscriber->settings->realtimeRepositories;
-        $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
+        if (in_array($repository, $repoList, true)) {
+            $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
 
-        $this->subscriberRepository->updateSettings($subscriber, new Settings($repoList, $subscriber->settings->summaryRepositories));
+            $this->subscriberRepository->updateSettings(
+                $subscriber,
+                new Settings(
+                    $repoList,
+                    $subscriber->settings->summaryRepositories
+                )
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -76,7 +94,7 @@ final class RealtimeEditAction implements ActionInterface
                 '-' => "Вы больше не отслеживаете $repository",
             };
 
-            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text, true);
+            $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text);
             $response = $response->withCallbackResponse($callbackResponse);
         }
 

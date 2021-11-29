@@ -18,15 +18,20 @@ final class Emitter
     {
         if ($callbackQueryId !== null) {
             $callbackResponse = $response->getCallbackResponse() ?? new TelegramCallbackResponse($callbackQueryId);
+            $data = [
+                'callback_query_id' => $callbackResponse->getId(),
+                'text' => $callbackResponse->getText(),
+                'show_alert' => $callbackResponse->isShowAlert(),
+                'cache_time' => $callbackResponse->getCacheTime(),
+            ];
+
+            $url = $callbackResponse->getUrl();
+            if ($url !== null) {
+                $data['url'] = $url;
+            }
             $this->client->send(
                 'answerCallbackQuery',
-                [
-                    'callback_query_id' => $callbackResponse->getId(),
-                    'text' => $callbackResponse->getText(),
-                    'show_alert' => $callbackResponse->isShowAlert(),
-                    'url' => $callbackResponse->getUrl(),
-                    'cache_time' => $callbackResponse->getCacheTime(),
-                ],
+                $data,
             );
         }
 
