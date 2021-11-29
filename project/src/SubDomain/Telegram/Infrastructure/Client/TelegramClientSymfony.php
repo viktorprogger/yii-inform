@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client;
 
 use RuntimeException;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;

@@ -10,10 +10,10 @@ final class TelegramMessage
      * @param InlineKeyboardButton[][] $inlineKeyboard
      */
     public function __construct(
-        private string $text,
-        private MessageFormat $format,
-        private string $chatId,
-        private array $inlineKeyboard = [],
+        public readonly string $text,
+        public readonly MessageFormat $format,
+        public readonly string $chatId,
+        public readonly array $inlineKeyboard = [],
     ) {
     }
 
