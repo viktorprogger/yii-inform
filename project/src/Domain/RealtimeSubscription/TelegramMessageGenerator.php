@@ -66,7 +66,7 @@ final class TelegramMessageGenerator
     {
         $text = <<<MD
             \#$event->repo
-            В тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']}) добавлен комментарий:
+            В тикет [\#{$event->payload['issue']['number']} {$event->payload['issue']['title']}]({$event->payload['issue']['html_url']}) добавлен комментарий\.
             Автор: [{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})
             Текст:
             {$event->payload['comment']['body']}
@@ -122,8 +122,10 @@ final class TelegramMessageGenerator
     {
         $text = <<<MD
             \#$event->repo
-             В PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) добавлен комментарий
-            {PR_comment}
+             В PR [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) добавлен комментарий\.
+            Автор: [{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})
+            Текст:
+            {$event->payload['comment']['body']}
             MD;
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
@@ -132,7 +134,7 @@ final class TelegramMessageGenerator
     private function prMergeApproved(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = "\#$event->repo\n";
-        $text .= "Одобрен мёрж пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']})\.";
+        $text .= "Мёрж пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) одобрен пользователем [{$event->payload['review']['user']['login']}]({$event->payload['review']['user']['html_url']})\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }
@@ -140,7 +142,7 @@ final class TelegramMessageGenerator
     private function prMergeDeclined(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = "\#$event->repo\n";
-        $text .= "Для пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) требуются изменения\.";
+        $text .= "Для пулл реквеста [\#{$event->payload['pull_request']['number']} {$event->payload['pull_request']['title']}]({$event->payload['pull_request']['html_url']}) по итогам ревью кода требуются изменения\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId);
     }

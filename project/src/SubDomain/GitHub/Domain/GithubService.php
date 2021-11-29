@@ -102,7 +102,7 @@ final class GithubService
                 default => null,
             },
             'PullRequestReviewEvent' => match ($data['payload']['review']['state']) {
-                'APPROVED' => EventType::PR_MERGE_APPROVED,
+                'approved' => EventType::PR_MERGE_APPROVED,
                 default => EventType::PR_MERGE_DECLINED,
             },
             'PullRequestReviewCommentEvent' => match ($data['payload']['action']) {
