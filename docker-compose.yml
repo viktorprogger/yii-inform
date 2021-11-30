@@ -13,7 +13,6 @@ services:
 
   php:
     build: .docker/php
-    restart: on-failure
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
       - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/40-custom.ini:ro
@@ -52,6 +51,7 @@ services:
 
   amqp:
     image: rabbitmq:3-management
+    restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_USER: ${AMQP_USER}
       RABBITMQ_DEFAULT_PASS: ${AMQP_PASSWORD}
