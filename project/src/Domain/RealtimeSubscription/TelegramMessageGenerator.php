@@ -8,7 +8,6 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Forma
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 
@@ -222,10 +221,16 @@ final class TelegramMessageGenerator
      */
     private function markdownTextClear(string $text): string|array|null
     {
-        return preg_replace(
-            '/([-.#{%&+])/',
-            '\\\\$1',
+        $result = preg_replace_callback(
+            '/(?:\[.+]\([-\w@:%._+~#=&]+\))+|[()\[\]]/m',
+            static fn($matches) => strlen($matches[0]) === 1 ? '\\' . $matches[0] : $matches[0],
             $text,
+        );
+
+        return preg_replace(
+            '/([-.#{%&+<>])/',
+            '\\\\$1',
+            $result,
         );
     }
 }
