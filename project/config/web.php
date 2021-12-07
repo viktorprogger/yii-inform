@@ -20,7 +20,7 @@ use Yiisoft\Definitions\Reference;
 use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
-use Yiisoft\Yii\Web\Application;
+use Yiisoft\Yii\Http\Application;
 use Yiisoft\Yii\Web\NotFoundHandler;
 
 return [
