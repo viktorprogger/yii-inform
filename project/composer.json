@@ -108,7 +108,10 @@
             "routes": "routes.php",
             "events": "events.php",
             "delegates-console": "dummy.php",
-            "bootstrap-console": "dummy.php"
+            "delegates-web": "dummy.php",
+            "providers-web": "dummy.php",
+            "bootstrap-console": "dummy.php",
+            "bootstrap-web": "dummy.php"
         }
     },
     "config": {

@@ -163,7 +163,22 @@ return [
                 'dummy.php',
             ],
         ],
+        'delegates-web' => [
+            '/' => [
+                'dummy.php',
+            ],
+        ],
+        'providers-web' => [
+            '/' => [
+                'dummy.php',
+            ],
+        ],
         'bootstrap-console' => [
+            '/' => [
+                'dummy.php',
+            ],
+        ],
+        'bootstrap-web' => [
             '/' => [
                 'dummy.php',
             ],
