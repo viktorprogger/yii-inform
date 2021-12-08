@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7800d22be08bcda82f167c2cfbe6bb3",
+    "content-hash": "b26f391b4871fbdaa91655223676ba5b",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -1240,16 +1240,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "v3.3.0",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "0442abd1361956e3a87e71683154c5c33c5a0dad"
+                "reference": "bddf0f5e686a2dc72ca0ec642e3b487b08d841ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/0442abd1361956e3a87e71683154c5c33c5a0dad",
-                "reference": "0442abd1361956e3a87e71683154c5c33c5a0dad",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/bddf0f5e686a2dc72ca0ec642e3b487b08d841ce",
+                "reference": "bddf0f5e686a2dc72ca0ec642e3b487b08d841ce",
                 "shasum": ""
             },
             "require": {
@@ -1260,7 +1260,7 @@
                 "php-http/discovery": "^1.12",
                 "php-http/httplug": "^2.2",
                 "php-http/multipart-stream-builder": "^1.1.2",
-                "psr/cache": "^1.0",
+                "psr/cache": "^1.0|^2.0",
                 "psr/http-client-implementation": "^1.0",
                 "psr/http-factory-implementation": "^1.0",
                 "psr/http-message": "^1.0",
@@ -1283,7 +1283,7 @@
             "extra": {
                 "branch-alias": {
                     "dev-2.x": "2.20.x-dev",
-                    "dev-master": "3.3.x-dev"
+                    "dev-master": "3.4.x-dev"
                 }
             },
             "autoload": {
@@ -1316,7 +1316,7 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/php-github-api/issues",
-                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.3.0"
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.4.0"
             },
             "funding": [
                 {
@@ -1324,7 +1324,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-05-20T20:28:41+00:00"
+            "time": "2021-12-08T07:25:22+00:00"
         },
         {
             "name": "laminas/laminas-hydrator",
@@ -1405,16 +1405,16 @@
         },
         {
             "name": "laminas/laminas-stdlib",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "db581851a092246ad99e12d4fddf105184924c71"
+                "reference": "6fe0842909638ca6bea8401b7e8168fb154bffb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/db581851a092246ad99e12d4fddf105184924c71",
-                "reference": "db581851a092246ad99e12d4fddf105184924c71",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/6fe0842909638ca6bea8401b7e8168fb154bffb5",
+                "reference": "6fe0842909638ca6bea8401b7e8168fb154bffb5",
                 "shasum": ""
             },
             "require": {
@@ -1460,7 +1460,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-11-10T11:33:52+00:00"
+            "time": "2021-12-07T21:06:58+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -2390,20 +2390,20 @@
         },
         {
             "name": "psr/cache",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
+                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
-                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
+                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
@@ -2423,7 +2423,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for caching libraries",
@@ -2433,9 +2433,9 @@
                 "psr-6"
             ],
             "support": {
-                "source": "https://github.com/php-fig/cache/tree/master"
+                "source": "https://github.com/php-fig/cache/tree/2.0.0"
             },
-            "time": "2016-08-06T20:24:11+00:00"
+            "time": "2021-02-03T23:23:37+00:00"
         },
         {
             "name": "psr/container",
@@ -5890,12 +5890,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/config.git",
-                "reference": "0d67d4f654de8a9433085de204a321a70cd546ae"
+                "reference": "0644bbdffa9152273548d1d737eb37c15a4798d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/config/zipball/0d67d4f654de8a9433085de204a321a70cd546ae",
-                "reference": "0d67d4f654de8a9433085de204a321a70cd546ae",
+                "url": "https://api.github.com/repos/yiisoft/config/zipball/0644bbdffa9152273548d1d737eb37c15a4798d7",
+                "reference": "0644bbdffa9152273548d1d737eb37c15a4798d7",
                 "shasum": ""
             },
             "require": {
@@ -5952,7 +5952,7 @@
                     "type": "opencollective"
                 }
             ],
-            "time": "2021-11-18T09:47:42+00:00"
+            "time": "2021-12-08T10:06:27+00:00"
         },
         {
             "name": "yiisoft/data",
@@ -6156,16 +6156,16 @@
         },
         {
             "name": "yiisoft/di",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/di.git",
-                "reference": "0b1876002ecf9e6d20d272d5efdecc5efc0d971a"
+                "reference": "804cb07e95b93763e7197c6c49c7ad938b839b5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/di/zipball/0b1876002ecf9e6d20d272d5efdecc5efc0d971a",
-                "reference": "0b1876002ecf9e6d20d272d5efdecc5efc0d971a",
+                "url": "https://api.github.com/repos/yiisoft/di/zipball/804cb07e95b93763e7197c6c49c7ad938b839b5a",
+                "reference": "804cb07e95b93763e7197c6c49c7ad938b839b5a",
                 "shasum": ""
             },
             "require": {
@@ -6191,13 +6191,7 @@
                 "phpbench/phpbench": "To run benchmarks.",
                 "yiisoft/injector": "^1.0"
             },
-            "default-branch": true,
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Yiisoft\\Di\\": "src"
@@ -6235,7 +6229,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-12-03T10:50:29+00:00"
+            "time": "2021-12-03T19:51:27+00:00"
         },
         {
             "name": "yiisoft/error-handler",
@@ -6389,12 +6383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/factory.git",
-                "reference": "03d5c4c4e8e5e694fbecec8b3239450286209527"
+                "reference": "74f1c05b5f35e31608e1850bc43a9a2af7b26e5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/factory/zipball/03d5c4c4e8e5e694fbecec8b3239450286209527",
-                "reference": "03d5c4c4e8e5e694fbecec8b3239450286209527",
+                "url": "https://api.github.com/repos/yiisoft/factory/zipball/74f1c05b5f35e31608e1850bc43a9a2af7b26e5e",
+                "reference": "74f1c05b5f35e31608e1850bc43a9a2af7b26e5e",
                 "shasum": ""
             },
             "require": {
@@ -6447,7 +6441,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-11-30T21:15:30+00:00"
+            "time": "2021-12-04T11:36:27+00:00"
         },
         {
             "name": "yiisoft/files",
@@ -7429,12 +7423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/validator.git",
-                "reference": "2ef518ed999f9f25f91894067dee7dbef688ecac"
+                "reference": "e93bed297b26b92043835f022ee2e6e8679f843a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/validator/zipball/2ef518ed999f9f25f91894067dee7dbef688ecac",
-                "reference": "2ef518ed999f9f25f91894067dee7dbef688ecac",
+                "url": "https://api.github.com/repos/yiisoft/validator/zipball/e93bed297b26b92043835f022ee2e6e8679f843a",
+                "reference": "e93bed297b26b92043835f022ee2e6e8679f843a",
                 "shasum": ""
             },
             "require": {
@@ -7505,7 +7499,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-11-10T22:31:52+00:00"
+            "time": "2021-12-07T09:12:04+00:00"
         },
         {
             "name": "yiisoft/var-dumper",
@@ -7828,12 +7822,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-http.git",
-                "reference": "0677e81785d90e56a1ff1b63e2488ac5913670c4"
+                "reference": "6eda4f405ddbf389e07346134d4959cae7320c02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-http/zipball/0677e81785d90e56a1ff1b63e2488ac5913670c4",
-                "reference": "0677e81785d90e56a1ff1b63e2488ac5913670c4",
+                "url": "https://api.github.com/repos/yiisoft/yii-http/zipball/6eda4f405ddbf389e07346134d4959cae7320c02",
+                "reference": "6eda4f405ddbf389e07346134d4959cae7320c02",
                 "shasum": ""
             },
             "require": {
@@ -7849,9 +7843,9 @@
             "require-dev": {
                 "httpsoft/http-message": "^1.0",
                 "phpunit/phpunit": "^9.5",
-                "roave/infection-static-analysis-plugin": "^1.10",
+                "roave/infection-static-analysis-plugin": "^1.12",
                 "spatie/phpunit-watcher": "^1.23",
-                "vimeo/psalm": "^4.12",
+                "vimeo/psalm": "^4.14",
                 "yiisoft/test-support": "^1.3"
             },
             "default-branch": true,
@@ -7890,7 +7884,7 @@
                     "type": "opencollective"
                 }
             ],
-            "time": "2021-11-18T20:22:47+00:00"
+            "time": "2021-12-07T14:48:35+00:00"
         },
         {
             "name": "yiisoft/yii-queue",
@@ -7898,12 +7892,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-queue.git",
-                "reference": "1ed9ff838710e490727796b00de4c235e821648d"
+                "reference": "184a61c375f24f1d1bf0508d81c294ed0eddaeb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-queue/zipball/1ed9ff838710e490727796b00de4c235e821648d",
-                "reference": "1ed9ff838710e490727796b00de4c235e821648d",
+                "url": "https://api.github.com/repos/yiisoft/yii-queue/zipball/184a61c375f24f1d1bf0508d81c294ed0eddaeb9",
+                "reference": "184a61c375f24f1d1bf0508d81c294ed0eddaeb9",
                 "shasum": ""
             },
             "require": {
@@ -7977,7 +7971,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-12-01T11:08:48+00:00"
+            "time": "2021-12-03T18:22:17+00:00"
         },
         {
             "name": "yiisoft/yii-queue-amqp",
@@ -8136,12 +8130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-runner-console.git",
-                "reference": "d18ffa8f156ae611736ce8e84ff6ef10312c3bdd"
+                "reference": "718acbe3506e8af6ff3920efd67e7bf3962c8505"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-runner-console/zipball/d18ffa8f156ae611736ce8e84ff6ef10312c3bdd",
-                "reference": "d18ffa8f156ae611736ce8e84ff6ef10312c3bdd",
+                "url": "https://api.github.com/repos/yiisoft/yii-runner-console/zipball/718acbe3506e8af6ff3920efd67e7bf3962c8505",
+                "reference": "718acbe3506e8af6ff3920efd67e7bf3962c8505",
                 "shasum": ""
             },
             "require": {
@@ -8197,7 +8191,7 @@
                     "type": "opencollective"
                 }
             ],
-            "time": "2021-11-26T19:54:14+00:00"
+            "time": "2021-12-08T12:25:06+00:00"
         },
         {
             "name": "yiisoft/yii-runner-roadrunner",
@@ -8205,18 +8199,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-runner-roadrunner.git",
-                "reference": "1813a018a7417db3b317fe7c8a9a469245b7dcf0"
+                "reference": "9971cec0bbc659e6a7fba265ed60f438756626d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-runner-roadrunner/zipball/1813a018a7417db3b317fe7c8a9a469245b7dcf0",
-                "reference": "1813a018a7417db3b317fe7c8a9a469245b7dcf0",
+                "url": "https://api.github.com/repos/yiisoft/yii-runner-roadrunner/zipball/9971cec0bbc659e6a7fba265ed60f438756626d6",
+                "reference": "9971cec0bbc659e6a7fba265ed60f438756626d6",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.0",
                 "spiral/roadrunner": "^2.5",
-                "yiisoft/di": "@dev",
+                "yiisoft/di": "^1.0",
                 "yiisoft/error-handler": "^2.0",
                 "yiisoft/log": "^1.0",
                 "yiisoft/log-target-file": "^1.0",
@@ -8272,7 +8266,7 @@
                     "type": "opencollective"
                 }
             ],
-            "time": "2021-11-28T14:09:59+00:00"
+            "time": "2021-12-08T12:25:22+00:00"
         },
         {
             "name": "yiisoft/yii-web",
@@ -8605,26 +8599,99 @@
             "time": "2021-09-13T08:41:34+00:00"
         },
         {
-            "name": "composer/xdebug-handler",
-            "version": "2.0.2",
+            "name": "composer/pcre",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "84674dd3a7575ba617f5a76d7e9e29a7d3891339"
+                "url": "https://github.com/composer/pcre.git",
+                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/84674dd3a7575ba617f5a76d7e9e29a7d3891339",
-                "reference": "84674dd3a7575ba617f5a76d7e9e29a7d3891339",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2",
                 "shasum": ""
             },
             "require": {
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Pcre\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "PCRE wrapping library that offers type-safe preg_* replacements.",
+            "keywords": [
+                "PCRE",
+                "preg",
+                "regex",
+                "regular expression"
+            ],
+            "support": {
+                "issues": "https://github.com/composer/pcre/issues",
+                "source": "https://github.com/composer/pcre/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-12-06T15:17:27+00:00"
+        },
+        {
+            "name": "composer/xdebug-handler",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/xdebug-handler.git",
+                "reference": "6555461e76962fd0379c444c46fd558a0fcfb65e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/6555461e76962fd0379c444c46fd558a0fcfb65e",
+                "reference": "6555461e76962fd0379c444c46fd558a0fcfb65e",
+                "shasum": ""
+            },
+            "require": {
+                "composer/pcre": "^1",
                 "php": "^5.3.2 || ^7.0 || ^8.0",
                 "psr/log": "^1 || ^2 || ^3"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.12.55",
-                "symfony/phpunit-bridge": "^4.2 || ^5"
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "symfony/phpunit-bridge": "^4.2 || ^5.0 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -8650,7 +8717,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/xdebug-handler/issues",
-                "source": "https://github.com/composer/xdebug-handler/tree/2.0.2"
+                "source": "https://github.com/composer/xdebug-handler/tree/2.0.3"
             },
             "funding": [
                 {
@@ -8666,7 +8733,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-31T17:03:58+00:00"
+            "time": "2021-12-08T13:07:32+00:00"
         },
         {
             "name": "dg/bypass-finals",
@@ -9729,16 +9796,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.14.0",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e"
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
                 "shasum": ""
             },
             "require": {
@@ -9790,22 +9857,22 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/1.14.0"
+                "source": "https://github.com/phpspec/prophecy/tree/v1.15.0"
             },
-            "time": "2021-09-10T09:02:12+00:00"
+            "time": "2021-12-08T12:19:24+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.9",
+            "version": "9.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f301eb1453c9e7a1bc912ee8b0ea9db22c60223b"
+                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f301eb1453c9e7a1bc912ee8b0ea9db22c60223b",
-                "reference": "f301eb1453c9e7a1bc912ee8b0ea9db22c60223b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d5850aaf931743067f4bfc1ae4cbd06468400687",
+                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687",
                 "shasum": ""
             },
             "require": {
@@ -9861,7 +9928,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.9"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.10"
             },
             "funding": [
                 {
@@ -9869,7 +9936,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-19T15:21:02+00:00"
+            "time": "2021-12-05T09:12:13+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -10319,12 +10386,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "344cf93f6b42a7bcd6169654b64fb953a5a85bea"
+                "reference": "48f62899325ede08503d5532d9e1c98d7983df55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/344cf93f6b42a7bcd6169654b64fb953a5a85bea",
-                "reference": "344cf93f6b42a7bcd6169654b64fb953a5a85bea",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/48f62899325ede08503d5532d9e1c98d7983df55",
+                "reference": "48f62899325ede08503d5532d9e1c98d7983df55",
                 "shasum": ""
             },
             "conflict": {
@@ -10390,6 +10457,7 @@
                 "drupal/drupal": ">=7,<7.80|>=8,<8.9.16|>=9,<9.1.12|>=9.2,<9.2.4",
                 "dweeves/magmi": "<=0.7.24",
                 "ecodev/newsletter": "<=4",
+                "elgg/elgg": "<3.3.22",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.13.1",
                 "erusev/parsedown": "<1.7.2",
@@ -10436,7 +10504,7 @@
                 "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
                 "gree/jose": "<=2.2",
                 "gregwar/rst": "<1.0.3",
-                "grumpydictator/firefly-iii": "<5.6.3",
+                "grumpydictator/firefly-iii": "<5.6.5",
                 "guzzlehttp/guzzle": ">=4-rc.2,<4.2.4|>=5,<5.3.1|>=6,<6.2.1",
                 "helloxz/imgurl": "<=2.31",
                 "hjue/justwriting": "<=1",
@@ -10457,7 +10525,7 @@
                 "joomla/session": "<1.3.1",
                 "jsmitty12/phpwhois": "<5.1",
                 "kazist/phpwhois": "<=4.2.6",
-                "kevinpapst/kimai2": "<1.16.2",
+                "kevinpapst/kimai2": "<1.16.3",
                 "kitodo/presentation": "<3.1.2",
                 "klaviyo/magento2-extension": ">=1,<3",
                 "kreait/firebase-php": ">=3.2,<3.8.1",
@@ -10470,7 +10538,7 @@
                 "league/commonmark": "<0.18.3",
                 "league/flysystem": "<1.1.4|>=2,<2.1.1",
                 "lexik/jwt-authentication-bundle": "<2.10.7|>=2.11,<2.11.3",
-                "librenms/librenms": "<=21.10.2",
+                "librenms/librenms": "<=21.11",
                 "limesurvey/limesurvey": "<3.27.19",
                 "livewire/livewire": ">2.2.4,<2.2.6",
                 "lms/routes": "<2.1.1",
@@ -10539,6 +10607,7 @@
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
+                "prestashop/prestashop": ">=1.7.5,<=1.7.8.1",
                 "prestashop/productcomments": ">=4,<4.2.1",
                 "prestashop/ps_emailsubscription": "<2.6.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
@@ -10561,7 +10630,7 @@
                 "shopware/platform": "<=6.4.6",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.6",
-                "showdoc/showdoc": "<=2.9.12",
+                "showdoc/showdoc": "<2.9.13",
                 "silverstripe/admin": "<4.8.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
@@ -10581,7 +10650,7 @@
                 "simplito/elliptic-php": "<1.0.6",
                 "slim/slim": "<2.6",
                 "smarty/smarty": "<3.1.39",
-                "snipe/snipe-it": "<5.3.2",
+                "snipe/snipe-it": "<5.3.3",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
                 "spoonity/tcpdf": "<6.2.22",
@@ -10737,7 +10806,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-02T18:18:00+00:00"
+            "time": "2021-12-07T22:15:12+00:00"
         },
         {
             "name": "sanmai/later",
@@ -12351,16 +12420,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.13.1",
+            "version": "v4.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "5cf660f63b548ccd4a56f62d916ee4d6028e01a3"
+                "reference": "a1b5e489e6fcebe40cb804793d964e99fc347820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/5cf660f63b548ccd4a56f62d916ee4d6028e01a3",
-                "reference": "5cf660f63b548ccd4a56f62d916ee4d6028e01a3",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a1b5e489e6fcebe40cb804793d964e99fc347820",
+                "reference": "a1b5e489e6fcebe40cb804793d964e99fc347820",
                 "shasum": ""
             },
             "require": {
@@ -12451,9 +12520,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.13.1"
+                "source": "https://github.com/vimeo/psalm/tree/v4.15.0"
             },
-            "time": "2021-11-23T23:52:49+00:00"
+            "time": "2021-12-07T11:25:29+00:00"
         },
         {
             "name": "webmozart/path-util",
@@ -12512,7 +12581,6 @@
     "stability-flags": {
         "yiisoft/config": 20,
         "yiisoft/data": 20,
-        "yiisoft/di": 20,
         "yiisoft/request-model": 20,
         "yiisoft/router": 20,
         "yiisoft/router-fastroute": 20,
