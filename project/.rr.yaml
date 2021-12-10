@@ -36,7 +36,7 @@ logs:
   # Logging level can be "panic", "error", "warn", "info", "debug".
   #
   # Default: "debug"
-  level: info
+  level: debug
 
   # Encoding format can be "console" or "json" (last is preferred for production usage).
   #
@@ -51,12 +51,13 @@ logs:
   # Output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
   #
   # Default: "stderr"
-  output: runtime/logs/rr.log
+  #output: runtime/logs/rr.log
+  output: stdout
 
   # Errors only output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
   #
   # Default: "stderr"
-  err_output: runtime/logs/rr-error.log
+  err_output: stderr
 
 # Service plugin settings
 # TODO maybe it's for queue consumers?
@@ -179,7 +180,7 @@ http:
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
     # Default: 0
-    num_workers: 0
+    num_workers: 4
 
     # Maximal count of worker executions. Zero (or nothing) means no limit.
     #
@@ -189,7 +190,7 @@ http:
     # Timeout for worker allocation. Zero means no limit.
     #
     # Default: 60s
-    allocate_timeout: 1s
+    allocate_timeout: 10s
 
     # Timeout for worker destroying before process killing. Zero means no limit.
     #
@@ -294,7 +295,7 @@ reload:
       # Ignored folders.
       #
       # Default: []
-      ignore: [ "vendor" ]
+      ignore: [ "vendor", "runtime" ]
 
       # Service specific file pattens to sync.
       #
