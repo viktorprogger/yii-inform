@@ -50,7 +50,7 @@
         "yiisoft/injector": "^1.0",
         "yiisoft/log": "^1.0.0",
         "yiisoft/log-target-file": "^1.0.0",
-        "yiisoft/request-body-parser": "^1.0.0",
+        "yiisoft/request-body-parser": "^1.0",
         "yiisoft/request-model": "^1.0@dev",
         "yiisoft/router": "3.0.x-dev",
         "yiisoft/router-fastroute": "3.0.x-dev",
@@ -58,12 +58,11 @@
         "yiisoft/yii-console": "^1.0",
         "yiisoft/yii-cycle": "3.0.x-dev",
         "yiisoft/yii-event": "^1.0",
-        "yiisoft/yii-http": "dev-master",
+        "yiisoft/yii-http": "^1.0",
         "yiisoft/yii-queue": "3.0.x-dev",
         "yiisoft/yii-queue-amqp": "3.0.x-dev",
         "yiisoft/yii-runner-console": "dev-master",
-        "yiisoft/yii-runner-roadrunner": "dev-master",
-        "yiisoft/yii-web": "^3.0.x-dev"
+        "yiisoft/yii-runner-roadrunner": "dev-master"
     },
     "require-dev": {
         "dg/bypass-finals": "^1.3",

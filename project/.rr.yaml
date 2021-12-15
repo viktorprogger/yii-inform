@@ -11,6 +11,12 @@
 
 # Important: TCP port numbers for each plugin (rpc, http, etc) must be unique!
 
+rpc:
+    # TCP address:port for listening.
+    #
+    # Default: "tcp://127.0.0.1:6001"
+    listen: tcp://127.0.0.1:6001
+
 # Application server settings (docs: https://roadrunner.dev/docs/php-worker)
 server:
   # Worker starting command, with any required arguments.
@@ -175,12 +181,12 @@ http:
     # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
     #
     # Default: false
-    debug: false
+    debug: true
 
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
     # Default: 0
-    num_workers: 4
+    num_workers: 2
 
     # Maximal count of worker executions. Zero (or nothing) means no limit.
     #
@@ -190,7 +196,7 @@ http:
     # Timeout for worker allocation. Zero means no limit.
     #
     # Default: 60s
-    allocate_timeout: 10s
+    allocate_timeout: 0s
 
     # Timeout for worker destroying before process killing. Zero means no limit.
     #
@@ -219,7 +225,7 @@ http:
       # Maximal worker memory usage in megabytes (soft limit). Zero means no limit.
       #
       # Default: 0
-      max_worker_memory: 32
+      max_worker_memory: 128
 
       # Maximal job lifetime (hard limit). Zero means no limit.
       #

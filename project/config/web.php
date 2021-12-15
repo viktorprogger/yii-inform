@@ -14,14 +14,24 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\Router;
+use Yiisoft\Config\Config;
+use Yiisoft\DataResponse\Middleware\FormatDataResponse;
 use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Definitions\Reference;
 use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
+use Yiisoft\ErrorHandler\Renderer\JsonRenderer;
+use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\Middleware\Router;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollectorInterface;
 use Yiisoft\Yii\Http\Application;
-use Yiisoft\Yii\Web\NotFoundHandler;
+use Yiisoft\Yii\Http\Handler\NotFoundHandler;
+
+/** @var Config $config */
 
 return [
     RequestFactoryInterface::class => RequestFactory::class,
@@ -45,4 +55,13 @@ return [
             'fallbackHandler' => Reference::to(NotFoundHandler::class),
         ],
     ],
+
+    RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) use ($config) {
+        $collector
+            ->middleware(FormatDataResponse::class)
+            ->addGroup(Group::create()->routes(...$config->get('routes')));
+
+        return new RouteCollection($collector);
+    },
+    ThrowableRendererInterface::class => JsonRenderer::class,
 ];
