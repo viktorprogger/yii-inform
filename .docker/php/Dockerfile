@@ -4,7 +4,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apk --no-cache add \
         git \
-        icu-dev && \
+        icu-dev \
+        bash && \
     docker-php-ext-install \
         intl \
         opcache \

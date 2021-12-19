@@ -12,13 +12,11 @@ use Yiisoft\Yii\Runner\RoadRunner\RoadRunnerApplicationRunner;
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/preload.php';
 
-$environment = null;
-
-(new RoadRunnerApplicationRunner(__DIR__, true, $environment))
+(new RoadRunnerApplicationRunner(__DIR__, $_ENV['YII_DEBUG'], $_SERVER['YII_ENV']))
     ->withConfig(
         new Config(
             new ConfigPaths(__DIR__, 'config'),
-            $environment,
+            $_SERVER['YII_ENV'],
             [
                 ReverseMerge::groups('events', 'events-web', 'events-console'),
                 RecursiveMerge::groups('params', 'events', 'events-web', 'events-console'),

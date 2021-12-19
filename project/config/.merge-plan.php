@@ -160,12 +160,12 @@ return [
         ],
         'delegates-console' => [
             '/' => [
-                'dummy.php',
+                '$delegates',
             ],
         ],
         'delegates-web' => [
             '/' => [
-                'dummy.php',
+                '$delegates',
             ],
         ],
         'providers-web' => [

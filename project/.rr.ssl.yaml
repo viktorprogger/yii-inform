@@ -75,7 +75,7 @@ service:
     # Command to execute. Can be any command here which can be executed.
     #
     # Default: none, required.
-    command: php yii queue/listen
+    command: sleep 5 && php yii queue/listen
 
     # Number of copies (processes) to start per command.
     #
@@ -190,25 +190,49 @@ http:
       # Default: 0s
       exec_ttl: 0s
 
-# Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
-# for this feature disabling.
-# metrics:
-  # Prometheus client address (path /metrics added automatically).
-  #
-  # Default: "127.0.0.1:2112"
-#   address: "127.0.0.1:2112"
+  ssl:
+      address: ':443'
 
-  # Application-specific metrics (published using an RPC connection to the server).
-#  collect:
-#    app_metric:
-#      type: histogram
-#      help: "Custom application metric"
-#      labels: [ "type" ]
-#      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
-#      # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
-#      objectives:
-#        - 1.4: 2.3
-#        - 2.0: 1.4
+      cert: runtime/ssl/server.crt
+      key: runtime/ssl/server.key
+      # ACME section
+      # TLS provider
+      acme:
+        # directory to store your certificate and key from the LE
+        # Default: rr_cache_dir
+        certs_dir: runtime/ssl
+
+        # Your email
+        # Mandatory. Error on empty.
+        email: viktorprogger@gmail.com
+
+        # Use staging or production endpoint
+        # Would be a good practice to test your setup, before obtaining a real certificate
+        use_production_endpoint: false
+
+        # List of your domains
+        # Mandatory. Error on empty
+        domains: []
+
+ Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
+ for this feature disabling.
+ metrics:
+ # Prometheus client address (path /metrics added automatically).
+ #
+ # Default: "127.0.0.1:2112"
+   address: "127.0.0.1:2112"
+
+ # Application-specific metrics (published using an RPC connection to the server).
+  collect:
+    app_metric:
+      type: histogram
+      help: "Custom application metric"
+      labels: [ "type" ]
+      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
+      # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
+      objectives:
+        - 1.4: 2.3
+        - 2.0: 1.4
 
 # Health check endpoint (docs: https://roadrunner.dev/docs/beep-beep-health). If response code is 200 - it means at
 # least one worker ready to serve requests. 500 - there are no workers ready to service requests.

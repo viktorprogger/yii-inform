@@ -34,6 +34,7 @@
         "ramsey/uuid": "^4.2",
         "sentry/sdk": "^3.1",
         "symfony/http-client": "^5.3",
+        "vishnubob/wait-for-it": "dev-master",
         "yiisoft/aliases": "^1.0",
         "yiisoft/arrays": "^2.0",
         "yiisoft/auth": "^3.0",
@@ -106,8 +107,8 @@
             ],
             "routes": "routes.php",
             "events": "events.php",
-            "delegates-console": "dummy.php",
-            "delegates-web": "dummy.php",
+            "delegates-console": "$delegates",
+            "delegates-web": "$delegates",
             "providers-web": "dummy.php",
             "bootstrap-console": "dummy.php",
             "bootstrap-web": "dummy.php"

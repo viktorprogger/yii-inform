@@ -111,9 +111,3 @@ tasks:
       - task: php:run
         vars:
           c: composer yii-config-rebuild
-
-  rr:
-    cmds:
-      - task: php:run
-        vars:
-          c: ./rr serve
