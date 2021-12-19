@@ -44,7 +44,7 @@ return [
     SubscriberRepositoryInterface::class => SubscriberRepository::class,
     UuidFactoryInterface::class => UuidFactory::class,
     LoggerInterface::class => Logger::class,
-    Logger::class => static fn(FileTarget $target) => new Logger([$target]),
+    Logger::class => static fn(FileTarget $target) => (new Logger([$target]))->setFlushInterval(1),
     CacheInterface::class => FileCache::class,
     GithubRepositoryInterface::class => GithubRepository::class,
     Router::class => [

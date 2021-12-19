@@ -13,7 +13,9 @@ services:
 
   php:
     build: .docker/php
+    command: vendor/bin/wait-for-it.sh amqp:5672 --strict -- vendor/bin/wait-for-it.sh db:3306 --strict -- ./rr serve -o http.pool.num_workers=${RR_WORKERS}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    restart: unless-stopped
     volumes:
       - ./.docker/php/php.ini:/usr/local/etc/php/conf.d/40-custom.ini:ro
       - ./.docker/data/composer:/home/appuser/.composer
@@ -29,10 +31,14 @@ services:
       XDEBUG_TRIGGER: "yes"
     env_file:
       - .env
-    links:
+    depends_on:
       - db
+      - amqp
     extra_hosts:
       - host.docker.internal:${HOST_IP:-host.docker.internal}
+    ports:
+      - "8888:80"
+      - "8889:443"
 
   db:
     image: mysql:5.7

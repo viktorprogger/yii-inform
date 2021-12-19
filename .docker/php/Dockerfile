@@ -1,10 +1,9 @@
-FROM php:8.1-rc-cli-alpine
-
-ENV COMPOSER_ALLOW_SUPERUSER=1
+FROM php:8.1-cli-alpine
 
 RUN apk --no-cache add \
         git \
-        icu-dev && \
+        icu-dev \
+        bash && \
     docker-php-ext-install \
         intl \
         opcache \
@@ -29,3 +28,9 @@ WORKDIR /var/www
 
 RUN addgroup -g 1000 appuser && \
     adduser -D -u 1000 -G appuser appuser
+
+ADD .docker/php/php.ini /usr/local/etc/php/conf.d/40-custom.ini
+
+COPY --chown=appuser:appuser project/ ./
+RUN ls -la
+RUN composer install -q

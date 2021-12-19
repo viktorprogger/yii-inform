@@ -31,3 +31,4 @@ phpunit.phar
 # local environment
 .env
 docker-compose.override.yml
+/project/rr_cache_dir
