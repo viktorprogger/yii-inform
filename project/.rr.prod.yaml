@@ -122,17 +122,8 @@ http:
   # Allow incoming requests only from the following subnets (https://en.wikipedia.org/wiki/Reserved_IP_addresses).
   #
   # Default: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",  "::1/128", "fc00::/7", "fe80::/10"]
-  # FIXME allow from everywhere
   trusted_subnets:
-    [
-        "10.0.0.0/8",
-        "127.0.0.0/8",
-        "172.16.0.0/12",
-        "192.168.0.0/16",
-        "::1/128",
-        "fc00::/7",
-        "fe80::/10",
-    ]
+    - "0.0.0.0/0"
 
   # Workers pool settings.
   pool:
@@ -214,25 +205,25 @@ http:
         # Mandatory. Error on empty
         domains: []
 
- Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
- for this feature disabling.
- metrics:
- # Prometheus client address (path /metrics added automatically).
- #
- # Default: "127.0.0.1:2112"
-   address: "127.0.0.1:2112"
+ # Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
+ # for this feature disabling.
+ # metrics:
+   # Prometheus client address (path /metrics added automatically).
+   #
+   # Default: "127.0.0.1:2112"
+   # address: "127.0.0.1:2112"
 
  # Application-specific metrics (published using an RPC connection to the server).
-  collect:
-    app_metric:
-      type: histogram
-      help: "Custom application metric"
-      labels: [ "type" ]
-      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
-      # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
-      objectives:
-        - 1.4: 2.3
-        - 2.0: 1.4
+  # collect:
+  #   app_metric:
+  #     type: histogram
+  #     help: "Custom application metric"
+  #     labels: [ "type" ]
+  #     buckets: [ 0.1, 0.2, 0.3, 1.0 ]
+  #     # Objectives defines the quantile rank estimates with their respective absolute error (for summary only).
+  #     objectives:
+  #       - 1.4: 2.3
+  #       - 2.0: 1.4
 
 # Health check endpoint (docs: https://roadrunner.dev/docs/beep-beep-health). If response code is 200 - it means at
 # least one worker ready to serve requests. 500 - there are no workers ready to service requests.
@@ -250,42 +241,3 @@ status:
   #
   # Default: 503
   unavailable_status_code: 503
-
-# Automatically detect PHP file changes and reload connected services (docs:
-# https://roadrunner.dev/docs/beep-beep-reload). Drop this section for this feature disabling.
-reload:
-  # Sync interval.
-  #
-  # Default: "1s"
-  interval: 1s
-
-  # Global patterns to sync.
-  #
-  # Default: [".php"]
-  patterns: [ ".php" ]
-
-  # List of included for sync services (this is a map, where key name is a plugin name).
-  #
-  # Default: <empty map>
-  services:
-    http:
-      # Directories to sync. If recursive is set to true, recursive sync will be applied only to the directories in
-      # "dirs" section. Dot (.) means "current working directory".
-      #
-      # Default: []
-      dirs: [ "." ]
-
-      # Recursive search for file patterns to add.
-      #
-      # Default: false
-      recursive: true
-
-      # Ignored folders.
-      #
-      # Default: []
-      ignore: [ "vendor", "runtime" ]
-
-      # Service specific file pattens to sync.
-      #
-      # Default: []
-      patterns: [ ".php", ".go", ".md" ]

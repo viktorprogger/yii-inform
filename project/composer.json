@@ -39,8 +39,7 @@
         "yiisoft/arrays": "^2.0",
         "yiisoft/auth": "^3.0",
         "yiisoft/cache": "^1.0.0",
-        "yiisoft/cache-apcu": "^1.0.0",
-        "yiisoft/cache-file": "^1.0",
+        "yiisoft/cache-apcu": "^1.0",
         "yiisoft/config": "^1.0",
         "yiisoft/data": "^3.0@dev",
         "yiisoft/data-response": "^1.0",
@@ -112,6 +111,14 @@
             "providers-web": "dummy.php",
             "bootstrap-console": "dummy.php",
             "bootstrap-web": "dummy.php"
+        },
+        "config-plugin-environments": {
+            "dev": {
+                "params": "params-dev.php"
+            },
+            "prod": {
+                "params": "params-prod.php"
+            }
         }
     },
     "config": {

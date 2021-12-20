@@ -3,13 +3,13 @@
 namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain;
 
 use DateTimeImmutable;
-use Github\Client;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Client\Client;
 
 final class GithubService
 {
@@ -19,7 +19,6 @@ final class GithubService
 
     public function __construct(
         private readonly Client $api,
-        private readonly HttpClientInterface $httpClient,
         private readonly EventIdFactoryInterface $eventIdFactory,
         private readonly EventRepositoryInterface $eventRepository,
         private readonly LoggerInterface $logger,
@@ -50,19 +49,16 @@ final class GithubService
             return;
         }
 
-        $events = $this->httpClient
-            ->request('GET', 'https://api.github.com/orgs/yiisoft/events?per_page=100&page=1')
-            ->getContent();
-        $events = json_decode($events, true, flags: JSON_THROW_ON_ERROR);
+        $events = $this->api->organization()->events('yiisoft', ['per_page' => 100]);
 
-        foreach ($events as $eventData) {
+        foreach (array_reverse($events) as $eventData) {
             $repo = str_replace('yiisoft/', '', $eventData['repo']['name']);
 
             if (in_array($repo, $repositories, true) === false) {
                 continue;
             }
 
-            if (in_array($repo, self::BOTS, true)) {
+            if (in_array($eventData['actor']['login'], self::BOTS, true)) {
                 continue;
             }
 

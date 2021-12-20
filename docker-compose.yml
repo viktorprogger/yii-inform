@@ -13,7 +13,19 @@ services:
 
   php:
     build: .docker/php
-    command: vendor/bin/wait-for-it.sh amqp:5672 --strict -- vendor/bin/wait-for-it.sh db:3306 --strict -- ./rr serve -o http.pool.num_workers=${RR_WORKERS}
+    command:
+      - vendor/bin/wait-for-it.sh
+      - amqp:5672
+      - --strict
+      - --
+      - vendor/bin/wait-for-it.sh
+      - db:3306
+      - --strict
+      - --
+      - ./rr
+      - serve
+      - -o
+      - http.pool.num_workers=${RR_WORKERS}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     restart: unless-stopped
     volumes:
@@ -25,7 +37,10 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_LOGIN: ${DB_LOGIN}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
       PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-}
+      YII_DEBUG: 'true'
+      YII_ENV: ${YII_ENV:-dev}
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
       XDEBUG_CONFIG: "client_host=host.docker.internal"
       XDEBUG_TRIGGER: "yes"

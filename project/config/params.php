@@ -61,15 +61,12 @@ return [
             'fileMode' => null,
         ],
         'fileRotator' => [
-            'maxFileSize' => 10240,
+            'maxFileSize' => 1024,
             'maxFiles' => 5,
             'fileMode' => null,
             'rotateByCopy' => null,
             'compressRotatedFiles' => false,
         ],
-    ],
-    'yiisoft/router-fastroute' => [
-        'enableCache' => true,
     ],
     'yiisoft/yii-console' => [
         'commands' => [
@@ -102,10 +99,16 @@ return [
         // Cycle migration config
         'migrations' => [
             'directory' => '@root/migrations',
-            'namespace' => 'App\\Migration',
+            'namespace' => 'Viktorprogger\\YiisoftInform\\Migration\\',
             'table' => 'migration',
             'safe' => false,
         ],
+
+        /**
+         * Annotated/attributed entity directories list.
+         * {@see \Yiisoft\Aliases\Aliases} are also supported.
+         */
+        'entity-paths' => ['@root/src'],
 
         /**
          * Config for {@see \Yiisoft\Yii\Cycle\Factory\OrmFactory}
@@ -114,48 +117,7 @@ return [
          * @link https://github.com/cycle/docs/blob/master/advanced/promise.md
          */
         'orm-promise-factory' => null,
-
-        /**
-         * SchemaProvider list for {@see \Yiisoft\Yii\Cycle\Schema\Provider\Support\SchemaProviderPipeline}
-         * Array of classname and {@see SchemaProviderInterface} object.
-         * You can configure providers if you pass classname as key and parameters as array:
-         * [
-         *     SimpleCacheSchemaProvider::class => [
-         *         'key' => 'my-custom-cache-key'
-         *     ],
-         *     FromFilesSchemaProvider::class => [
-         *         'files' => ['@runtime/cycle-schema.php']
-         *     ],
-         *     FromConveyorSchemaProvider::class => [
-         *         'generators' => [
-         *              Generator\SyncTables::class, // sync table changes to database
-         *          ]
-         *     ],
-         * ]
-         */
-        'schema-providers' => [
-            // Uncomment next line to enable schema cache
-            // SimpleCacheSchemaProvider::class => ['key' => 'cycle-orm-cache-key'],
-            PhpFileSchemaProvider::class => [
-                'file' => '@runtime/schema.php',
-                'mode' => PhpFileSchemaProvider::MODE_WRITE_ONLY,
-            ],
-            FromConveyorSchemaProvider::class => [
-                'generators' => [
-                    Cycle\Schema\Generator\SyncTables::class, // sync table changes to database
-                ],
-            ],
-        ],
-
-        /**
-         * Annotated/attributed entity directories list.
-         * {@see \Yiisoft\Aliases\Aliases} are also supported.
-         */
-        'entity-paths' => ['@root/src'],
         'conveyor' => CompositeSchemaConveyor::class,
-
-        /** @deprecated use `entity-paths` key instead */
-        'annotated-entity-paths' => [],
     ],
     'yiisoft/yii-queue' => [
         'handlers' => [

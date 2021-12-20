@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Github\AuthMethod;
+use Github\Client as GithubClient;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPLazyConnection;
 use Psr\Log\LoggerInterface;
@@ -10,7 +12,7 @@ use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Yiisoft\Cache\File\FileCache;
+use Yiisoft\Cache\Apcu\ApcuCache;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
@@ -37,6 +39,12 @@ use Yiisoft\Yii\Queue\QueueInterface;
 /** @var array $params */
 
 return [
+    GithubClient::class => [
+        'authenticate()' => [
+            'tokenOrLogin' => getenv('GITHUB_TOKEN'),
+            'authMethod' => AuthMethod::ACCESS_TOKEN,
+        ],
+    ],
     TelegramClientInterface::class => TelegramClientSymfony::class,
     TelegramClientSymfony::class => ['__construct()' => ['token' => getenv('BOT_TOKEN')]],
     HttpClientInterface::class => static fn() => HttpClient::create(),
@@ -45,7 +53,7 @@ return [
     UuidFactoryInterface::class => UuidFactory::class,
     LoggerInterface::class => Logger::class,
     Logger::class => static fn(FileTarget $target) => (new Logger([$target]))->setFlushInterval(1),
-    CacheInterface::class => FileCache::class,
+    CacheInterface::class => ApcuCache::class,
     GithubRepositoryInterface::class => GithubRepository::class,
     Router::class => [
         '__construct()' => ['routes' => $params['telegram routes']]

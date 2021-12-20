@@ -9,9 +9,6 @@ return [
             'yiisoft/cache' => [
                 'config/common.php',
             ],
-            'yiisoft/cache-file' => [
-                'config/common.php',
-            ],
             'yiisoft/request-model' => [
                 'config/common.php',
             ],
@@ -47,9 +44,6 @@ return [
             ],
         ],
         'params' => [
-            'yiisoft/cache-file' => [
-                'config/params.php',
-            ],
             'yiisoft/data-response' => [
                 'config/params.php',
             ],
@@ -181,6 +175,20 @@ return [
         'bootstrap-web' => [
             '/' => [
                 'dummy.php',
+            ],
+        ],
+    ],
+    'dev' => [
+        'params' => [
+            '/' => [
+                'params-dev.php',
+            ],
+        ],
+    ],
+    'prod' => [
+        'params' => [
+            '/' => [
+                'params-prod.php',
             ],
         ],
     ],

@@ -68,9 +68,6 @@ logs:
 # Service plugin settings
 # TODO maybe it's for queue consumers?
 service:
-  # User defined service name
-  #
-  # Default: none, required
   queue_consumer_default:
     # Command to execute. Can be any command here which can be executed.
     #
@@ -96,6 +93,16 @@ service:
     #
     # Default: 30
     restart_sec: 1
+
+  github_repos:
+    command: php yii inform/github/load-repos
+    remain_after_exit: true
+    restart_sec: 43200 # 12 hours
+
+  github_updates:
+    command: php yii inform/github/load-events
+    remain_after_exit: true
+    restart_sec: 30
 
 # HTTP plugin settings.
 http:
