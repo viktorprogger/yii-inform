@@ -26,11 +26,11 @@ return [
             'action' => HelloAction::class,
         ],
         [
-            'rule' => static fn (string $data) => $data === '/realtime',
+            'rule' => static fn (string $data) => preg_match("#^/realtime(?::\d+)?$#", $data),
             'action' => RealtimeAction::class,
         ],
         [
-            'rule' => static fn (string $data) => $data === '/summary',
+            'rule' => static fn (string $data) => preg_match("#^/summary(?::\d+)?$#", $data),
             'action' => SummaryAction::class,
         ],
         [

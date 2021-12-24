@@ -29,6 +29,13 @@ final class TelegramClientLog implements TelegramClientInterface
         return null;
     }
 
+    public function updateMessage(mixed $message): ?array
+    {
+        $this->send('editMessageText', $message->getArray());
+
+        return null;
+    }
+
     public function send(string $apiEndpoint, array $data = []): ?array
     {
         $fields = [

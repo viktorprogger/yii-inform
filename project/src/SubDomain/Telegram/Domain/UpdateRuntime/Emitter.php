@@ -35,6 +35,10 @@ final class Emitter
             );
         }
 
+        foreach ($response->getMessageUpdates() as $message) {
+            $this->client->updateMessage($message);
+        }
+
         foreach ($response->getKeyboardUpdates() as $message) {
             $this->client->updateKeyboard($message);
         }

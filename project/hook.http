@@ -1,0 +1,31 @@
+POST http://localhost:8888/telegram/hook
+Content-Type: application/json
+
+{
+    "update_id": 30226203,
+    "message": {
+        "message_id": 105,
+        "from": {
+            "id": 214200830,
+            "is_bot": false,
+            "first_name": "\u0412\u0438\u043a\u0442\u043e\u0440",
+            "username": "viktorprogger",
+            "language_code": "en"
+        },
+        "chat": {
+            "id": 214200830,
+            "first_name": "\u0412\u0438\u043a\u0442\u043e\u0440",
+            "username": "viktorprogger",
+            "type": "private"
+        },
+        "date": 1638034533,
+        "text": "\/start",
+        "entities": [
+            {
+                "offset": 0,
+                "length": 6,
+                "type": "bot_command"
+            }
+        ]
+    }
+}

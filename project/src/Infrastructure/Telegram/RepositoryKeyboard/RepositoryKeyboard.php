@@ -2,12 +2,13 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard;
 
+use Countable as Countable;
 use Iterator;
 
 /**
  * TODO find a way to use generics to say PhpStorm it's a RepositoryButton[] iterator
  */
-final class RepositoryKeyboard implements Iterator
+final class RepositoryKeyboard implements Iterator, Countable
 {
     /** @var RepositoryButton[] */
     private array $buttons;
@@ -70,5 +71,10 @@ final class RepositoryKeyboard implements Iterator
     public function rewind(): void
     {
         reset($this->buttons);
+    }
+
+    public function count(): int
+    {
+        return count($this->buttons);
     }
 }

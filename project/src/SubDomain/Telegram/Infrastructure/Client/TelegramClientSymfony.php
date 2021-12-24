@@ -13,6 +13,10 @@ use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage
 final class TelegramClientSymfony implements TelegramClientInterface
 {
     private const URI = 'https://api.telegram.org/';
+    private const ERRORS_IGNORED = [
+        'Bad Request: query is too old and response timeout expired or query ID is invalid',
+        'Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message',
+    ];
 
     public function __construct(private string $token, private HttpClientInterface $client)
     {
@@ -23,6 +27,11 @@ final class TelegramClientSymfony implements TelegramClientInterface
         return $this->send('sendMessage', $message->getArray());
     }
 
+    public function updateMessage(mixed $message): ?array
+    {
+        return $this->send('editMessageText', $message->getArray());
+    }
+
     public function updateKeyboard(TelegramKeyboardUpdate $message): ?array
     {
         return $this->send('editMessageReplyMarkup', $message->getArray());
@@ -30,24 +39,20 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
     public function send(string $apiEndpoint, array $data = []): ?array
     {
-        // try {
-            $response = $this->client->request(
-                'POST',
-                self::URI . "bot$this->token/$apiEndpoint",
-                ['json' => $data]
-            )->getContent(false);
+        $response = $this->client->request(
+            'POST',
+            self::URI . "bot$this->token/$apiEndpoint",
+            ['json' => $data]
+        )->getContent(false);
 
-            if (!empty($response)) {
-                $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);
-                if ($response['ok'] === false && $response['description'] !== 'Bad Request: query is too old and response timeout expired or query ID is invalid') {
-                    throw new RuntimeException($response['description']);
-                }
-
-                return $response;
+        if (!empty($response)) {
+            $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);
+            if ($response['ok'] === false && !in_array($response['description'], self::ERRORS_IGNORED, true)) {
+                throw new RuntimeException($response['description']);
             }
-        /*} catch (ClientExceptionInterface) {
-            // TODO
-        }*/
+
+            return $response;
+        }
 
         return null;
     }

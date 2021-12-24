@@ -14,10 +14,21 @@ final class Response
     /** @var TelegramKeyboardUpdate[] */
     private array $keyboardUpdates = [];
 
+    /** @var TelegramMessageUpdate[] */
+    private array $messageUpdates = [];
+
     public function withMessage(TelegramMessage $message): self
     {
         $instance = clone $this;
         $instance->messages[] = $message;
+
+        return $instance;
+    }
+
+    public function withMessageUpdate(TelegramMessageUpdate $message): self
+    {
+        $instance = clone $this;
+        $instance->messageUpdates[] = $message;
 
         return $instance;
     }
@@ -41,6 +52,11 @@ final class Response
     public function getMessages(): array
     {
         return $this->messages;
+    }
+
+    public function getMessageUpdates()
+    {
+        return $this->messageUpdates;
     }
 
     public function getCallbackResponse(): ?TelegramCallbackResponse

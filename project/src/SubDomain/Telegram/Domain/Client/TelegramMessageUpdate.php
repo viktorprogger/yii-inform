@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client;
 
-final class TelegramMessage
+final class TelegramMessageUpdate
 {
     /**
      * @param InlineKeyboardButton[][] $inlineKeyboard
@@ -13,8 +13,8 @@ final class TelegramMessage
         public readonly string $text,
         public readonly MessageFormat $format,
         public readonly string $chatId,
+        public readonly string $messageId,
         public readonly array $inlineKeyboard = [],
-        public readonly bool $disableLinkPreview = false,
     ) {
     }
 
@@ -23,7 +23,7 @@ final class TelegramMessage
         $result = [
             'text' => $this->text,
             'chat_id' => $this->chatId,
-            'disable_web_page_preview' => $this->disableLinkPreview,
+            'message_id' => $this->messageId,
         ];
 
         if ($this->format->isMarkdown()) {

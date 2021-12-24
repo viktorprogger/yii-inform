@@ -11,4 +11,6 @@ interface TelegramClientInterface
     public function updateKeyboard(TelegramKeyboardUpdate $message): ?array;
 
     public function send(string $apiEndpoint, array $data = []): ?array;
+
+    public function updateMessage(mixed $message): ?array;
 }

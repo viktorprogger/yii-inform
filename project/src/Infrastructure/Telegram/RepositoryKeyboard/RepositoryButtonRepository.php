@@ -11,7 +11,6 @@ final class RepositoryButtonRepository
 {
     public function __construct(
         private readonly GithubRepositoryInterface $githubRepository,
-        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -31,13 +30,14 @@ final class RepositoryButtonRepository
         );
     }
 
-    public function createKeyboard(Subscriber $subscriber, SubscriptionType $type): RepositoryKeyboard
+    /**
+     * @param Subscriber $subscriber
+     * @param SubscriptionType $type
+     *
+     * @return RepositoryButton[]
+     */
+    public function createKeyboard(Subscriber $subscriber, SubscriptionType $type): array
     {
-        $keyboard = [];
-        foreach ($this->githubRepository->all() as $repository) {
-            $keyboard[] = $this->createButton($repository, $subscriber, $type);
-        }
-
-        return new RepositoryKeyboard(...$keyboard);
+        return array_map(fn (string $repo) => $this->createButton($repo, $subscriber, $type), $this->githubRepository->all());
     }
 }

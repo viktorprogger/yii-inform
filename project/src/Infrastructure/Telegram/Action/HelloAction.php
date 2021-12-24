@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action;
 
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
@@ -17,8 +18,8 @@ final class HelloAction implements ActionInterface
         $text = <<<'TXT'
             Добро пожаловать\! Этот бот позволит вам отслеживать обновления Yii3 прямо в Telegram\.
             Доступные команды:
-            \- /realtime \- настройка получения обновлений из репозиториев в реальном времени
-            \- /summary \- настройка периодического получения обновлений \(раз в сутки\)\.
+            \- **realtime** \- настройка получения обновлений из репозиториев в реальном времени
+            \- **summary** \- настройка периодического получения обновлений \(раз в сутки\)\.
             TXT;
 
 
@@ -27,6 +28,12 @@ final class HelloAction implements ActionInterface
                 $text,
                 MessageFormat::markdown(),
                 $request->chatId,
+                [
+                    [
+                        new InlineKeyboardButton('Realtime', '/realtime'),
+                        new InlineKeyboardButton('Summary', '/summary'),
+                    ],
+                ],
             ),
         );
     }
