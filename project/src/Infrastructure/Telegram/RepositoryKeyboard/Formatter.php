@@ -5,27 +5,41 @@ namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Yiisoft\Data\Paginator\OffsetPaginator;
-use Yiisoft\Data\Paginator\PaginatorInterface;
 
 final class Formatter
 {
+    public const REPO_ALL = 'all-repos';
+
     public function format(SubscriptionType $type, int $perLine, OffsetPaginator $pagination): array
     {
         $result = [];
         $count = 0;
         $line = 0;
 
-        $result[$line][] = $this->createInlineButton('all-repos', ButtonAction::ADD, $type, 'Подписаться на все');
-        $result[$line][] = $this->createInlineButton('all-repos', ButtonAction::REMOVE, $type, 'Отписаться ото всего');
+        $result[$line][] = $this->createInlineButton(
+            self::REPO_ALL,
+            ButtonAction::ADD,
+            $type,
+            $pagination->getCurrentPage(),
+            'Подписаться на все'
+        );
+        $result[$line][] = $this->createInlineButton(
+            self::REPO_ALL,
+            ButtonAction::REMOVE,
+            $type,
+            $pagination->getCurrentPage(),
+            'Отписаться ото всего'
+        );
         $line++;
 
+        /** @var RepositoryButton $button */
         foreach ($pagination->read() as $button) {
             if ($count !== 0 && $count % $perLine === 0) {
                 $line++;
             }
             $count++;
 
-            $result[$line][] = $this->createInlineButton($button->name, $button->action, $type);
+            $result[$line][] = $this->createInlineButton($button->name, $button->action, $type, $pagination->getCurrentPage());
         }
 
         $this->addPagination($result, $pagination, $type);
@@ -37,6 +51,7 @@ final class Formatter
         string $repository,
         ButtonAction $action,
         SubscriptionType $type,
+        int $page,
         ?string $label = null,
     ): InlineKeyboardButton {
         if ($action === ButtonAction::REMOVE) {
@@ -48,7 +63,7 @@ final class Formatter
         }
 
         $text = $label ?? "$emoji $repository";
-        $callbackData = "$type->value:$sign:$repository";
+        $callbackData = "$type->value:$sign:$repository:$page";
 
         return new InlineKeyboardButton($text, $callbackData);
     }

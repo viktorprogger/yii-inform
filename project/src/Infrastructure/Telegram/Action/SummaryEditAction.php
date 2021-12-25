@@ -7,12 +7,15 @@ use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Yiisoft\Data\Paginator\OffsetPaginator;
+use Yiisoft\Data\Reader\Iterable\IterableDataReader;
 
 final class SummaryEditAction implements ActionInterface
 {
@@ -20,40 +23,84 @@ final class SummaryEditAction implements ActionInterface
         private readonly SubscriberRepositoryInterface $subscriberRepository,
         private readonly RepositoryButtonRepository $buttonService,
         private readonly Formatter $formatter,
+        private readonly GithubRepositoryInterface $githubRepository,
     ) {
     }
 
     public function handle(TelegramRequest $request, Response $response): Response
     {
-        [, $sign, $repository] = explode(':', $request->requestData);
+        [, $sign, $repository, $page] = explode(':', $request->requestData);
+        $page = (int) ($page ?? 1);
+
         if ($sign === '+') {
-            $this->add($repository, $request->subscriber);
+            $keyboardChanged = $this->add($repository, $request->subscriber);
         } else {
-            $this->remove($repository, $request->subscriber);
+            $keyboardChanged = $this->remove($repository, $request->subscriber);
         }
 
         $response = $this->sendCallbackResponse($request, $sign, $repository, $response);
+        if ($keyboardChanged) {
+            $response = $this->sendKeyboardUpdate($request, $response, $page);
+        }
 
-        return $this->sendKeyboardUpdate($request, $response, $repository);
+        return $response;
     }
 
-    private function add(string $repository, Subscriber $subscriber): void
+    private function add(string $repository, Subscriber $subscriber): bool
     {
+        if ($repository === Formatter::REPO_ALL) {
+            $allRepos = $this->githubRepository->all();
+            if (array_diff($allRepos, $subscriber->settings) !== []) {
+                $settings = new Settings($allRepos, $this->githubRepository->all());
+                $this->subscriberRepository->updateSettings($subscriber, $settings);
+
+                return true;
+            }
+
+            return false;
+        }
+
         $repoList = $subscriber->settings->summaryRepositories;
         if (!in_array($repository, $repoList, true)) {
             $repoList[] = $repository;
+            $settings = new Settings($subscriber->settings->realtimeRepositories, $repoList);
+            $this->subscriberRepository->updateSettings($subscriber, $settings);
+
+            return true;
         }
 
-        $settings = new Settings($subscriber->settings->realtimeRepositories, $repoList);
-        $this->subscriberRepository->updateSettings($subscriber, $settings);
+        return false;
     }
 
-    private function remove(string $repository, Subscriber $subscriber): void
+    private function remove(string $repository, Subscriber $subscriber): bool
     {
-        $repoList = $subscriber->settings->summaryRepositories;
-        $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
+        if ($repository === Formatter::REPO_ALL) {
+            if ($subscriber->settings->summaryRepositories === []) {
+                return false;
+            }
 
-        $this->subscriberRepository->updateSettings($subscriber, new Settings($subscriber->settings->realtimeRepositories, $repoList));
+            $settings = new Settings($subscriber->settings->summaryRepositories, []);
+            $this->subscriberRepository->updateSettings($subscriber, $settings);
+
+            return true;
+        }
+
+        $repoList = $subscriber->settings->summaryRepositories;
+        if (in_array($repository, $repoList, true)) {
+            $repoList = array_filter($repoList, static fn(string $repo) => $repo !== $repository);
+
+            $this->subscriberRepository->updateSettings(
+                $subscriber,
+                new Settings(
+                    $subscriber->settings->realtimeRepositories,
+                    $repoList
+                )
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -71,9 +118,15 @@ final class SummaryEditAction implements ActionInterface
         Response $response
     ): Response {
         if ($request->callbackQueryId !== null) {
-            $text = match ($sign) {
-                '+' => "Вы начали отслеживать $repository",
-                '-' => "Вы больше не отслеживаете $repository",
+            $text = match ($repository) {
+                Formatter::REPO_ALL => match ($sign) {
+                    '+' => "Вы начали отслеживать все репозитории",
+                    '-' => "Вы больше не отслеживаете ни один репозиторий",
+                },
+                default => match ($sign) {
+                    '+' => "Вы начали отслеживать $repository",
+                    '-' => "Вы больше не отслеживаете $repository",
+                },
             };
 
             $callbackResponse = new TelegramCallbackResponse($request->callbackQueryId, $text);
@@ -86,31 +139,31 @@ final class SummaryEditAction implements ActionInterface
     /**
      * @param TelegramRequest $request
      * @param Response $response
-     * @param string $repository
+     * @param int $page
      *
      * @return Response
      */
-    private function sendKeyboardUpdate(TelegramRequest $request, Response $response, string $repository): Response
-    {
-        $keyboard = $this->buttonService->createKeyboard(
+    private function sendKeyboardUpdate(
+        TelegramRequest $request,
+        Response $response,
+        int $page
+    ): Response {
+        $buttons = $this->buttonService->createKeyboard(
             $this->subscriberRepository->find($request->subscriber->id),
-            SubscriptionType::SUMMARY
+            SubscriptionType::REALTIME
         );
 
-        foreach ($keyboard->iterateBunch(100) as $subKeyboard) {
-            if ($subKeyboard->has($repository)) {
-                $message = new TelegramKeyboardUpdate(
-                    $request->chatId,
-                    $request->messageId,
-                    $this->formatter->format($subKeyboard, SubscriptionType::SUMMARY),
-                );
+        $pagination = (new OffsetPaginator(new IterableDataReader($buttons)))
+            ->withPageSize(21)
+            ->withCurrentPage($page);
 
-                $response = $response->withKeyboardUpdate($message);
-                break;
-            }
-        }
+        $update = new TelegramKeyboardUpdate(
+            $request->chatId,
+            $request->messageId,
+            $this->formatter->format(SubscriptionType::REALTIME, 3, $pagination),
+        );
 
         // TODO What to do if there was no such button in the keyboard??
-        return $response;
+        return $response->withKeyboardUpdate($update);
     }
 }

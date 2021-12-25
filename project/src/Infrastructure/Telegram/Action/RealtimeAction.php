@@ -38,14 +38,20 @@ final class RealtimeAction implements ActionInterface
         $pagination = (new OffsetPaginator(new IterableDataReader($buttons)))
             ->withPageSize(21)
             ->withCurrentPage($page);
-        $text = "*Страница $page\n\n*" .
-            "Используйте кнопки ниже, чтобы подписаться на обновления репозитория или отписаться от них:";
+        $text = <<<TXT
+            *Настройка подписки на обновления в реальном времени*
+            **Страница $page**
+
+            Используйте кнопки ниже, чтобы подписаться на обновления репозитория или отписаться от них:
+            TXT;
 
         $keyboard = $this->formatter->format(
             SubscriptionType::REALTIME,
             3,
             $pagination
         );
+
+        $keyboard[] = [new InlineKeyboardButton('< В меню', '/start')];
 
         if ($isButtonPressed) {
             $message = new TelegramMessageUpdate(

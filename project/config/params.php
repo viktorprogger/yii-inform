@@ -34,11 +34,11 @@ return [
             'action' => SummaryAction::class,
         ],
         [
-            'rule' => static fn (string $data) => preg_match("/^realtime:[+-]:[\w_-]+$/", $data),
+            'rule' => static fn (string $data) => preg_match("/^realtime:[+-]:[\w_-]+(?::\d+)?$/", $data),
             'action' => RealtimeEditAction::class,
         ],
         [
-            'rule' => static fn (string $data) => preg_match("/^summary:[+-]:[\w_-]+$/", $data),
+            'rule' => static fn (string $data) => preg_match("/^summary:[+-]:[\w_-]+(?::\d+)?$/", $data),
             'action' => SummaryEditAction::class,
         ],
     ],

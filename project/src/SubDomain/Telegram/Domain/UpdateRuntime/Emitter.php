@@ -20,10 +20,13 @@ final class Emitter
             $callbackResponse = $response->getCallbackResponse() ?? new TelegramCallbackResponse($callbackQueryId);
             $data = [
                 'callback_query_id' => $callbackResponse->getId(),
-                'text' => $callbackResponse->getText(),
                 'show_alert' => $callbackResponse->isShowAlert(),
                 'cache_time' => $callbackResponse->getCacheTime(),
             ];
+
+            if ($callbackResponse->getText() !== null) {
+                $data['text'] = $callbackResponse->getText();
+            }
 
             $url = $callbackResponse->getUrl();
             if ($url !== null) {
