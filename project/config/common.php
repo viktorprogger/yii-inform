@@ -9,6 +9,9 @@ use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
+use Sentry\ClientBuilder;
+use Sentry\SentrySdk;
+use Sentry\State\HubInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Client\Client as GithubClient;
@@ -76,4 +79,11 @@ return [
     QueueSettings::class => [
         '__construct()' => ['queueName' => 'yii-queue'],
     ],
+    HubInterface::class => static function(): HubInterface {
+        $client = ClientBuilder::create(['dsn' => getenv('SENTRY_DSN')])->getClient(); //FIXME
+        $hub = SentrySdk::init();
+        $hub->bindClient($client);
+
+        return $hub;
+    },
 ];

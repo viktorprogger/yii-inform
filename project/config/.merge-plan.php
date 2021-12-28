@@ -21,6 +21,9 @@ return [
             'yiisoft/yii-queue-amqp' => [
                 'config/common.php',
             ],
+            'yiisoft/yii-sentry' => [
+                'config/common.php',
+            ],
             'yiisoft/aliases' => [
                 'config/common.php',
             ],
@@ -51,6 +54,9 @@ return [
                 'config/params.php',
             ],
             'yiisoft/yii-cycle' => [
+                'config/params.php',
+            ],
+            'yiisoft/yii-sentry' => [
                 'config/params.php',
             ],
             'yiisoft/aliases' => [
@@ -109,6 +115,9 @@ return [
             'yiisoft/yii-cycle' => [
                 'config/events-console.php',
             ],
+            'yiisoft/yii-sentry' => [
+                'config/events-console.php',
+            ],
             'yiisoft/log' => [
                 'config/events-console.php',
             ],
@@ -123,6 +132,11 @@ return [
         'delegates' => [
             'yiisoft/yii-cycle' => [
                 'config/delegates.php',
+            ],
+        ],
+        'bootstrap' => [
+            'yiisoft/yii-sentry' => [
+                'config/bootstrap.php',
             ],
         ],
         'events-web' => [

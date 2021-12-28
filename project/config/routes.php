@@ -6,10 +6,12 @@ use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Web\Controller
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Request\Body\RequestBodyParser;
 use Yiisoft\Router\Route;
+use Yiisoft\Yii\Sentry\SentryMiddleware;
 
 return [
     Route::post('/telegram/hook')
-        ->middleware(FormatDataResponseAsJson::class)
+        ->middleware(SentryMiddleware::class)
         ->middleware(RequestBodyParser::class)
+        ->middleware(FormatDataResponseAsJson::class)
         ->action([TelegramHookController::class, 'hook']),
 ];

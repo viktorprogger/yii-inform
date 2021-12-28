@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
+use Viktorprogger\YiisoftInform\Infrastructure\Console\CacheClearCommand;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventHandler;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventMessage;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\HelloAction;
@@ -70,6 +71,7 @@ return [
     ],
     'yiisoft/yii-console' => [
         'commands' => [
+            'inform/cache/clear' => CacheClearCommand::class,
             'inform/tg/updates' => GetUpdatesCommand::class,
             'inform/github/load-repos' => LoadRepositoriesCommand::class,
             'inform/github/load-events' => LoadEventsCommand::class,

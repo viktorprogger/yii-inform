@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client;
 
 use RuntimeException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramRequestException;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TooManyRequestsException;
 
 final class TelegramClientSymfony implements TelegramClientInterface
 {
@@ -39,11 +42,19 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
     public function send(string $apiEndpoint, array $data = []): ?array
     {
-        $response = $this->client->request(
-            'POST',
-            self::URI . "bot$this->token/$apiEndpoint",
-            ['json' => $data]
-        )->getContent(false);
+        try {
+            $response = $this->client->request(
+                'POST',
+                self::URI . "bot$this->token/$apiEndpoint",
+                ['json' => $data]
+            )->getContent();
+        } catch (ClientExceptionInterface $e) {
+            if ($e->getResponse()->getStatusCode() === 429) {
+                throw new TooManyRequestsException($e->getMessage(), previous: $e);
+            }
+
+            throw new TelegramRequestException($e->getMessage(), previous: $e);
+        }
 
         if (!empty($response)) {
             $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);

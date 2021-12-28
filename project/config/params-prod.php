@@ -5,7 +5,7 @@ use Yiisoft\Yii\Cycle\Schema\Provider\SimpleCacheSchemaProvider;
 
 return [
     'yiisoft/router-fastroute' => [
-        'enableCache' => false,
+        'enableCache' => true,
     ],
     'yiisoft/yii-cycle' => [
         /**
