@@ -101,7 +101,7 @@ return [
         // Cycle migration config
         'migrations' => [
             'directory' => '@root/migrations',
-            'namespace' => 'Viktorprogger\\YiisoftInform\\Migration\\',
+            'namespace' => 'Viktorprogger\\YiisoftInform\\Migration',
             'table' => 'migration',
             'safe' => false,
         ],
