@@ -12,7 +12,9 @@ services:
 #      - php
 
   php:
-    build: .docker/php
+    build:
+      dockerfile: .docker/php/Dockerfile
+      context: ./
     command:
       - vendor/bin/wait-for-it.sh
       - amqp:5672
@@ -69,7 +71,6 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
 
-
   amqp:
     image: rabbitmq:3-management
     restart: unless-stopped
@@ -79,4 +80,4 @@ services:
     expose:
       - 5672
     ports:
-      - 15674:15672
+      - ${AMQP_PORT:-15672}:15672

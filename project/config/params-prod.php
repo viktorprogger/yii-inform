@@ -28,6 +28,9 @@ return [
          */
         'schema-providers' => [
             SimpleCacheSchemaProvider::class,
+            PhpFileSchemaProvider::class => [
+                'file' => '@runtime/schema.php',
+            ],
         ],
     ],
 ];

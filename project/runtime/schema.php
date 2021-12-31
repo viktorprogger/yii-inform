@@ -10,7 +10,7 @@ return [
         Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Entity\\Subscriber\\SubscriberEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
-        Schema::REPOSITORY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Entity\\Subscriber\\SubscriberCycleRepository',
+        Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
         Schema::DATABASE => 'default',
         Schema::TABLE => 'subscriber',
         Schema::PRIMARY_KEY => 'id',

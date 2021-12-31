@@ -9,7 +9,7 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Relation\Embedded;
 use Cycle\ORM\Promise\Reference;
 
-#[Entity(table: 'subscriber', repository: SubscriberCycleRepository::class)]
+#[Entity(table: 'subscriber')]
 final class SubscriberEntity
 {
     #[Column(type: 'string', primary: true)]
