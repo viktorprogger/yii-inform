@@ -80,7 +80,9 @@ return [
         '__construct()' => ['queueName' => 'yii-queue'],
     ],
     HubInterface::class => static function(): HubInterface {
-        $client = ClientBuilder::create(['dsn' => getenv('SENTRY_DSN')])->getClient(); //FIXME
+        //TODO move to params
+        $options = ['dsn' => getenv('SENTRY_DSN'), 'environment' => getenv('YII_ENV')];
+        $client = ClientBuilder::create($options)->getClient();
         $hub = SentrySdk::init();
         $hub->bindClient($client);
 
