@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client;
 
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -21,7 +22,11 @@ final class TelegramClientSymfony implements TelegramClientInterface
         'Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message',
     ];
 
-    public function __construct(private string $token, private HttpClientInterface $client)
+    public function __construct(
+        private readonly string $token,
+        private readonly HttpClientInterface $client,
+        private readonly LoggerInterface $logger,
+    )
     {
     }
 
@@ -42,6 +47,8 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
     public function send(string $apiEndpoint, array $data = []): ?array
     {
+        $this->logger->debug('Sending Telegram request', ['category' => 'telegram', 'endpoint' => $apiEndpoint]);
+
         try {
             $response = $this->client->request(
                 'POST',
@@ -58,8 +65,19 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
         if (!empty($response)) {
             $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);
-            if ($response['ok'] === false && !in_array($response['description'], self::ERRORS_IGNORED, true)) {
-                throw new RuntimeException($response['description']);
+            if (($response['ok'] ?? false) === false) {
+                if (in_array($response['description'] ?? '', self::ERRORS_IGNORED, true)) {
+                    $this->logger->debug(
+                        'Error occurred while sending request',
+                        [
+                            'category' => 'telegram',
+                            'endpoint' => $apiEndpoint,
+                            'error' => $response['description'],
+                        ]
+                    );
+                } else {
+                    throw new RuntimeException($response['description']);
+                }
             }
 
             return $response;
