@@ -2,6 +2,8 @@ version: "3.8"
 services:
   php:
     image: viktorprogger/yii-inform:latest
+    volumes:
+      - ./runtime/ssl:/var/www/runtime/ssl
     command:
       - vendor/bin/wait-for-it.sh
       - db:3306
@@ -51,7 +53,6 @@ services:
       MYSQL_USER: ${DB_LOGIN}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-
 
   amqp:
     image: rabbitmq:3-management
