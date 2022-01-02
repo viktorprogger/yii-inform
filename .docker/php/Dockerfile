@@ -26,10 +26,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --2 --install-dir=/usr/l
 
 WORKDIR /var/www
 
-RUN addgroup -g 1000 appuser && \
-    adduser -D -u 1000 -G appuser appuser
-
 ADD .docker/php/php.ini /usr/local/etc/php/conf.d/40-custom.ini
+
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser && \
+    chown appuser:appuser .
+
+USER appuser
 
 COPY --chown=appuser:appuser project/ ./
 RUN ls -la
