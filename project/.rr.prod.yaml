@@ -97,6 +97,21 @@ service:
     # Default: 30
     restart_sec: 1
 
+  github_repos:
+    command: php yii inform/github/load-repos
+    remain_after_exit: true
+    restart_sec: 43200 # 12 hours
+
+  github_updates:
+    command: php yii inform/github/load-events
+    remain_after_exit: true
+    restart_sec: 30
+
+  telegram_updates:
+    command: php yii inform/tg/updates
+    remain_after_exit: true
+    restart_sec: 1
+
 # HTTP plugin settings.
 http:
   # Host and port to listen on (eg.: `127.0.0.1:8080`).
@@ -199,7 +214,7 @@ http:
 
         # Use staging or production endpoint
         # Would be a good practice to test your setup, before obtaining a real certificate
-        use_production_endpoint: false
+        use_production_endpoint: true
 
         # List of your domains
         # Mandatory. Error on empty
