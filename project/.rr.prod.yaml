@@ -75,7 +75,7 @@ service:
     # Command to execute. Can be any command here which can be executed.
     #
     # Default: none, required.
-    command: sleep 5 && php yii queue/listen
+    command: php yii queue/listen
 
     # Number of copies (processes) to start per command.
     #
