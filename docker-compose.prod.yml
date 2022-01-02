@@ -17,6 +17,8 @@ services:
       - .rr.prod.yaml
       - -o
       - http.pool.num_workers=${RR_WORKERS}
+      - -o
+      - http.ssl.acme.domains[0]=${DOMAIN}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     environment:
       TZ: Europe/Moscow
