@@ -3,11 +3,18 @@ services:
   php:
     image: viktorprogger/yii-inform:latest
     command:
-      - vendor/bin/wait-for-it.sh amqp:5672 --strict
+      - vendor/bin/wait-for-it.sh
+      - db:3306
+      - --strict
       - --
-      - vendor/bin/wait-for-it.sh db:3306 --strict
+      - vendor/bin/wait-for-it.sh
+      - amqp:5672
+      - --strict
       - --
-      - ./rr serve -c .rr.prod.yaml -o http.ssl.acme.domains[0]=${DOMAIN} -o http.pool.num_workers=${RR_WORKERS}
+      - ./rr
+      - serve
+      - -o
+      - http.pool.num_workers=${RR_WORKERS}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     environment:
       TZ: Europe/Moscow
