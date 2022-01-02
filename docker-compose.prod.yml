@@ -13,6 +13,8 @@ services:
       - --
       - ./rr
       - serve
+      - -c
+      - .rr.prod.yaml
       - -o
       - http.pool.num_workers=${RR_WORKERS}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
