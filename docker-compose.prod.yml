@@ -29,7 +29,7 @@ services:
       DB_LOGIN: ${DB_LOGIN}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
       YII_DEBUG: 'false'
-      YII_ENV: 'prod'
+      YII_ENV: ${YII_ENV:-prod}
       XDEBUG_MODE: 'off'
     env_file:
       - .env

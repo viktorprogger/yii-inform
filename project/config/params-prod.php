@@ -32,5 +32,8 @@ return [
                 'file' => '@runtime/schema.php',
             ],
         ],
+        'migrations' => [
+            'safe' => true,
+        ],
     ],
 ];
