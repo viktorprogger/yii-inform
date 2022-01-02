@@ -32,7 +32,7 @@ services:
     volumes:
       - .docker/data/db:/var/lib/mysql
     ports:
-      - ${DB_PORT:-3306}:3306
+      - "127.0.0.1:${DB_PORT:-3306}:3306"
     environment:
       TZ: Europe/Moscow
       MYSQL_DATABASE: ${DB_NAME}
@@ -50,4 +50,4 @@ services:
     expose:
       - 5672
     ports:
-      - 15674:15672
+      - "127.0.0.1:${AMQP_PORT:-15672}:15672"
