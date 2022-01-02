@@ -10,6 +10,7 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Repos
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
@@ -155,10 +156,12 @@ final class RealtimeEditAction implements ActionInterface
             ->withPageSize(21)
             ->withCurrentPage($page);
 
+        $keyboard = $this->formatter->format(SubscriptionType::REALTIME, 3, $pagination);
+        $keyboard[] = [new InlineKeyboardButton('< В меню', '/start')];
         $update = new TelegramKeyboardUpdate(
             $request->chatId,
             $request->messageId,
-            $this->formatter->format(SubscriptionType::REALTIME, 3, $pagination),
+            $keyboard,
         );
 
         return $response->withKeyboardUpdate($update);
