@@ -196,29 +196,29 @@ http:
       # Default: 0s
       exec_ttl: 0s
 
-  ssl:
-      address: ':443'
-
-      cert: runtime/ssl/server.crt
-      key: runtime/ssl/server.key
-      # ACME section
-      # TLS provider
-      acme:
-        # directory to store your certificate and key from the LE
-        # Default: rr_cache_dir
-        certs_dir: runtime/ssl
-
-        # Your email
-        # Mandatory. Error on empty.
-        email: viktorprogger@gmail.com
-
-        # Use staging or production endpoint
-        # Would be a good practice to test your setup, before obtaining a real certificate
-        use_production_endpoint: true
-
-        # List of your domains
-        # Mandatory. Error on empty
-        domains: []
+#  ssl:
+#      address: ':443'
+#
+#      cert: runtime/ssl/server.crt
+#      key: runtime/ssl/server.key
+#      # ACME section
+#      # TLS provider
+#      acme:
+#        # directory to store your certificate and key from the LE
+#        # Default: rr_cache_dir
+#        certs_dir: runtime/ssl
+#
+#        # Your email
+#        # Mandatory. Error on empty.
+#        email: viktorprogger@gmail.com
+#
+#        # Use staging or production endpoint
+#        # Would be a good practice to test your setup, before obtaining a real certificate
+#        use_production_endpoint: true
+#
+#        # List of your domains
+#        # Mandatory. Error on empty
+#        domains: []
 
  # Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/beep-beep-metrics). Drop this section
  # for this feature disabling.
