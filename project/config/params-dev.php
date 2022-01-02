@@ -1,9 +1,22 @@
 <?php
 
+use Psr\Log\LogLevel;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
 use Yiisoft\Yii\Cycle\Schema\Provider\PhpFileSchemaProvider;
 
 return [
+    'yiisoft/log-target-file' => [
+        'fileTarget' => [
+            'levels' => [
+                LogLevel::EMERGENCY,
+                LogLevel::ERROR,
+                LogLevel::WARNING,
+                LogLevel::INFO,
+                LogLevel::NOTICE,
+                LogLevel::DEBUG,
+            ],
+        ],
+    ],
     'yiisoft/router-fastroute' => [
         'enableCache' => true,
     ],
