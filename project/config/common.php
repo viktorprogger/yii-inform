@@ -3,6 +3,12 @@
 declare(strict_types=1);
 
 use Github\AuthMethod;
+use Monolog\Formatter\JsonFormatter;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\PsrLogMessageProcessor;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Connection\AMQPLazyConnection;
 use Psr\Log\LoggerInterface;
@@ -15,6 +21,8 @@ use Sentry\State\HubInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Client\Client as GithubClient;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Cache\Apcu\ApcuCache;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
@@ -48,14 +56,24 @@ return [
             'authMethod' => AuthMethod::ACCESS_TOKEN,
         ],
     ],
-    TelegramClientInterface::class => TelegramClientSymfony::class,
+    TelegramClientInterface::class => TelegramClientLog::class,
     TelegramClientSymfony::class => ['__construct()' => ['token' => getenv('BOT_TOKEN')]],
     HttpClientInterface::class => static fn() => HttpClient::create(),
     SubscriberIdFactoryInterface::class => SubscriberIdFactory::class,
     SubscriberRepositoryInterface::class => SubscriberRepository::class,
     UuidFactoryInterface::class => UuidFactory::class,
     LoggerInterface::class => Logger::class,
-    Logger::class => static fn(FileTarget $target) => (new Logger([$target]))->setFlushInterval(1),
+    Logger::class => static function(Aliases $alias) {
+        return (new \Monolog\Logger('application'))
+            ->pushProcessor(new PsrLogMessageProcessor())
+            ->pushProcessor(new MemoryUsageProcessor())
+            ->pushProcessor(new MemoryPeakUsageProcessor())
+            ->pushHandler(
+                (new RotatingFileHandler($alias->get('@runtime/logs/app.log')))
+                    ->setFilenameFormat('{filename}-{date}', RotatingFileHandler::FILE_PER_MONTH)
+                    ->setFormatter(new JsonFormatter())
+            );
+    },
     CacheInterface::class => ApcuCache::class,
     GithubRepositoryInterface::class => GithubRepository::class,
     Router::class => [

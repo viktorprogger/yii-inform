@@ -81,3 +81,30 @@ services:
       - 5672
     ports:
       - ${AMQP_PORT:-15672}:15672
+
+  loki:
+    image: grafana/loki:2.4.1
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    volumes:
+      - ./project/runtime/logs:/var/log/app
+      - .docker/data/promtail-data:/var/lib/promtail/positions
+      - .docker/loki/promtail-local-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    ports:
+      - "9080:9080"
+    links:
+      - loki
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    user: 1000:1000
+    volumes:
+      - .docker/data/grafana:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-yii-inform}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+    ports:
+      - "3000:3000"
