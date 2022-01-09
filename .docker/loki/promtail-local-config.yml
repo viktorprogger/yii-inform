@@ -18,4 +18,15 @@ scrape_configs:
       - json:
           expressions:
             datetime: datetime
-          source: extra
+            channel: channel
+            level_name: level_name
+      - json:
+          expressions:
+            endpoint: endpoint
+            request_id: request_id
+          source: context
+
+      - labels:
+          channel:
+          level_name:
+          request_id:

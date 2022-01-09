@@ -62,8 +62,6 @@ final class GithubService
                 continue;
             }
 
-            $this->logger->debug($eventData);
-
             $id = $this->eventIdFactory->create((string) $eventData['id']);
             if ($this->eventRepository->exists($id)) {
                 continue;
@@ -71,6 +69,7 @@ final class GithubService
 
             $type = $this->getEventType($eventData);
             if ($type !== null) {
+                $this->logger->debug('Found new event', $eventData);
                 $event = new GithubEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
                 $this->eventRepository->create($event);
             }

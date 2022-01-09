@@ -81,7 +81,7 @@ return [
         // DBAL config
         'dbal' => [
             // SQL query logger. Definition of Psr\Log\LoggerInterface
-            'query-logger' => LoggerInterface::class,
+            'query-logger' => 'loggerCycle',
             // Default database
             'default' => 'default',
             'aliases' => [],

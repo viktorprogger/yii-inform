@@ -103,6 +103,7 @@ services:
     user: 1000:1000
     volumes:
       - .docker/data/grafana:/var/lib/grafana
+      - .docker/grafana/provisioning:/etc/grafana/provisioning
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-yii-inform}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
