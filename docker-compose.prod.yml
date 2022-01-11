@@ -24,6 +24,8 @@ services:
     image: viktorprogger/yii-inform:latest
     volumes:
       - ./runtime/ssl:/var/www/runtime/ssl
+      - logs:runtime/logs
+      - logs-rr:runtime/logs-rr
     command:
       - vendor/bin/wait-for-it.sh
       - db:3306
@@ -87,8 +89,8 @@ services:
   promtail:
     image: grafana/promtail:2.4.1
     volumes:
-      - ./project/runtime/logs:/var/log/app
-      - ./project/runtime/logs-rr:/var/log/rr
+      - logs:/var/log/app:ro
+      - logs-rr:/var/log/rr:ro
       - .docker/data/promtail-data:/var/lib/promtail/positions
       - .docker/loki/promtail-local-config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
@@ -110,3 +112,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(\"${DOMAIN}\") && Path(`/grafana`, `/grafana/{path:.*}`)"
       - "traefik.http.routers.grafana.entrypoints=web"
+
+volumes:
+  logs:
+  logs-rr:
