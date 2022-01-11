@@ -24,8 +24,8 @@ services:
     image: viktorprogger/yii-inform:latest
     volumes:
       - ./runtime/ssl:/var/www/runtime/ssl
-      - logs:runtime/logs
-      - logs-rr:runtime/logs-rr
+      - logs:/var/www/runtime/logs
+      - logs-rr:/var/www/runtime/logs-rr
     command:
       - vendor/bin/wait-for-it.sh
       - db:3306
