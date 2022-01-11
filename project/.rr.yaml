@@ -101,7 +101,7 @@ service:
   github_updates:
     command: php yii inform/github/load-events
     remain_after_exit: true
-    restart_sec: 300
+    restart_sec: 30
 
   telegram_updates:
       command: php yii inform/tg/updates

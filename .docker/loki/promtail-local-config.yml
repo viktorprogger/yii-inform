@@ -35,7 +35,6 @@ scrape_configs:
       - labels:
           channel:
           level_name:
-          request_id:
 
   - job_name: roadrunner
     static_configs:
