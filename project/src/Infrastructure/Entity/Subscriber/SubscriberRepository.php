@@ -56,8 +56,8 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         /** @var SubscriberEntity $entity */
         $entity = $this->cycleRepository->findByPK($subscriber->id->value); // TODO not found exception
         $entity->telegram_chat_id = $subscriber->chatId;
-        $entity->settings_realtime = json_encode($settings->realtimeRepositories, JSON_THROW_ON_ERROR);
-        $entity->settings_summary = json_encode($settings->summaryRepositories, JSON_THROW_ON_ERROR);
+        $entity->settings_realtime = json_encode(array_values($settings->realtimeRepositories), JSON_THROW_ON_ERROR);
+        $entity->settings_summary = json_encode(array_values($settings->summaryRepositories), JSON_THROW_ON_ERROR);
         (new Transaction($this->orm))->persist($entity)->run();
     }
 
