@@ -102,6 +102,11 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
                     throw new RuntimeException($decoded['description']);
                 }
+            } else {
+                $this->logger->warning(
+                    'Telegram response',
+                    $context
+                );
             }
 
             return $decoded;
