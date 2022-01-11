@@ -2,6 +2,7 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure;
 
+use Psr\Log\LoggerInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberId;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventMessage;
@@ -17,6 +18,7 @@ final class SubscriberEventProcessor
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
         private readonly Queue $queue,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -33,6 +35,10 @@ final class SubscriberEventProcessor
             } else {
                 $ids = $this->getSubscribers($subscriptionEvent->repo);
             }
+            $this->logger->info(
+                'Found {subscriberCount} subscribers for event {eventId}',
+                ['subscriberCount' => count($ids), 'eventId' => $subscriptionEvent->id]
+            );
 
             foreach ($ids as $subscriberId) {
                 $this->queue->push(new RealtimeEventMessage($subscriptionEvent->id->value, $subscriberId->value));
