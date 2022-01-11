@@ -71,7 +71,7 @@ final class GithubService
 
             $type = $this->getEventType($eventData);
             if ($type !== null) {
-                $this->logger->info('Found new event', $eventData);
+                $this->logger->info('Found new event', ['eventData' => $eventData]);
                 $event = new GithubEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
                 $this->eventRepository->create($event);
             }
