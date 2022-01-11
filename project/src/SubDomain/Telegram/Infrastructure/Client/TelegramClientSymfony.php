@@ -47,15 +47,29 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
     public function send(string $apiEndpoint, array $data = []): ?array
     {
-        $this->logger->debug('Sending Telegram request', ['category' => 'telegram', 'endpoint' => $apiEndpoint]);
+        $this->logger->info('Sending Telegram request', ['endpoint' => $apiEndpoint, 'data' => $data]);
 
         try {
             $response = $this->client->request(
                 'POST',
                 self::URI . "bot$this->token/$apiEndpoint",
                 ['json' => $data]
-            )->getContent();
+            );
+            $responseContent = $response->getContent();
         } catch (ClientExceptionInterface $e) {
+            $response = $e->getResponse()->getContent(false);
+            $this->logger->info(
+                'Telegram request error',
+                [
+                    'endpoint' => $apiEndpoint,
+                    'data' => $data,
+                    'responseRaw' => $response,
+                    'response' => json_decode($response, true),
+                    'responseCode' => $e->getResponse()->getStatusCode(),
+                    'error' => $e->getMessage(),
+                ]
+            );
+
             if ($e->getResponse()->getStatusCode() === 429) {
                 throw new TooManyRequestsException($e->getMessage(), previous: $e);
             }
@@ -63,24 +77,34 @@ final class TelegramClientSymfony implements TelegramClientInterface
             throw new TelegramRequestException($e->getMessage(), previous: $e);
         }
 
-        if (!empty($response)) {
-            $response = json_decode($response, true, flags: JSON_THROW_ON_ERROR);
-            if (($response['ok'] ?? false) === false) {
-                if (in_array($response['description'] ?? '', self::ERRORS_IGNORED, true)) {
-                    $this->logger->debug(
-                        'Error occurred while sending request',
-                        [
-                            'category' => 'telegram',
-                            'endpoint' => $apiEndpoint,
-                            'error' => $response['description'],
-                        ]
+        if (!empty($responseContent)) {
+            $decoded = json_decode($responseContent, true, flags: JSON_THROW_ON_ERROR);
+            $context = [
+                'endpoint' => $apiEndpoint,
+                'data' => $data,
+                'responseRaw' => $responseContent,
+                'response' => $decoded,
+                'responseCode' => $response->getStatusCode(),
+            ];
+
+            if (($decoded['ok'] ?? false) === false) {
+                $context['error'] = $decoded['description'] ?? '';
+                if (in_array($decoded['description'] ?? '', self::ERRORS_IGNORED, true)) {
+                    $this->logger->warning(
+                        'Error occurred while sending Telegram request',
+                        $context
                     );
                 } else {
-                    throw new RuntimeException($response['description']);
+                    $this->logger->error(
+                        'Error occurred while sending Telegram request',
+                        $context
+                    );
+
+                    throw new RuntimeException($decoded['description']);
                 }
             }
 
-            return $response;
+            return $decoded;
         }
 
         return null;

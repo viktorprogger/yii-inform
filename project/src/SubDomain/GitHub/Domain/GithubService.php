@@ -49,7 +49,9 @@ final class GithubService
             return;
         }
 
+        $this->logger->info('Load events request');
         $events = $this->api->organization()->events('yiisoft', ['per_page' => 100]);
+        $this->logger->info('Load events response', ['eventsCount' => count($events)]);
 
         foreach (array_reverse($events) as $eventData) {
             $repo = str_replace('yiisoft/', '', $eventData['repo']['name']);
@@ -62,8 +64,6 @@ final class GithubService
                 continue;
             }
 
-            $this->logger->debug($eventData);
-
             $id = $this->eventIdFactory->create((string) $eventData['id']);
             if ($this->eventRepository->exists($id)) {
                 continue;
@@ -71,6 +71,7 @@ final class GithubService
 
             $type = $this->getEventType($eventData);
             if ($type !== null) {
+                $this->logger->info('Found new event', $eventData);
                 $event = new GithubEvent($id, $type, $repo, $eventData['payload'], new DateTimeImmutable());
                 $this->eventRepository->create($event);
             }

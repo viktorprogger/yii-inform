@@ -47,7 +47,7 @@ logs:
   # Encoding format can be "console" or "json" (last is preferred for production usage).
   #
   # Default: "console"
-  encoding: console
+  encoding: json
 
   # Log line ending
   #
@@ -58,12 +58,12 @@ logs:
   #
   # Default: "stderr"
   #output: runtime/logs/rr.log
-  output: stdout
+  output: runtime/logs-rr/rr.log
 
   # Errors only output can be file (eg.: "/var/log/rr_errors.log"), "stderr" or "stdout".
   #
   # Default: "stderr"
-  err_output: stderr
+  err_output: runtime/logs-rr/rr-error.log
 
 # Service plugin settings
 service:
