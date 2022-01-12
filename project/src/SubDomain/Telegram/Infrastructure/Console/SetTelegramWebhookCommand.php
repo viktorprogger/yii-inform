@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Yiisoft\Yii\Console\ExitCode;
 
 final class SetTelegramWebhookCommand extends Command
 {
@@ -27,5 +28,7 @@ final class SetTelegramWebhookCommand extends Command
         ];
 
         $this->client->send('setWebhook', $fields);
+
+        return ExitCode::OK;
     }
 }
