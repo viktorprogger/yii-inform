@@ -73,6 +73,7 @@ services:
       - "traefik.http.routers.app.entrypoints=ssl"
       - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.tls.certresolver=acme"
+      - "traefik.http.services.app.loadbalancer.server.port=80"
 
   db:
     image: mysql:5.7
@@ -127,6 +128,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(\"${DOMAIN}\") && Path(`/grafana`, `/grafana/{path:.*}`)"
       - "traefik.http.routers.grafana.entrypoints=ssl"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.tls.certresolver=acme"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
 volumes:
   logs:
