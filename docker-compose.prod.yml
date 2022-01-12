@@ -2,7 +2,7 @@ version: "3.8"
 services:
   webserver:
     image: traefik:v2.5
-    restart: no
+    restart: 'no'
     command:
       - --experimental.http3=true
       - --log.level=DEBUG
