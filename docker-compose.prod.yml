@@ -17,7 +17,7 @@ services:
       - --certificatesresolvers.acme.acme.email=admin@${DOMAIN}
       - --certificatesresolvers.acme.acme.storage=/service-state/acme.json
       - --certificatesresolvers.acme.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.acme.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - .docker/data/traefik/:/service-state/
