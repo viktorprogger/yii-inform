@@ -11,7 +11,10 @@ use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientI
 
 final class SetTelegramWebhookCommand extends Command
 {
-    public function __construct(private TelegramClientInterface $client, private string $botToken, string $name = null)
+    protected static $defaultName = 'inform/tg/set-webhook';
+    protected static $defaultDescription = 'Set TG webhook address';
+
+    public function __construct(private TelegramClientInterface $client, string $name = null)
     {
         parent::__construct($name);
     }
@@ -19,8 +22,8 @@ final class SetTelegramWebhookCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $fields = [
-            'url' => 'https://wallet.viktorprogger.com/wallet/telegram-webhook',
-            'allowed_updates' => ['message'],
+            'url' => 'https://' .getenv('DOMAIN') . (getenv('URL_PREFIX') ?: '') . '/telegram/hook',
+            'allowed_updates' => ['message', 'callback_query'],
         ];
 
         $this->client->send('setWebhook', $fields);

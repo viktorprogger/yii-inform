@@ -16,6 +16,7 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\SummaryEditAction
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadEventsCommand;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadRepositoriesCommand;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\SetTelegramWebhookCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
 use Yiisoft\Yii\Cycle\Schema\Provider\PhpFileSchemaProvider;
@@ -73,6 +74,7 @@ return [
         'commands' => [
             'inform/cache/clear' => CacheClearCommand::class,
             'inform/tg/updates' => GetUpdatesCommand::class,
+            'inform/tg/set-webhook' => SetTelegramWebhookCommand::class,
             'inform/github/load-repos' => LoadRepositoriesCommand::class,
             'inform/github/load-events' => LoadEventsCommand::class,
         ],
