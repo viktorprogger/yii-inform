@@ -59,7 +59,7 @@ return [
     RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) use ($config) {
         $collector
             ->middleware(FormatDataResponse::class)
-            ->addGroup(Group::create()->routes(...$config->get('routes')));
+            ->addGroup(Group::create(getenv('URL_PREFIX') ?: null)->routes(...$config->get('routes')));
 
         return new RouteCollection($collector);
     },

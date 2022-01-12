@@ -2,17 +2,25 @@ version: "3.8"
 services:
   webserver:
     image: traefik:v2.5
-    restart: unless-stopped
+    restart: no
     command:
       - --experimental.http3=true
-      #- --log.level=DEBUG
+      - --log.level=DEBUG
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=ssl
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entryPoint.permanent=true
       - --entrypoints.ssl.address=:443
+      - --certificatesresolvers.acme.acme.email=admin@${DOMAIN}
+      - --certificatesresolvers.acme.acme.storage=/service-state/acme.json
+      - --certificatesresolvers.acme.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - .docker/data/traefik/:/service-state/
     ports:
       - ${WEB_PORT:-80}:80
       - 443:443
@@ -53,11 +61,18 @@ services:
       YII_DEBUG: 'false'
       YII_ENV: ${YII_ENV:-prod}
       XDEBUG_MODE: 'off'
+      URL_PREFIX: /app
     env_file:
       - .env
     depends_on:
       - db
       - amqp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(\"${DOMAIN}\") && Path(`/app`, `/app/{path:.*}`)"
+      - "traefik.http.routers.app.entrypoints=ssl"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.tls.certresolver=acme"
 
   db:
     image: mysql:5.7
@@ -111,7 +126,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(\"${DOMAIN}\") && Path(`/grafana`, `/grafana/{path:.*}`)"
-      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.routers.grafana.entrypoints=ssl"
 
 volumes:
   logs:

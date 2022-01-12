@@ -54,6 +54,7 @@ services:
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
       XDEBUG_CONFIG: "client_host=host.docker.internal"
       XDEBUG_TRIGGER: "yes"
+      URL_PREFIX: /app
     env_file:
       - .env
     depends_on:
@@ -63,8 +64,8 @@ services:
       - host.docker.internal:${HOST_IP:-host.docker.internal}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(\"${DOMAIN}\") && Path(`/app`, `/app/{path:.*}`)"
-      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.routers.app.rule=Host(\"${DOMAIN}\") && Path(`/app`, `/app/{path:.*}`)"
+      - "traefik.http.routers.app.entrypoints=web"
 
   db:
     image: mysql:5.7
