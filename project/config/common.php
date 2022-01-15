@@ -35,6 +35,7 @@ use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event\Eve
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event\EventRepository;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository\GithubRepository;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\Application;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\Router;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
@@ -65,11 +66,8 @@ return [
             'logger' => Reference::to('loggerTelegram'),
         ],
     ],
-    TelegramClientLog::class => [
-        '__construct()' => [
-            'logger' => Reference::to('loggerTelegram'),
-        ],
-    ],
+    TelegramClientLog::class => ['__construct()' => ['logger' => Reference::to('loggerTelegram')]],
+    Application::class => ['__construct()' => ['logger' => Reference::to('loggerTelegram')]],
     HttpClientInterface::class => static fn() => HttpClient::create(),
     SubscriberIdFactoryInterface::class => SubscriberIdFactory::class,
     SubscriberRepositoryInterface::class => SubscriberRepository::class,

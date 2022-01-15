@@ -29,6 +29,6 @@ final class Router
             }
         }
 
-        throw new RuntimeException('No matches for the request'); // TODO change me to a project-specific exception
+        throw new NotFoundException($request);
     }
 }
