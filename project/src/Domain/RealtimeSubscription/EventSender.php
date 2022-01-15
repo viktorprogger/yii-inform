@@ -6,7 +6,6 @@ use Psr\Log\LoggerInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramRequestException;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TooManyRequestsException;
 
 final class EventSender
@@ -24,7 +23,7 @@ final class EventSender
     {
         $this->logger->info(
             'Sending event {eventId} to subscriber {subscriberId}',
-            ['subscriberId' => $subscriber->id, 'eventId' => $event->id]
+            ['subscriberId' => $subscriber->id->value, 'eventId' => $event->id->value]
         );
 
         try {

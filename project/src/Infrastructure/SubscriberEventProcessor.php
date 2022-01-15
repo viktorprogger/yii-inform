@@ -37,7 +37,7 @@ final class SubscriberEventProcessor
             }
             $this->logger->info(
                 'Found {subscriberCount} subscribers for event {eventId}',
-                ['subscriberCount' => count($ids), 'eventId' => $subscriptionEvent->id]
+                ['subscriberCount' => count($ids), 'eventId' => $subscriptionEvent->id->value]
             );
 
             foreach ($ids as $subscriberId) {
