@@ -58,23 +58,32 @@ final class TelegramClientSymfony implements TelegramClientInterface
             $responseContent = $response->getContent();
         } catch (ClientExceptionInterface $e) {
             $response = $e->getResponse()->getContent(false);
-            $this->logger->error(
-                'Telegram request error',
-                [
-                    'endpoint' => $apiEndpoint,
-                    'data' => $data,
-                    'responseRaw' => $response,
-                    'response' => json_decode($response, true),
-                    'responseCode' => $e->getResponse()->getStatusCode(),
-                    'error' => $e->getMessage(),
-                ]
-            );
+            $context = [
+                'endpoint' => $apiEndpoint,
+                'data' => $data,
+                'responseRaw' => $response,
+                'response' => json_decode($response, true),
+                'responseCode' => $e->getResponse()->getStatusCode(),
+                'error' => $e->getMessage(),
+            ];
 
-            if ($e->getResponse()->getStatusCode() === 429) {
-                throw new TooManyRequestsException($e->getMessage(), previous: $e);
+            if (in_array($decoded['description'] ?? '', self::ERRORS_IGNORED, true)) {
+                $this->logger->warning(
+                    'Error occurred while sending Telegram request',
+                    $context
+                );
+            } else {
+                $this->logger->error(
+                    'Telegram request error',
+                    $context
+                );
+
+                if ($e->getResponse()->getStatusCode() === 429) {
+                    throw new TooManyRequestsException($e->getMessage(), previous: $e);
+                }
+
+                throw new TelegramRequestException($e->getMessage(), previous: $e);
             }
-
-            throw new TelegramRequestException($e->getMessage(), previous: $e);
         }
 
         if (!empty($responseContent)) {
