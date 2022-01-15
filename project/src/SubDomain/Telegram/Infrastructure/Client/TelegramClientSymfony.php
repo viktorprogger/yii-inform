@@ -58,7 +58,7 @@ final class TelegramClientSymfony implements TelegramClientInterface
             $responseContent = $response->getContent();
         } catch (ClientExceptionInterface $e) {
             $response = $e->getResponse()->getContent(false);
-            $this->logger->info(
+            $this->logger->error(
                 'Telegram request error',
                 [
                     'endpoint' => $apiEndpoint,
