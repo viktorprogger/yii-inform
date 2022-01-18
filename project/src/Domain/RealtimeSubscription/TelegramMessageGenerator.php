@@ -13,6 +13,9 @@ use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage
 
 final class TelegramMessageGenerator
 {
+    private const TEMPLATE_START = '{!';
+    private const TEMPLATE_END = '!}';
+
     public function __construct(private readonly Formatter $formatter)
     {
     }
@@ -39,22 +42,16 @@ final class TelegramMessageGenerator
 
     private function issueCreated(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['issue']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Был создан тикет [\#{$event->payload['issue']['number']} $title]({$event->payload['issue']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Был создан тикет {!issue!} пользователем {!user!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function issueClosed(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['issue']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Закрыт тикет [\#{$event->payload['issue']['number']} $title]({$event->payload['issue']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Закрыт тикет {!issue!} пользователем {!user!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
@@ -192,10 +189,22 @@ final class TelegramMessageGenerator
         $text = "\#$repo\n";
         $text .= "Создан новый репозиторий {$this->markdownTextClear($event->repo)}";
 
-        $keyboard = [[
-            $this->formatter->createInlineButton($event->repo, ButtonAction::ADD, SubscriptionType::REALTIME, 'Подписаться realtime'),
-            $this->formatter->createInlineButton($event->repo, ButtonAction::ADD, SubscriptionType::SUMMARY, 'Подписаться на summary'),
-        ]];
+        $keyboard = [
+            [
+                $this->formatter->createInlineButton(
+                    $event->repo,
+                    ButtonAction::ADD,
+                    SubscriptionType::REALTIME,
+                    'Подписаться realtime'
+                ),
+                $this->formatter->createInlineButton(
+                    $event->repo,
+                    ButtonAction::ADD,
+                    SubscriptionType::SUMMARY,
+                    'Подписаться на summary'
+                ),
+            ]
+        ];
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, $keyboard);
     }
@@ -232,5 +241,20 @@ final class TelegramMessageGenerator
             '\\\\$1',
             $result,
         );
+    }
+
+    private function template(string $message, GithubEvent $event): string
+    {
+        $matcher = function() use($event) {
+            $issueTitle = $this->markdownTextClear($event->payload['issue']['title']);
+            $payload = $event->payload;
+            $a = [
+                'repo' => $this->repoNameClear($event->repo),
+                'issue' => "[\#{$payload['issue']['number']} $issueTitle]({$payload['issue']['html_url']})",
+                'user' => "[{$payload['comment']['user']['login']}]({$payload['comment']['user']['html_url']})",
+            ];
+        };
+
+
     }
 }
