@@ -74,7 +74,7 @@ final class GithubService
         }
 
         $this->logger->info('Load events request');
-        $events = $this->api->organization()->events('yiisoft', ['per_page' => 100]);
+        $events = $this->api->organization()->events('yiisoft', ['per_page' => 500]);
         $this->logger->info('Load events response', ['eventsCount' => count($events)]);
 
         foreach (array_reverse($events) as $eventData) {

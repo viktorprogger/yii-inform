@@ -15,9 +15,6 @@ use Yiisoft\Arrays\ArrayHelper;
 
 final class TelegramMessageGenerator
 {
-    private const TEMPLATE_START = '{!';
-    private const TEMPLATE_END = '!}';
-
     public function __construct(
         private readonly Formatter $formatter,
         private readonly GithubService $github,
@@ -94,46 +91,34 @@ final class TelegramMessageGenerator
 
     private function prClosed(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Закрыт PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Закрыт PR {!pr!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function prMerged(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Смержили PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Смержен PR {!pr!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function prReopened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Заново открыт PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Заново открыт PR {!pr!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function prChanged(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
         // TODO
-
         $text = <<<MD
-            \#$repo
-             В PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']}) произошли изменения\.
+            \#{!repo!}
+             В PR {!pr!} произошли изменения\.
             \{changes_summary\}
             MD;
 
@@ -142,16 +127,12 @@ final class TelegramMessageGenerator
 
     private function prCommented(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-        $comment = $this->markdownTextClear($event->payload['comment']['body']);
-
         $text = <<<MD
-            \#$repo
-             В PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']}) добавлен комментарий\.
-            Автор: [{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})
+            \#{!repo!}
+             В PR {!pr!} добавлен комментарий\.
+            Автор: {!comment_author!}
             Текст:
-            $comment
+            {!comment_text!}
             MD;
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
@@ -159,32 +140,24 @@ final class TelegramMessageGenerator
 
     private function prMergeApproved(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Мёрж пулл реквеста [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']}) одобрен пользователем [{$event->payload['review']['user']['login']}]({$event->payload['review']['user']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "✅ Мёрж пулл реквеста {!pr!} одобрен пользователем {!review_user!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function prMergeDeclined(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Для пулл реквеста [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']}) по итогам ревью кода требуются изменения\.";
+        $text = "\#{!repo!}\n";
+        $text .= "❌ Пулл реквест {!pr!} требует изменений по мнению пользователя {!review_user!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function newRepoCreated(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-
-        $text = "\#$repo\n";
-        $text .= "Создан новый репозиторий {$this->markdownTextClear($event->repo)}";
+        $text = "\#{!repo!}\n";
+        $text .= "Создан новый репозиторий {!repo_full!}";
 
         $keyboard = [
             [
@@ -246,6 +219,7 @@ final class TelegramMessageGenerator
 
         $callbacks = [
             '/{!repo!}/' => fn () => $this->repoNameClear($event->repo),
+            '/{!repo_full!}/' => fn () => $this->markdownTextClear($event->repo),
             '/{!issue!}/' => fn () => "[\#{$payload['issue']['number']} {$this->markdownTextClear($event->payload['issue']['title'])}]({$payload['issue']['html_url']})",
             '/{!issue_author!}/' => static fn () => "[{$payload['issue']['user']['login']}]({$payload['issue']['user']['html_url']})",
             '/{!issue_closed_user!}/' => function() use($event) {
@@ -264,6 +238,7 @@ final class TelegramMessageGenerator
             '/{!comment_text!}/' => fn() => $this->markdownTextClear($event->payload['comment']['body']),
             '/{!pr!}/' => fn () => "[\#{$event->payload['pull_request']['number']} {$this->markdownTextClear($event->payload['pull_request']['title'])}]({$event->payload['pull_request']['html_url']})",
             '/{!pr_author!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
+            '/{!review_user!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
         ];
 
         return preg_replace_callback_array($callbacks, $message);
