@@ -7,23 +7,28 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Butto
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
+use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\GithubService;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
+use Yiisoft\Arrays\ArrayHelper;
 
 final class TelegramMessageGenerator
 {
     private const TEMPLATE_START = '{!';
     private const TEMPLATE_END = '!}';
 
-    public function __construct(private readonly Formatter $formatter)
+    public function __construct(
+        private readonly Formatter $formatter,
+        private readonly GithubService $github,
+    )
     {
     }
 
     public function generateForEvent(GithubEvent $event, Subscriber $subscriber): TelegramMessage
     {
         // FIXME take a Subscriber instead of chatId to get method newRepoCreated() done
-        return match ($event->type) {
+        $message = match ($event->type) {
             EventType::ISSUE_OPENED => $this->issueCreated($event, $subscriber->chatId),
             EventType::ISSUE_CLOSED => $this->issueClosed($event, $subscriber->chatId),
             EventType::ISSUE_REOPENED => $this->issueReopened($event, $subscriber->chatId),
@@ -38,12 +43,14 @@ final class TelegramMessageGenerator
             EventType::PR_MERGE_DECLINED => $this->prMergeDeclined($event, $subscriber->chatId),
             EventType::NEW_REPO => $this->newRepoCreated($event, $subscriber->chatId),
         };
+
+        return $message->withText($this->template($message->text, $event));
     }
 
     private function issueCreated(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = "\#{!repo!}\n";
-        $text .= "Был создан тикет {!issue!} пользователем {!user!}\.";
+        $text .= "Был создан тикет {!issue!} пользователем {!issue_author!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
@@ -51,34 +58,27 @@ final class TelegramMessageGenerator
     private function issueClosed(GithubEvent $event, string $chatId): TelegramMessage
     {
         $text = "\#{!repo!}\n";
-        $text .= "Закрыт тикет {!issue!} пользователем {!user!}\.";
+        $text .= "Закрыт тикет {!issue!} пользователем {!issue_closed_user!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function issueReopened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['issue']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Заново открыт тикет [\#{$event->payload['issue']['number']} $title]({$event->payload['issue']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Заново открыт тикет {!issue!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
 
     private function issueCommented(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['issue']['title']);
-        $comment = $this->markdownTextClear($event->payload['comment']['body']);
-
         $text = <<<MD
-            \#$repo
-            В тикет [\#{$event->payload['issue']['number']} $title]({$event->payload['issue']['html_url']}) добавлен комментарий\.
-            Автор: [{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})
+            \#{!repo!}
+            В тикет {!issue!} добавлен комментарий\.
+            Автор: {!comment_author!}
             Текст:
-            $comment
+            {!comment_text!}
             MD;
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
@@ -86,11 +86,8 @@ final class TelegramMessageGenerator
 
     private function prOpened(GithubEvent $event, string $chatId): TelegramMessage
     {
-        $repo = $this->repoNameClear($event->repo);
-        $title = $this->markdownTextClear($event->payload['pull_request']['title']);
-
-        $text = "\#$repo\n";
-        $text .= "Открыт PR [\#{$event->payload['pull_request']['number']} $title]({$event->payload['pull_request']['html_url']})\.";
+        $text = "\#{!repo!}\n";
+        $text .= "Открыт PR {!pr!} пользователем {!pr_author!}\.";
 
         return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
     }
@@ -245,16 +242,30 @@ final class TelegramMessageGenerator
 
     private function template(string $message, GithubEvent $event): string
     {
-        $matcher = function() use($event) {
-            $issueTitle = $this->markdownTextClear($event->payload['issue']['title']);
-            $payload = $event->payload;
-            $a = [
-                'repo' => $this->repoNameClear($event->repo),
-                'issue' => "[\#{$payload['issue']['number']} $issueTitle]({$payload['issue']['html_url']})",
-                'user' => "[{$payload['comment']['user']['login']}]({$payload['comment']['user']['html_url']})",
-            ];
-        };
+        $payload = $event->payload;
 
+        $callbacks = [
+            '/{!repo!}/' => fn () => $this->repoNameClear($event->repo),
+            '/{!issue!}/' => fn () => "[\#{$payload['issue']['number']} {$this->markdownTextClear($event->payload['issue']['title'])}]({$payload['issue']['html_url']})",
+            '/{!issue_author!}/' => static fn () => "[{$payload['issue']['user']['login']}]({$payload['issue']['user']['html_url']})",
+            '/{!issue_closed_user!}/' => function() use($event) {
+                if (!isset($event->payload['closed_by'])) {
+                    $event = $this->github->enrich($event);
+                }
 
+                $payload = $event->payload;
+                if (isset($payload['closed_by'])) {
+                    return "[{$payload['closed_by']['user']['login']}]({$payload['closed_by']['user']['html_url']})";
+                }
+
+                return '`\\<not found>`';
+            },
+            '/{!comment_author!}/' => static fn () => "[{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})",
+            '/{!comment_text!}/' => fn() => $this->markdownTextClear($event->payload['comment']['body']),
+            '/{!pr!}/' => fn () => "[\#{$event->payload['pull_request']['number']} {$this->markdownTextClear($event->payload['pull_request']['title'])}]({$event->payload['pull_request']['html_url']})",
+            '/{!pr_author!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
+        ];
+
+        return preg_replace_callback_array($callbacks, $message);
     }
 }

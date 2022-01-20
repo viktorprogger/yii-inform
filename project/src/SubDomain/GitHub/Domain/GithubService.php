@@ -4,7 +4,6 @@ namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain;
 
 use DateTimeImmutable;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
@@ -23,6 +22,31 @@ final class GithubService
         private readonly EventRepositoryInterface $eventRepository,
         private readonly LoggerInterface $logger,
     ) {
+    }
+
+    public function enrich(GithubEvent $event): GithubEvent
+    {
+        $url = match(true) {
+            $event->type->isIssueRelated() => $event->payload['issue']['url'],
+            $event->type->isPRRelated() => $event->payload['pull_request']['url'],
+            default => null,
+        };
+
+        if ($url !== null) {
+            $response = $this->api->getHttpClient()->get($url);
+            if ($response->getStatusCode() === 200) {
+                return $this->eventRepository->enrich(
+                    $event,
+                    json_decode(
+                        $response->getBody(),
+                        true,
+                        flags: JSON_THROW_ON_ERROR
+                    )
+                );
+            }
+        }
+
+        return $event;
     }
 
     public function loadYii3Packages(): array
@@ -80,29 +104,33 @@ final class GithubService
 
     private function getEventType(array $data): ?EventType
     {
+        $payload = $data['payload'];
+
         return match ($data['type']) {
-            'IssuesEvent' => match ($data['payload']['action']) {
+            'IssuesEvent' => match ($payload['action']) {
                 'opened' => EventType::ISSUE_OPENED,
                 'closed' => EventType::ISSUE_CLOSED,
                 'reopened' => EventType::ISSUE_REOPENED,
                 default => null,
             },
-            'IssueCommentEvent' => match ($data['payload']['action']) {
+            'IssueCommentEvent' => match ($payload['action']) {
                 'created' => EventType::ISSUE_COMMENTED,
                 default => null,
             },
-            'PullRequestEvent' => match ($data['payload']['action']) {
+            'PullRequestEvent' => match ($payload['action']) {
                 'opened' => EventType::PR_OPENED,
-                'closed' => EventType::PR_CLOSED, // TODO add merge check https://docs.github.com/en/rest/reference/pulls#check-if-a-pull-request-has-been-merged
+                'closed' => $payload['pull_request']['closed_at'] === $payload['pull_request']['merged_at']
+                    ? EventType::PR_MERGED
+                    : EventType::PR_CLOSED,
                 'reopened' => EventType::PR_REOPENED,
                 'edited' => EventType::PR_CHANGED,
                 default => null,
             },
-            'PullRequestReviewEvent' => match ($data['payload']['review']['state']) {
+            'PullRequestReviewEvent' => match ($payload['review']['state']) {
                 'approved' => EventType::PR_MERGE_APPROVED,
                 default => EventType::PR_MERGE_DECLINED,
             },
-            'PullRequestReviewCommentEvent' => match ($data['payload']['action']) {
+            'PullRequestReviewCommentEvent' => match ($payload['action']) {
                 'created' => EventType::PR_COMMENTED,
                 default => null,
             },

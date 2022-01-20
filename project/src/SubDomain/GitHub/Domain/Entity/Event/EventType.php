@@ -21,4 +21,41 @@ enum EventType: string
     case ISSUE_REOPENED = 'issue reopened';
     case ISSUE_CLOSED = 'issue closed';
     case ISSUE_COMMENTED = 'issue commented';
+
+    public function isIssueRelated(): bool
+    {
+        return in_array(
+            $this,
+            [
+                self::ISSUE_OPENED,
+                self::ISSUE_REOPENED,
+                self::ISSUE_CLOSED,
+                self::ISSUE_COMMENTED,
+            ],
+            true
+        );
+    }
+
+    public function isPRRelated(): bool
+    {
+        return in_array(
+            $this,
+            [
+                self::PR_OPENED,
+                self::PR_CLOSED,
+                self::PR_REOPENED,
+                self::PR_CHANGED,
+                self::PR_COMMENTED,
+                self::PR_MERGED,
+                self::PR_MERGE_APPROVED,
+                self::PR_MERGE_DECLINED,
+            ],
+            true
+        );
+    }
+
+    public function isRepositoryRelated(): bool
+    {
+        return $this === self::NEW_REPO;
+    }
 }

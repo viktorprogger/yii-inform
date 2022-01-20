@@ -46,9 +46,12 @@ final class TelegramMessage
 
     public function withText(string $text): self
     {
-        $instance = clone $this;
-        $instance->text = $text;
-
-        return $instance;
+        return new self(
+            $text,
+            $this->format,
+            $this->chatId,
+            $this->inlineKeyboard,
+            $this->disableLinkPreview,
+        );
     }
 }

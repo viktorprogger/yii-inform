@@ -17,6 +17,8 @@ interface EventRepositoryInterface
      */
     public function create(GithubEvent $event): void;
 
+    public function enrich(GithubEvent $event, mixed $payload): GithubEvent;
+
     public function exists(EventId $id): bool;
 
     /**
@@ -24,5 +26,5 @@ interface EventRepositoryInterface
      */
     public function read(DateTimeImmutable $since): iterable;
 
-    public function find(EventId $id);
+    public function find(EventId $id): ?GithubEvent;
 }

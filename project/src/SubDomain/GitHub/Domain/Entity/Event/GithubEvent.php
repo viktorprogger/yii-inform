@@ -16,4 +16,15 @@ final class GithubEvent
         public readonly DateTimeImmutable $created,
     ) {
     }
+
+    public function withPayload(array $payload): self
+    {
+        return new self(
+            $this->id,
+            $this->type,
+            $this->repo,
+            $payload,
+            $this->created,
+        );
+    }
 }
