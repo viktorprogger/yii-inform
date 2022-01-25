@@ -231,7 +231,7 @@ final class TelegramMessageGenerator
 
                 $payload = $event->payload;
                 if (isset($payload['closed_by'])) {
-                    return "[{$payload['closed_by']['user']['login']}]({$payload['closed_by']['user']['html_url']})";
+                    return "[{$payload['closed_by']['login']}]({$payload['closed_by']['html_url']})";
                 }
 
                 return '`\\<not found>`';
