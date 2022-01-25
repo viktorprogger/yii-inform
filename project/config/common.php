@@ -59,7 +59,7 @@ return [
             'authMethod' => AuthMethod::ACCESS_TOKEN,
         ],
     ],
-    TelegramClientInterface::class => TelegramClientSymfony::class,
+    TelegramClientInterface::class => TelegramClientLog::class,
     TelegramClientSymfony::class => [
         '__construct()' => [
             'token' => getenv('BOT_TOKEN'),

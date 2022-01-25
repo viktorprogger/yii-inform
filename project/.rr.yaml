@@ -108,6 +108,11 @@ service:
       remain_after_exit: true
       restart_sec: 1
 
+  summary_check:
+      command: php yii inform/send-summary
+      remain_after_exit: true
+      restart_sec: 60
+
 # HTTP plugin settings.
 http:
   # Host and port to listen on (eg.: `127.0.0.1:8080`).

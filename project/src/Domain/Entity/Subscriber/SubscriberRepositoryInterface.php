@@ -17,6 +17,13 @@ interface SubscriberRepositoryInterface
      */
     public function findForRealtimeRepo(string $repo): array;
 
+    /**
+     * Find subscribers who didn't recieve
+     *
+     * @return SubscriberId[]
+     */
+    public function findForSummary(): array;
+
     public function getAllIds(): array;
 
     public function updateSettings(Subscriber $subscriber, Settings $settings): void;
