@@ -165,12 +165,14 @@ final class TelegramMessageGenerator
                     $event->repo,
                     ButtonAction::ADD,
                     SubscriptionType::REALTIME,
+                    1,
                     'Подписаться realtime'
                 ),
                 $this->formatter->createInlineButton(
                     $event->repo,
                     ButtonAction::ADD,
                     SubscriptionType::SUMMARY,
+                    1,
                     'Подписаться на summary'
                 ),
             ]
