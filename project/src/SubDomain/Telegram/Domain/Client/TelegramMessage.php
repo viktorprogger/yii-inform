@@ -44,6 +44,17 @@ final class TelegramMessage
         return $result;
     }
 
+    public function withFormat(MessageFormat $format): self
+    {
+        return new self(
+            $this->text,
+            $format,
+            $this->chatId,
+            $this->inlineKeyboard,
+            $this->disableLinkPreview,
+        );
+    }
+
     public function withText(string $text): self
     {
         return new self(

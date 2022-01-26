@@ -13,6 +13,7 @@ use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboar
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramRequestException;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TooManyRequestsException;
+use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\WrongEntitiesException;
 
 final class TelegramClientSymfony implements TelegramClientInterface
 {
@@ -58,11 +59,12 @@ final class TelegramClientSymfony implements TelegramClientInterface
             $responseContent = $response->getContent();
         } catch (ClientExceptionInterface $e) {
             $response = $e->getResponse()->getContent(false);
+            $decoded = json_decode($response, true);
             $context = [
                 'endpoint' => $apiEndpoint,
                 'data' => $data,
                 'responseRaw' => $response,
-                'response' => json_decode($response, true),
+                'response' => $decoded,
                 'responseCode' => $e->getResponse()->getStatusCode(),
                 'error' => $e->getMessage(),
             ];
@@ -80,6 +82,13 @@ final class TelegramClientSymfony implements TelegramClientInterface
 
                 if ($e->getResponse()->getStatusCode() === 429) {
                     throw new TooManyRequestsException($e->getMessage(), previous: $e);
+                }
+
+                if (
+                    is_array($decoded)
+                    && str_starts_with($decoded['description'], 'Bad Request: can\'t parse entities')
+                ) {
+                    throw new WrongEntitiesException($e->getMessage(), previous: $e);
                 }
 
                 throw new TelegramRequestException($e->getMessage(), previous: $e);
