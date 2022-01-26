@@ -42,6 +42,7 @@ final class EventSender
                             https://github.com/viktorprogger/yii-inform/issues
 
                             Original message text:
+                            $message->text
                             MSG
                         )
                 );
