@@ -215,7 +215,7 @@ final class TelegramMessageGenerator
         );
 
         return preg_replace(
-            '/([-.#{%&+<>=])/',
+            '/([-.#{%&+<>=]!)/',
             '\\\\$1',
             $result,
         );
