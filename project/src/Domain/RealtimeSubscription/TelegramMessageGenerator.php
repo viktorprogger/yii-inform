@@ -208,6 +208,12 @@ final class TelegramMessageGenerator
             $text,
         );
 
+        $result = preg_replace(
+            '/\S(_)/',
+            '\\\\$1',
+            $result,
+        );
+
         return preg_replace(
             '/([-.#{%&+<>=])/',
             '\\\\$1',
