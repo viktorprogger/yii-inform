@@ -215,7 +215,7 @@ final class TelegramMessageGenerator
         );
 
         return preg_replace(
-            '/([-.#{%&+<>=!])/',
+            '/([-.#{%&+<>=!\\\])/',
             '\\\\$1',
             $result,
         );
@@ -228,10 +228,10 @@ final class TelegramMessageGenerator
         $callbacks = [
             '/{!repo!}/' => fn () => $this->repoNameClear($event->repo),
             '/{!repo_full!}/' => fn () => $this->markdownTextClear($event->repo),
-            '/{!issue!}/' => fn () => "[\#{$payload['issue']['number']} {$this->markdownTextClear($event->payload['issue']['title'])}]({$payload['issue']['html_url']})",
+            '/{!issue!}/' => fn () => "[\#{$payload['issue']['number']} {$this->markdownTextClear($payload['issue']['title'])}]({$payload['issue']['html_url']})",
             '/{!issue_author!}/' => static fn () => "[{$payload['issue']['user']['login']}]({$payload['issue']['user']['html_url']})",
             '/{!issue_closed_user!}/' => function() use($event) {
-                if (!isset($event->payload['closed_by'])) {
+                if (!isset($payload['closed_by'])) {
                     $event = $this->github->enrich($event);
                 }
 
@@ -240,11 +240,11 @@ final class TelegramMessageGenerator
                     return "[{$payload['closed_by']['login']}]({$payload['closed_by']['html_url']})";
                 }
 
-                return '`\\<not found>`';
+                return '`\\<not found\\>`';
             },
-            '/{!comment_author!}/' => static fn () => "[{$event->payload['comment']['user']['login']}]({$event->payload['comment']['user']['html_url']})",
-            '/{!comment_text!}/' => fn() => $this->markdownTextClear($event->payload['comment']['body']),
-            '/{!pr!}/' => fn () => "[\#{$event->payload['pull_request']['number']} {$this->markdownTextClear($event->payload['pull_request']['title'])}]({$event->payload['pull_request']['html_url']})",
+            '/{!comment_author!}/' => static fn () => "[{$payload['comment']['user']['login']}]({$payload['comment']['user']['html_url']})",
+            '/{!comment_text!}/' => fn() => $this->markdownTextClear($payload['comment']['body']),
+            '/{!pr!}/' => fn () => "[\#{$payload['pull_request']['number']} {$this->markdownTextClear($payload['pull_request']['title'])}]({$payload['pull_request']['html_url']})",
             '/{!pr_author!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
             '/{!review_user!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
         ];
