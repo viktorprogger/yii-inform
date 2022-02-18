@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Spiral\Database\Driver\MySQL\MySQLDriver;
 use Viktorprogger\YiisoftInform\Infrastructure\Console\CacheClearCommand;
@@ -18,8 +17,6 @@ use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadRepo
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
 use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\SetTelegramWebhookCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
-use Yiisoft\Yii\Cycle\Schema\Provider\FromConveyorSchemaProvider;
-use Yiisoft\Yii\Cycle\Schema\Provider\PhpFileSchemaProvider;
 
 return [
     'telegram routes' => [
