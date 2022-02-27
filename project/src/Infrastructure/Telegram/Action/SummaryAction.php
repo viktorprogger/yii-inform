@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action;
 
+use Viktorprogger\TelegramBot\Domain\Client\ResponseInterface;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\RequestHandlerInterface;
+use Viktorprogger\YiisoftInform\Domain\SubscriptionType;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\SubscriberMiddleware;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessageUpdate;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Viktorprogger\TelegramBot\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\TelegramBot\Domain\Client\MessageFormat;
+use Viktorprogger\TelegramBot\Domain\Client\Response;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramMessage;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramMessageUpdate;
+use Viktorprogger\TelegramBot\Domain\Entity\Request\TelegramRequest;
 use Yiisoft\Data\Paginator\OffsetPaginator;
 use Yiisoft\Data\Reader\Iterable\IterableDataReader;
 
-final class SummaryAction implements ActionInterface
+final class SummaryAction implements RequestHandlerInterface
 {
     public function __construct(
         private readonly RepositoryButtonRepository $buttonService,
@@ -25,12 +27,13 @@ final class SummaryAction implements ActionInterface
     ) {
     }
 
-    public function handle(TelegramRequest $request, Response $response): Response
+    public function handle(TelegramRequest $request): ResponseInterface
     {
+        $response = new Response();
         preg_match("#^/summary:(\d+)$#", $request->requestData, $matches, PREG_UNMATCHED_AS_NULL);
         $page = (int) ($matches[1] ?? 1);
         $isButtonPressed = $request->callbackQueryId !== null;
-        $buttons = $this->buttonService->createKeyboard($request->subscriber, SubscriptionType::SUMMARY);
+        $buttons = $this->buttonService->createKeyboard($request->getAttribute(SubscriberMiddleware::ATTRIBUTE), SubscriptionType::SUMMARY);
         $pagination = (new OffsetPaginator(new IterableDataReader($buttons)))
             ->withPageSize(21)
             ->withCurrentPage($page);
@@ -55,7 +58,7 @@ final class SummaryAction implements ActionInterface
         if ($isButtonPressed) {
             $message = new TelegramMessageUpdate(
                 $text,
-                MessageFormat::markdown(),
+                MessageFormat::MARKDOWN,
                 $request->chatId,
                 $request->messageId,
                 $keyboard,
@@ -65,7 +68,7 @@ final class SummaryAction implements ActionInterface
         } else {
             $message = new TelegramMessage(
                 $text,
-                MessageFormat::markdown(),
+                MessageFormat::MARKDOWN,
                 $request->chatId,
                 $keyboard,
             );

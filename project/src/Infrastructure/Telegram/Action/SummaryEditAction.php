@@ -2,23 +2,25 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action;
 
+use Viktorprogger\TelegramBot\Domain\Client\ResponseInterface;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\RequestHandlerInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Settings;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\SubscriptionType;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\SubscriberMiddleware;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\RepositoryButtonRepository;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramCallbackResponse;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramKeyboardUpdate;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Viktorprogger\TelegramBot\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\TelegramBot\Domain\Client\Response;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramCallbackResponse;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramKeyboardUpdate;
+use Viktorprogger\TelegramBot\Domain\Entity\Request\TelegramRequest;
 use Yiisoft\Data\Paginator\OffsetPaginator;
 use Yiisoft\Data\Reader\Iterable\IterableDataReader;
 
-final class SummaryEditAction implements ActionInterface
+final class SummaryEditAction implements RequestHandlerInterface
 {
     public function __construct(
         private readonly SubscriberRepositoryInterface $subscriberRepository,
@@ -28,18 +30,20 @@ final class SummaryEditAction implements ActionInterface
     ) {
     }
 
-    public function handle(TelegramRequest $request, Response $response): Response
+    public function handle(TelegramRequest $request): ResponseInterface
     {
         [, $sign, $repository, $page] = explode(':', $request->requestData);
         $page = (int) ($page ?? 1);
 
+        /** @var Subscriber $subscriber */
+        $subscriber = $request->getAttribute(SubscriberMiddleware::ATTRIBUTE);
         if ($sign === '+') {
-            $keyboardChanged = $this->add($repository, $request->subscriber);
+            $keyboardChanged = $this->add($repository, $subscriber);
         } else {
-            $keyboardChanged = $this->remove($repository, $request->subscriber);
+            $keyboardChanged = $this->remove($repository, $subscriber);
         }
 
-        $response = $this->sendCallbackResponse($request, $sign, $repository, $response);
+        $response = $this->sendCallbackResponse($request, $sign, $repository, new Response());
         if ($keyboardChanged) {
             $response = $this->sendKeyboardUpdate($request, $response, $page);
         }
@@ -51,7 +55,7 @@ final class SummaryEditAction implements ActionInterface
     {
         if ($repository === Formatter::REPO_ALL) {
             $allRepos = $this->githubRepository->all();
-            if (array_diff($allRepos, $subscriber->settings) !== []) {
+            if (array_diff($allRepos, $subscriber->settings->summaryRepositories) !== []) {
                 $settings = new Settings($allRepos, $this->githubRepository->all());
                 $this->subscriberRepository->updateSettings($subscriber, $settings);
 
@@ -110,14 +114,14 @@ final class SummaryEditAction implements ActionInterface
      * @param string $repository
      * @param Response $response
      *
-     * @return Response
+     * @return ResponseInterface
      */
     private function sendCallbackResponse(
         TelegramRequest $request,
         mixed $sign,
         string $repository,
-        Response $response
-    ): Response {
+        ResponseInterface $response
+    ): ResponseInterface {
         if ($request->callbackQueryId !== null) {
             $text = match ($repository) {
                 Formatter::REPO_ALL => match ($sign) {
@@ -139,18 +143,18 @@ final class SummaryEditAction implements ActionInterface
 
     /**
      * @param TelegramRequest $request
-     * @param Response $response
+     * @param ResponseInterface $response
      * @param int $page
      *
-     * @return Response
+     * @return ResponseInterface
      */
     private function sendKeyboardUpdate(
         TelegramRequest $request,
-        Response $response,
+        ResponseInterface $response,
         int $page
-    ): Response {
+    ): ResponseInterface {
         $buttons = $this->buttonService->createKeyboard(
-            $this->subscriberRepository->find($request->subscriber->id),
+            $this->subscriberRepository->find($request->getAttribute(SubscriberMiddleware::ATTRIBUTE)->id),
             SubscriptionType::REALTIME
         );
 

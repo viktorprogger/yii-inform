@@ -6,6 +6,9 @@ declare(strict_types=1);
 return [
     '/' => [
         'common' => [
+            'viktorprogger/telegram-bot' => [
+                'config/common.php',
+            ],
             'yiisoft/cache' => [
                 'config/common.php',
             ],
@@ -47,7 +50,7 @@ return [
             ],
         ],
         'params' => [
-            'yiisoft/data-response' => [
+            'viktorprogger/telegram-bot' => [
                 'config/params.php',
             ],
             'yiisoft/router-fastroute' => [
@@ -57,6 +60,9 @@ return [
                 'config/params.php',
             ],
             'yiisoft/yii-sentry' => [
+                'config/params.php',
+            ],
+            'yiisoft/data-response' => [
                 'config/params.php',
             ],
             'yiisoft/aliases' => [
@@ -76,10 +82,10 @@ return [
             ],
         ],
         'web' => [
-            'yiisoft/data-response' => [
+            'yiisoft/router-fastroute' => [
                 'config/web.php',
             ],
-            'yiisoft/router-fastroute' => [
+            'yiisoft/data-response' => [
                 'config/web.php',
             ],
             'yiisoft/error-handler' => [

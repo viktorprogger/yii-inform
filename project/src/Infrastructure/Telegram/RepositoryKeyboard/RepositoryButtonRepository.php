@@ -2,10 +2,9 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard;
 
-use Psr\Log\LoggerInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Domain\SubscriptionType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
 
 final class RepositoryButtonRepository
 {

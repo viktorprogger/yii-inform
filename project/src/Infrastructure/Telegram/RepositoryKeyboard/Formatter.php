@@ -2,8 +2,8 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard;
 
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\TelegramBot\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\YiisoftInform\Domain\SubscriptionType;
 use Yiisoft\Data\Paginator\OffsetPaginator;
 
 final class Formatter
@@ -68,7 +68,7 @@ final class Formatter
         return new InlineKeyboardButton($text, $callbackData);
     }
 
-    private function addPagination(array &$result, OffsetPaginator $pagination, SubscriptionType $type)
+    private function addPagination(array &$result, OffsetPaginator $pagination, SubscriptionType $type): void
     {
         $perLine = 10;
         $line = count($result);
@@ -77,7 +77,7 @@ final class Formatter
                 $line++;
             }
 
-            $result[$line][] = new InlineKeyboardButton($i, "/$type->value:$i");
+            $result[$line][] = new InlineKeyboardButton((string) $i, "/$type->value:$i");
         }
     }
 }

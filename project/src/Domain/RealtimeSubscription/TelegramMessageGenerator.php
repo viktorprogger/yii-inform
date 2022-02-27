@@ -2,16 +2,15 @@
 
 namespace Viktorprogger\YiisoftInform\Domain\RealtimeSubscription;
 
+use Viktorprogger\TelegramBot\Domain\Client\MessageFormat;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramMessage;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
+use Viktorprogger\YiisoftInform\Domain\SubscriptionType;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\ButtonAction;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\RepositoryKeyboard\Formatter;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventType;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\GithubService;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\SubscriptionType;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Yiisoft\Arrays\ArrayHelper;
 
 final class TelegramMessageGenerator
 {
@@ -49,7 +48,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Был создан тикет {!issue!} пользователем {!issue_author!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function issueClosed(string $chatId): TelegramMessage
@@ -57,7 +56,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Закрыт тикет {!issue!} пользователем {!issue_closed_user!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function issueReopened(string $chatId): TelegramMessage
@@ -65,7 +64,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Заново открыт тикет {!issue!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function issueCommented(string $chatId): TelegramMessage
@@ -78,7 +77,7 @@ final class TelegramMessageGenerator
             {!comment_text!}
             MD;
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prOpened(string $chatId): TelegramMessage
@@ -86,7 +85,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Открыт PR {!pr!} пользователем {!pr_author!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prClosed(string $chatId): TelegramMessage
@@ -94,7 +93,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Закрыт PR {!pr!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prMerged(string $chatId): TelegramMessage
@@ -102,7 +101,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Смержен PR {!pr!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prReopened(string $chatId): TelegramMessage
@@ -110,7 +109,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "Заново открыт PR {!pr!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prChanged(string $chatId): TelegramMessage
@@ -122,7 +121,7 @@ final class TelegramMessageGenerator
             \{changes_summary\}
             MD;
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prCommented(string $chatId): TelegramMessage
@@ -135,7 +134,7 @@ final class TelegramMessageGenerator
             {!comment_text!}
             MD;
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prMergeApproved(string $chatId): TelegramMessage
@@ -143,7 +142,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "✅ Мёрж пулл реквеста {!pr!} одобрен пользователем {!review_user!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function prMergeDeclined(string $chatId): TelegramMessage
@@ -151,7 +150,7 @@ final class TelegramMessageGenerator
         $text = "\#{!repo!}\n";
         $text .= "❌ Пулл реквест {!pr!} требует изменений по мнению пользователя {!review_user!}\.";
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, disableLinkPreview: true);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, disableLinkPreview: true);
     }
 
     private function newRepoCreated(GithubEvent $event, string $chatId): TelegramMessage
@@ -178,7 +177,7 @@ final class TelegramMessageGenerator
             ]
         ];
 
-        return new TelegramMessage($text, MessageFormat::markdown(), $chatId, $keyboard);
+        return new TelegramMessage($text, MessageFormat::MARKDOWN, $chatId, $keyboard);
     }
 
     /**

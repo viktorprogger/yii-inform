@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action;
 
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Action\ActionInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\InlineKeyboardButton;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\Response;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessage;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramMessageUpdate;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\TelegramRequest;
+use Viktorprogger\TelegramBot\Domain\Client\InlineKeyboardButton;
+use Viktorprogger\TelegramBot\Domain\Client\MessageFormat;
+use Viktorprogger\TelegramBot\Domain\Client\Response;
+use Viktorprogger\TelegramBot\Domain\Client\ResponseInterface;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramMessage;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramMessageUpdate;
+use Viktorprogger\TelegramBot\Domain\Entity\Request\TelegramRequest;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\RequestHandlerInterface;
 
-final class HelloAction implements ActionInterface
+final class HelloAction implements RequestHandlerInterface
 {
-    public function handle(TelegramRequest $request, Response $response): Response
+    public function handle(TelegramRequest $request): ResponseInterface
     {
+        $response = new Response();
         $isButtonPressed = $request->callbackQueryId !== null;
 
         $text = <<<'TXT'
@@ -34,7 +36,7 @@ final class HelloAction implements ActionInterface
         if ($isButtonPressed) {
             $message = new TelegramMessageUpdate(
                 $text,
-                MessageFormat::markdown(),
+                MessageFormat::MARKDOWN,
                 $request->chatId,
                 $request->messageId,
                 $keyboard,
@@ -44,7 +46,7 @@ final class HelloAction implements ActionInterface
         } else {
             $message = new TelegramMessage(
                 $text,
-                MessageFormat::markdown(),
+                MessageFormat::MARKDOWN,
                 $request->chatId,
                 $keyboard,
             );

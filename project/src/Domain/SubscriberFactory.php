@@ -1,13 +1,13 @@
 <?php
 
-namespace Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain;
+namespace Viktorprogger\YiisoftInform\Domain;
 
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Settings;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 
-final class SubscriberService
+final class SubscriberFactory
 {
     public function __construct(
         private SubscriberIdFactoryInterface $subscriberIdFactory,

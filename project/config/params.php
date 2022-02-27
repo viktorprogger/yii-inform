@@ -14,8 +14,6 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\SummaryAction;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\SummaryEditAction;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadEventsCommand;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadRepositoriesCommand;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\GetUpdatesCommand;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Console\SetTelegramWebhookCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
 
 return [
@@ -70,8 +68,6 @@ return [
     'yiisoft/yii-console' => [
         'commands' => [
             'inform/cache/clear' => CacheClearCommand::class,
-            'inform/tg/updates' => GetUpdatesCommand::class,
-            'inform/tg/set-webhook' => SetTelegramWebhookCommand::class,
             'inform/github/load-repos' => LoadRepositoriesCommand::class,
             'inform/github/load-events' => LoadEventsCommand::class,
         ],
@@ -109,7 +105,10 @@ return [
          * Annotated/attributed entity directories list.
          * {@see \Yiisoft\Aliases\Aliases} are also supported.
          */
-        'entity-paths' => ['@root/src'],
+        'entity-paths' => [
+            '@root/src',
+            '@vendor/viktorprogger/telegram-bot/src/Infrastructure/Entity'
+        ],
 
         /**
          * Config for {@see \Yiisoft\Yii\Cycle\Factory\OrmFactory}

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 
 declare(strict_types=1);
 
@@ -21,11 +22,20 @@ use Sentry\SentrySdk;
 use Sentry\State\HubInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramClientInterface;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Application;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Middleware\MiddlewareDispatcher;
+use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Router;
+use Viktorprogger\TelegramBot\Infrastructure\Client\TelegramClientLog;
+use Viktorprogger\TelegramBot\Infrastructure\Client\TelegramClientSymfony;
+use Viktorprogger\TelegramBot\Infrastructure\UpdateRuntime\Middleware\RequestPersistingMiddleware;
+use Viktorprogger\TelegramBot\Infrastructure\UpdateRuntime\Middleware\RouterMiddleware;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Viktorprogger\YiisoftInform\Infrastructure\RequestIdLogProcessor;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\NotFoundRequestHandler;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
@@ -34,14 +44,11 @@ use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Client\Client as
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event\EventIdFactory;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\Event\EventRepository;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Entity\GithubRepository\GithubRepository;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\Application;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\UpdateRuntime\Router;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client\TelegramClientLog;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Infrastructure\Client\TelegramClientSymfony;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Cache\Apcu\ApcuCache;
+use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Definitions\Reference;
+use Yiisoft\Injector\Injector;
 use Yiisoft\Yii\Queue\Adapter\AdapterInterface;
 use Yiisoft\Yii\Queue\AMQP\Adapter;
 use Yiisoft\Yii\Queue\AMQP\MessageSerializer;
@@ -67,7 +74,6 @@ return [
         ],
     ],
     TelegramClientLog::class => ['__construct()' => ['logger' => Reference::to('loggerTelegram')]],
-    Application::class => ['__construct()' => ['logger' => Reference::to('loggerTelegram')]],
     HttpClientInterface::class => static fn() => HttpClient::create(),
     SubscriberIdFactoryInterface::class => SubscriberIdFactory::class,
     SubscriberRepositoryInterface::class => SubscriberRepository::class,
@@ -123,7 +129,7 @@ return [
     QueueSettings::class => [
         '__construct()' => ['queueName' => 'yii-queue'],
     ],
-    HubInterface::class => static function(): HubInterface {
+    HubInterface::class => static function (): HubInterface {
         //TODO move to params
         $options = ['dsn' => getenv('SENTRY_DSN'), 'environment' => getenv('YII_ENV')];
         $client = ClientBuilder::create($options)->getClient();
@@ -132,4 +138,18 @@ return [
 
         return $hub;
     },
+    Application::class => [
+        '__construct()' => [
+            'fallbackHandler' => Reference::to(NotFoundRequestHandler::class),
+            'dispatcher' => DynamicReference::to(static function (Injector $injector): MiddlewareDispatcher {
+                return ($injector->make(MiddlewareDispatcher::class))
+                    ->withMiddlewares(
+                        [
+                            RequestPersistingMiddleware::class,
+                            RouterMiddleware::class,
+                        ]
+                    );
+            }),
+        ],
+    ],
 ];
