@@ -72,7 +72,7 @@ return [
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
         Schema::DATABASE => 'default',
-        Schema::TABLE => 'user_entity',
+        Schema::TABLE => 'viktorprogger_telegram_user',
         Schema::PRIMARY_KEY => 'id',
         Schema::FIND_BY_KEYS => ['id'],
         Schema::COLUMNS => [
@@ -81,28 +81,6 @@ return [
         Schema::RELATIONS => [],
         Schema::CONSTRAIN => null,
         Schema::TYPECAST => [],
-        Schema::SCHEMA => [],
-    ],
-    'telegramUpdateEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\Update\\Cycle\\TelegramUpdateEntity',
-        Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
-        Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
-        Schema::REPOSITORY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\TgUpdateEntityCycleRepository',
-        Schema::DATABASE => 'default',
-        Schema::TABLE => 'tg_update',
-        Schema::PRIMARY_KEY => 'id',
-        Schema::FIND_BY_KEYS => ['id'],
-        Schema::COLUMNS => [
-            'id' => 'id',
-            'created_at' => 'created_at',
-            'contents' => 'contents',
-        ],
-        Schema::RELATIONS => [],
-        Schema::CONSTRAIN => null,
-        Schema::TYPECAST => [
-            'id' => 'int',
-            'created_at' => 'datetime',
-        ],
         Schema::SCHEMA => [],
     ],
     'requestEntity' => [
