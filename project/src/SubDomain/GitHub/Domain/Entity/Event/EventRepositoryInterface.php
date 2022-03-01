@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event;
 
-use DateTimeImmutable;
-
 interface EventRepositoryInterface
 {
     /**
@@ -20,11 +18,6 @@ interface EventRepositoryInterface
     public function enrich(GithubEvent $event, mixed $payload): GithubEvent;
 
     public function exists(EventId $id): bool;
-
-    /**
-     * @return GithubEvent[]
-     */
-    public function read(DateTimeImmutable $since): iterable;
 
     public function find(EventId $id): ?GithubEvent;
 }

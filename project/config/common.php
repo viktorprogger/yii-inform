@@ -36,6 +36,7 @@ use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberIdFac
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Viktorprogger\YiisoftInform\Infrastructure\RequestIdLogProcessor;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\NotFoundRequestHandler;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\SubscriberMiddleware;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventRepositoryInterface;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\GithubRepositoryInterface;
@@ -145,6 +146,7 @@ return [
                 return ($injector->make(MiddlewareDispatcher::class))
                     ->withMiddlewares(
                         [
+                            SubscriberMiddleware::class,
                             RequestPersistingMiddleware::class,
                             RouterMiddleware::class,
                         ]

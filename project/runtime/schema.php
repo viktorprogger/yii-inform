@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cycle\ORM\Relation;
 use Cycle\ORM\SchemaInterface as Schema;
 
 return [
@@ -65,13 +66,52 @@ return [
         Schema::TYPECAST => [],
         Schema::SCHEMA => [],
     ],
-    'telegramUpdateEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\SubDomain\\Telegram\\Infrastructure\\Entity\\TelegramUpdateEntity',
+    'userEntity' => [
+        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\User\\Cycle\\UserEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
-        Schema::REPOSITORY => 'Viktorprogger\\YiisoftInform\\SubDomain\\Telegram\\Infrastructure\\Entity\\TgUpdateEntityCycleRepository',
+        Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
+        Schema::DATABASE => 'default',
+        Schema::TABLE => 'user_entity',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::FIND_BY_KEYS => ['id'],
+        Schema::COLUMNS => [
+            'id' => 'id',
+        ],
+        Schema::RELATIONS => [],
+        Schema::CONSTRAIN => null,
+        Schema::TYPECAST => [],
+        Schema::SCHEMA => [],
+    ],
+    'telegramUpdateEntity' => [
+        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\Update\\Cycle\\TelegramUpdateEntity',
+        Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
+        Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
+        Schema::REPOSITORY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\TgUpdateEntityCycleRepository',
         Schema::DATABASE => 'default',
         Schema::TABLE => 'tg_update',
+        Schema::PRIMARY_KEY => 'id',
+        Schema::FIND_BY_KEYS => ['id'],
+        Schema::COLUMNS => [
+            'id' => 'id',
+            'created_at' => 'created_at',
+            'contents' => 'contents',
+        ],
+        Schema::RELATIONS => [],
+        Schema::CONSTRAIN => null,
+        Schema::TYPECAST => [
+            'id' => 'int',
+            'created_at' => 'datetime',
+        ],
+        Schema::SCHEMA => [],
+    ],
+    'requestEntity' => [
+        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\Request\\Cycle\\RequestEntity',
+        Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
+        Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
+        Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
+        Schema::DATABASE => 'default',
+        Schema::TABLE => 'viktorprogger_tg_request',
         Schema::PRIMARY_KEY => 'id',
         Schema::FIND_BY_KEYS => ['id'],
         Schema::COLUMNS => [

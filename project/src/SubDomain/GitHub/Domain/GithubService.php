@@ -14,6 +14,7 @@ final class GithubService
 {
     private const BOTS = [
         'dependabot[bot]',
+        'codecov[bot]',
     ];
 
     public function __construct(

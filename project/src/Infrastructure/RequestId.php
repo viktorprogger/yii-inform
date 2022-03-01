@@ -17,7 +17,7 @@ final class RequestId
 
     public function getValue(): string
     {
-        return $this->uuid?->toString() ?? throw new RuntimeException('Request ID is not generated');
+        return $this->uuid->toString();
     }
 
     public function regenerate(): void

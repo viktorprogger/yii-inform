@@ -61,11 +61,6 @@ final class EventRepository implements EventRepositoryInterface
         return $this->repository->select()->wherePK($id->value)->count('id') > 0;
     }
 
-    public function read(DateTimeImmutable $since): iterable
-    {
-        // TODO: Implement read() method.
-    }
-
     public function find(EventId $id): ?GithubEvent
     {
         /** @var EventEntity|null $entity */
@@ -78,7 +73,7 @@ final class EventRepository implements EventRepositoryInterface
     }
 
     /**
-     * @param EventEntity|null $entity
+     * @param EventEntity $entity
      *
      * @return GithubEvent
      * @throws JsonException

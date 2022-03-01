@@ -10,16 +10,17 @@ use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInt
 final class SubscriberFactory
 {
     public function __construct(
-        private SubscriberIdFactoryInterface $subscriberIdFactory,
-        private SubscriberRepositoryInterface $subscriberRepository,
+        private readonly SubscriberIdFactoryInterface $subscriberIdFactory,
+        private readonly SubscriberRepositoryInterface $subscriberRepository,
     )
     {
     }
 
     /**
      * @param string $telegramId A telegram id of a telegram user
+     * @param string $chatId
      *
-     * @return void
+     * @return Subscriber
      */
     public function getSubscriber(string $telegramId, string $chatId): Subscriber
     {

@@ -104,7 +104,7 @@ service:
     restart_sec: 30
 
   telegram_updates:
-      command: php yii inform/tg/updates
+      command: php yii viktorprogger/telegram/updates
       remain_after_exit: true
       restart_sec: 1
 

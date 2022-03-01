@@ -8,7 +8,7 @@ use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFact
 
 final class EventIdFactory implements EventIdFactoryInterface
 {
-    public function __construct(private UuidFactory $uuidFactory)
+    public function __construct(private readonly UuidFactory $uuidFactory)
     {
     }
 

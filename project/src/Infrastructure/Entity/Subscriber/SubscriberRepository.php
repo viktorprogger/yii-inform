@@ -20,7 +20,7 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
     private Repository $cycleRepository;
 
     public function __construct(
-        private ORM $orm,
+        private readonly ORM $orm,
         private readonly SubscriberIdFactoryInterface $idFactory,
     ) {
         /** @noinspection PhpFieldAssignmentTypeMismatchInspection */

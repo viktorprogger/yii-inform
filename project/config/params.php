@@ -44,6 +44,7 @@ return [
         'aliases' => [
             '@root' => dirname(__DIR__),
             '@runtime' => '@root/runtime',
+            '@vendor' => '@root/vendor'
         ],
     ],
     'yiisoft/log-target-file' => [

@@ -10,7 +10,7 @@ use Viktorprogger\YiisoftInform\Infrastructure\Entity\UuidFactory;
 
 final class SubscriberIdFactory implements SubscriberIdFactoryInterface
 {
-    public function __construct(private UuidFactory $uuidFactory)
+    public function __construct(private readonly UuidFactory $uuidFactory)
     {
     }
 

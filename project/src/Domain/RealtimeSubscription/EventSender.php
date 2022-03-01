@@ -3,12 +3,12 @@
 namespace Viktorprogger\YiisoftInform\Domain\RealtimeSubscription;
 
 use Psr\Log\LoggerInterface;
+use Viktorprogger\TelegramBot\Domain\Client\MessageFormat;
+use Viktorprogger\TelegramBot\Domain\Client\TelegramClientInterface;
+use Viktorprogger\TelegramBot\Domain\Client\TooManyRequestsException;
+use Viktorprogger\TelegramBot\Domain\Client\WrongEntitiesException;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\Subscriber;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\GithubEvent;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\MessageFormat;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TelegramClientInterface;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\TooManyRequestsException;
-use Viktorprogger\YiisoftInform\SubDomain\Telegram\Domain\Client\WrongEntitiesException;
 
 final class EventSender
 {
@@ -35,7 +35,7 @@ final class EventSender
             } catch (WrongEntitiesException) {
                 $this->client->sendMessage(
                     $message
-                        ->withFormat(MessageFormat::text())
+                        ->withFormat(MessageFormat::TEXT)
                         ->withText(<<<MSG
                             Message markup has errors, so it was sent in a raw style.
                             Feel free to create a ticket or to subscribe to an existing one here:
