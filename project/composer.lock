@@ -5513,12 +5513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/viktorprogger/telegram-bot.git",
-                "reference": "3134f5a25f25bec769a5a91f1cc2cabd4a4e0a8d"
+                "reference": "06ba7c5c931f22f40d3fae6a7904b5867a5fff23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/3134f5a25f25bec769a5a91f1cc2cabd4a4e0a8d",
-                "reference": "3134f5a25f25bec769a5a91f1cc2cabd4a4e0a8d",
+                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/06ba7c5c931f22f40d3fae6a7904b5867a5fff23",
+                "reference": "06ba7c5c931f22f40d3fae6a7904b5867a5fff23",
                 "shasum": ""
             },
             "require": {
@@ -5527,12 +5527,16 @@
                 "php": "^8.1",
                 "psr/http-message": "^1.0",
                 "psr/log": "^1.0.0||^2.0.0||^3.0.0",
-                "yiisoft/data-response": "^1.0"
+                "symfony/http-client": "^6.0",
+                "yiisoft/data-response": "^1.0",
+                "yiisoft/injector": "^1.0",
+                "yiisoft/yii-console": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
                 "roave/infection-static-analysis-plugin": "^1.16",
-                "vimeo/psalm": "^4.18"
+                "vimeo/psalm": "^4.18",
+                "yiisoft/test-support": "^1.3"
             },
             "default-branch": true,
             "type": "library",
@@ -5563,7 +5567,7 @@
                 "issues": "https://github.com/viktorprogger/telegram-bot/issues?state=open",
                 "source": "https://github.com/viktorprogger/telegram-bot"
             },
-            "time": "2022-02-18T07:53:26+00:00"
+            "time": "2022-03-01T16:12:36+00:00"
         },
         {
             "name": "vishnubob/wait-for-it",

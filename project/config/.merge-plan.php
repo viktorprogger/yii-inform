@@ -65,13 +65,13 @@ return [
             'yiisoft/data-response' => [
                 'config/params.php',
             ],
+            'yiisoft/yii-console' => [
+                'config/params.php',
+            ],
             'yiisoft/aliases' => [
                 'config/params.php',
             ],
             'yiisoft/log-target-file' => [
-                'config/params.php',
-            ],
-            'yiisoft/yii-console' => [
                 'config/params.php',
             ],
             'yiisoft/yii-queue' => [
@@ -124,10 +124,10 @@ return [
             'yiisoft/yii-sentry' => [
                 'config/events-console.php',
             ],
-            'yiisoft/log' => [
+            'yiisoft/yii-console' => [
                 'config/events-console.php',
             ],
-            'yiisoft/yii-console' => [
+            'yiisoft/log' => [
                 'config/events-console.php',
             ],
             'yiisoft/yii-event' => [
@@ -145,6 +145,11 @@ return [
                 'config/bootstrap.php',
             ],
         ],
+        'providers-console' => [
+            'yiisoft/yii-console' => [
+                'config/providers-console.php',
+            ],
+        ],
         'events-web' => [
             'yiisoft/log' => [
                 'config/events-web.php',
@@ -152,11 +157,6 @@ return [
             'yiisoft/yii-event' => [
                 '$events',
                 'config/events-web.php',
-            ],
-        ],
-        'providers-console' => [
-            'yiisoft/yii-console' => [
-                'config/providers-console.php',
             ],
         ],
         'events' => [
