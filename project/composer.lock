@@ -5513,12 +5513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/viktorprogger/telegram-bot.git",
-                "reference": "06ba7c5c931f22f40d3fae6a7904b5867a5fff23"
+                "reference": "a03ba11570d745dc7fe4eb2f1c51f6adac979a79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/06ba7c5c931f22f40d3fae6a7904b5867a5fff23",
-                "reference": "06ba7c5c931f22f40d3fae6a7904b5867a5fff23",
+                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/a03ba11570d745dc7fe4eb2f1c51f6adac979a79",
+                "reference": "a03ba11570d745dc7fe4eb2f1c51f6adac979a79",
                 "shasum": ""
             },
             "require": {
@@ -5567,7 +5567,7 @@
                 "issues": "https://github.com/viktorprogger/telegram-bot/issues?state=open",
                 "source": "https://github.com/viktorprogger/telegram-bot"
             },
-            "time": "2022-03-01T16:12:36+00:00"
+            "time": "2022-03-02T16:41:29+00:00"
         },
         {
             "name": "vishnubob/wait-for-it",
