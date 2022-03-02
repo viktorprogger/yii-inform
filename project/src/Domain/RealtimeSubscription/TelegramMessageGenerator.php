@@ -246,7 +246,7 @@ final class TelegramMessageGenerator
             '/{!comment_text!}/' => fn() => $this->markdownTextClear($payload['comment']['body']),
             '/{!pr!}/' => fn () => "[\#{$payload['pull_request']['number']} {$this->markdownTextClear($payload['pull_request']['title'])}]({$payload['pull_request']['html_url']})",
             '/{!pr_author!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
-            '/{!review_user!}/' => static fn () => "[{$payload['pull_request']['user']['login']}]({$payload['pull_request']['user']['html_url']})",
+            '/{!review_user!}/' => static fn () => "[{$payload['review']['user']['login']}]({$payload['review']['user']['html_url']})",
         ];
 
         return preg_replace_callback_array($callbacks, $message);
