@@ -20,7 +20,7 @@ class OrmDefaultAeea5c0bccf2e49e536823d6c99eced8 extends Migration
             ->create();
 
         $this->table('tg_update')
-            ->rename('viktorprogger_tg_request');
+            ->rename('viktorprogger_telegram_request');
     }
 
     public function down(): void
