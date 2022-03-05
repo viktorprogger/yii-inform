@@ -25,7 +25,7 @@ class OrmDefaultAeea5c0bccf2e49e536823d6c99eced8 extends Migration
 
     public function down(): void
     {
-        $this->table('viktorprogger_tg_request')->rename('tg_update');
+        $this->table('viktorprogger_telegram_request')->rename('tg_update');
         $this->table('viktorprogger_telegram_user')->drop();
     }
 }

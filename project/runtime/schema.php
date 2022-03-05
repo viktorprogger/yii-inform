@@ -89,7 +89,7 @@ return [
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
         Schema::DATABASE => 'default',
-        Schema::TABLE => 'viktorprogger_tg_request',
+        Schema::TABLE => 'viktorprogger_telegram_request',
         Schema::PRIMARY_KEY => 'id',
         Schema::FIND_BY_KEYS => ['id'],
         Schema::COLUMNS => [
