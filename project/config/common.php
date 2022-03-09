@@ -32,8 +32,10 @@ use Viktorprogger\TelegramBot\Infrastructure\UpdateRuntime\Middleware\RequestPer
 use Viktorprogger\TelegramBot\Infrastructure\UpdateRuntime\Middleware\RouterMiddleware;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberIdFactoryInterface;
 use Viktorprogger\YiisoftInform\Domain\Entity\Subscriber\SubscriberRepositoryInterface;
+use Viktorprogger\YiisoftInform\Domain\RealtimeSubscription\RealtimeMessageGeneratorInterface;
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberIdFactory;
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberRepository;
+use Viktorprogger\YiisoftInform\Infrastructure\GithubEventMessage\Markdown\RealtimeMessageGenerator;
 use Viktorprogger\YiisoftInform\Infrastructure\RequestIdLogProcessor;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\NotFoundRequestHandler;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\SubscriberMiddleware;
@@ -154,4 +156,5 @@ return [
             }),
         ],
     ],
+    RealtimeMessageGeneratorInterface::class => RealtimeMessageGenerator::class,
 ];

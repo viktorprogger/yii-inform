@@ -21,7 +21,7 @@ final class RepositoryKeyboard implements Iterator, Countable
     /**
      * @param int $quantity Button quantity in a single bunch
      *
-     * @return self[]
+     * @return iterable<self>
      */
     public function iterateBunch(int $quantity): iterable
     {
@@ -36,7 +36,7 @@ final class RepositoryKeyboard implements Iterator, Countable
         return new self(...array_filter($this->buttons, static fn (RepositoryButton $button) => $button->action === $action));
     }
 
-    public function has(string $repository)
+    public function has(string $repository): bool
     {
         return in_array(
             $repository,

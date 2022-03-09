@@ -30,7 +30,7 @@ final class RealtimeEditAction implements RequestHandlerInterface
     ) {
     }
 
-    public function handle(TelegramRequest $request): Response
+    public function handle(TelegramRequest $request): ResponseInterface
     {
         [, $sign, $repository, $page] = explode(':', $request->requestData);
         $page = (int) ($page ?? 1);
@@ -145,9 +145,9 @@ final class RealtimeEditAction implements RequestHandlerInterface
      * @param Response $response
      * @param int $page
      *
-     * @return Response
+     * @return ResponseInterface
      */
-    private function sendKeyboardUpdate(TelegramRequest $request, Response $response, int $page): ResponseInterface
+    private function sendKeyboardUpdate(TelegramRequest $request, ResponseInterface $response, int $page): ResponseInterface
     {
         $buttons = $this->buttonService->createKeyboard(
             $this->subscriberRepository->find($request->getAttribute(SubscriberMiddleware::ATTRIBUTE)->id),

@@ -15,7 +15,7 @@ final class EventSender
     private const MAX_ATTEMPTS = 10;
 
     public function __construct(
-        private readonly TelegramMessageGenerator $generator,
+        private readonly RealtimeMessageGeneratorInterface $generator,
         private readonly TelegramClientInterface $client,
         private readonly LoggerInterface $logger,
     ) {

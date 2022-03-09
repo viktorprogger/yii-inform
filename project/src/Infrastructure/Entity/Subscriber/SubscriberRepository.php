@@ -23,7 +23,10 @@ final class SubscriberRepository implements SubscriberRepositoryInterface
         private readonly ORM $orm,
         private readonly SubscriberIdFactoryInterface $idFactory,
     ) {
-        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+        /**
+         * @noinspection PhpFieldAssignmentTypeMismatchInspection
+         * @psalm-suppress PropertyTypeCoercion
+         */
         $this->cycleRepository = $this->orm->getRepository(SubscriberEntity::class);
     }
 

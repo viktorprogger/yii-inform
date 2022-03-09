@@ -19,6 +19,7 @@ final class GithubRepository implements GithubRepositoryInterface
 
     public function all(): array
     {
+        /** @var GithubRepositoryEntity[] $result */
         $result = $this->repo->select()->orderBy('name')->limit(150)->fetchAll();
 
         return array_map(static fn (GithubRepositoryEntity $record) => $record->name, $result);

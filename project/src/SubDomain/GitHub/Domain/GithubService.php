@@ -36,10 +36,14 @@ final class GithubService
         if ($url !== null) {
             $response = $this->api->getHttpClient()->get($url);
             if ($response->getStatusCode() === 200) {
+                /**
+                 * @noinspection PhpUnhandledExceptionInspection
+                 * @noinspection JsonEncodingApiUsageInspection
+                 */
                 return $this->eventRepository->enrich(
                     $event,
                     json_decode(
-                        $response->getBody(),
+                        (string) $response->getBody(),
                         true,
                         flags: JSON_THROW_ON_ERROR
                     )
