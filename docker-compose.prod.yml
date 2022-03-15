@@ -62,6 +62,7 @@ services:
       YII_ENV: ${YII_ENV:-prod}
       XDEBUG_MODE: 'off'
       URL_PREFIX: /app
+      DOMAIN: ${DOMAIN}
     env_file:
       - .env
     depends_on:
