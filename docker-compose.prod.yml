@@ -123,7 +123,7 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-yii-inform}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
-      GF_SERVER_ROOT_URL: http://${DOMAIN}/grafana
+      GF_SERVER_ROOT_URL: https://${DOMAIN}/grafana
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
     labels:
       - "traefik.enable=true"
