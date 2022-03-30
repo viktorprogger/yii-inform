@@ -163,10 +163,12 @@ final class MarkdownMessageFormatter
 
     private function markdownTextClear(string $text): string
     {
+        $result = str_replace('\\', '\\\\', $text);
+
         $result = preg_replace_callback(
             '/(?:\[.+]\([-\w@:%._+~#=&]+\))+|[()\[\]]/m',
             static fn($matches) => strlen($matches[0]) === 1 ? '\\' . $matches[0] : $matches[0],
-            $text,
+            $result,
         );
 
         $result = preg_replace(
@@ -176,7 +178,7 @@ final class MarkdownMessageFormatter
         );
 
         return preg_replace(
-            '/([-.#{%&+<>=!\\\,:^])/',
+            '/([-.#{%&+<>=!,:^])/',
             '\\\\$1',
             $result,
         );
