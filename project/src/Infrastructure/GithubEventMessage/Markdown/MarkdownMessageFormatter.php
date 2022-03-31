@@ -178,7 +178,7 @@ final class MarkdownMessageFormatter
         );
 
         return preg_replace(
-            '/([-.#{%&+<>=!,:^])/',
+            '/([-.#{}%&+<>=!,:^])/',
             '\\\\$1',
             $result,
         );
