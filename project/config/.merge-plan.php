@@ -12,9 +12,6 @@ return [
             'yiisoft/cache' => [
                 'config/common.php',
             ],
-            'yiisoft/request-model' => [
-                'config/common.php',
-            ],
             'yiisoft/router-fastroute' => [
                 'config/common.php',
             ],
@@ -30,19 +27,19 @@ return [
             'yiisoft/aliases' => [
                 'config/common.php',
             ],
-            'yiisoft/log-target-file' => [
-                'config/common.php',
-            ],
             'yiisoft/validator' => [
                 'config/common.php',
             ],
             'yiisoft/router' => [
                 'config/common.php',
             ],
-            'yiisoft/yii-event' => [
+            'yiisoft/yii-queue' => [
                 'config/common.php',
             ],
-            'yiisoft/yii-queue' => [
+            'yiisoft/log-target-file' => [
+                'config/common.php',
+            ],
+            'yiisoft/yii-event' => [
                 'config/common.php',
             ],
             '/' => [
@@ -71,10 +68,10 @@ return [
             'yiisoft/aliases' => [
                 'config/params.php',
             ],
-            'yiisoft/log-target-file' => [
+            'yiisoft/yii-queue' => [
                 'config/params.php',
             ],
-            'yiisoft/yii-queue' => [
+            'yiisoft/log-target-file' => [
                 'config/params.php',
             ],
             '/' => [
@@ -127,11 +124,11 @@ return [
             'yiisoft/yii-console' => [
                 'config/events-console.php',
             ],
-            'yiisoft/log' => [
-                'config/events-console.php',
-            ],
             'yiisoft/yii-event' => [
                 '$events',
+                'config/events-console.php',
+            ],
+            'yiisoft/log' => [
                 'config/events-console.php',
             ],
         ],
@@ -150,21 +147,21 @@ return [
                 'config/providers-console.php',
             ],
         ],
-        'events-web' => [
-            'yiisoft/log' => [
-                'config/events-web.php',
-            ],
-            'yiisoft/yii-event' => [
-                '$events',
-                'config/events-web.php',
-            ],
-        ],
         'events' => [
             'yiisoft/yii-event' => [
                 'config/events.php',
             ],
             '/' => [
                 'events.php',
+            ],
+        ],
+        'events-web' => [
+            'yiisoft/yii-event' => [
+                '$events',
+                'config/events-web.php',
+            ],
+            'yiisoft/log' => [
+                'config/events-web.php',
             ],
         ],
         'routes' => [

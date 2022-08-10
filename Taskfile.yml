@@ -62,13 +62,13 @@ tasks:
 
   php:run:
     cmds:
-      - docker-compose run --rm php {{.c}}
+      - docker-compose run --rm php {{.CLI_ARGS}}
 
   yii:
     cmds:
       - task: php:run
         vars:
-          c: php ./yii {{if .c}}{{.c}}{{end}}
+          CLI_ARGS: php ./yii {{if .CLI_ARGS}}{{.CLI_ARGS}}{{end}}
 
   yii:migrate:
     cmds:
@@ -86,31 +86,31 @@ tasks:
     cmds:
       - task: php:run
         vars:
-          c: composer install
+          CLI_ARGS: composer install
 
   composer:u:
     cmds:
       - task: php:run
         vars:
-          c: composer update {{if .c}}{{.c}}{{end}}
+          CLI_ARGS: composer update {{if .CLI_ARGS}}{{.CLI_ARGS}}{{end}}
 
   composer:r:
     cmds:
       - task: php:run
         vars:
-          c: composer require {{.c}}
+          CLI_ARGS: composer require {{.CLI_ARGS}}
 
   composer:rm:
     cmds:
       - task: php:run
         vars:
-          c: composer remove {{.c}}
+          CLI_ARGS: composer remove {{.CLI_ARGS}}
 
   composer:yii-cfg:
     cmds:
       - task: php:run
         vars:
-          c: composer yii-config-rebuild
+          CLI_ARGS: composer yii-config-rebuild
 
   prod:u:
     cmds:

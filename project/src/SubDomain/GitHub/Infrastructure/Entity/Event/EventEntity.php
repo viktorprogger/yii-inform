@@ -7,7 +7,7 @@ use Cycle\Annotated\Annotation\Entity;
 use DateTimeImmutable;
 
 #[Entity(table: 'github_event')]
-final class EventEntity
+class EventEntity
 {
     public function __construct(
         #[Column(type: 'string', primary: true)]

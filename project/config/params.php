@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Cycle\Database\Config\MySQL\DsnConnectionConfig;
+use Cycle\Database\Config\MySQLDriverConfig;
+use Cycle\Database\Driver\MySQL\MySQLDriver;
 use Psr\Log\LogLevel;
-use Spiral\Database\Driver\MySQL\MySQLDriver;
 use Viktorprogger\YiisoftInform\Infrastructure\Console\CacheClearCommand;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventHandler;
 use Viktorprogger\YiisoftInform\Infrastructure\Queue\RealtimeEventMessage;
@@ -85,12 +87,13 @@ return [
                 'default' => ['connection' => 'default']
             ],
             'connections' => [
-                'default' => [
-                    'driver' => MySQLDriver::class,
-                    'connection' => 'mysql:dbname=' . getenv('DB_NAME') . ';host=db',
-                    'username' => getenv('DB_LOGIN'),
-                    'password' => getenv('DB_PASSWORD'),
-                ],
+                'default' => new MySQLDriverConfig(
+                    connection: new DsnConnectionConfig(
+                        dsn: 'mysql:dbname=' . getenv('DB_NAME') . ';host=db',
+                        user: getenv('DB_LOGIN'),
+                        password: getenv('DB_PASSWORD'),
+                    ),
+                ),
             ],
         ],
 

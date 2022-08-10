@@ -7,6 +7,7 @@ use Github\AuthMethod;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Monolog\LogRecord;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\MemoryPeakUsageProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
@@ -84,10 +85,11 @@ return [
     LoggerInterface::class => Logger::class,
     Logger::class => static function(Aliases $alias, RequestIdLogProcessor $requestIdLogProcessor) {
         return (new Logger('application'))
-            ->pushProcessor(static function (array $record): array {
-                if (isset($record['extra'])) {
-                    $record['context']['extra'] = $record['extra'] ?? [];
-                    unset($record['extra']);
+            ->pushProcessor(static function (LogRecord $record): LogRecord {
+                if ($record->extra !== []) {
+                    $context = $record->context + ['extra' => $record->extra];
+
+                    return $record->with(...['context' => $context, 'extra' => []]);
                 }
 
                 return $record;

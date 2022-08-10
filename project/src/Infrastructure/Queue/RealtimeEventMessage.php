@@ -12,7 +12,7 @@ final class RealtimeEventMessage extends AbstractMessage
     {
     }
 
-    public function getName(): string
+    public function getHandlerName(): string
     {
         return self::NAME;
     }

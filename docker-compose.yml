@@ -30,11 +30,6 @@ services:
       - vendor/bin/wait-for-it.sh
       - db:3306
       - --strict
-      - --
-      - ./rr
-      - serve
-      - -o
-      - http.pool.num_workers=${RR_WORKERS}
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     restart: unless-stopped
     volumes:

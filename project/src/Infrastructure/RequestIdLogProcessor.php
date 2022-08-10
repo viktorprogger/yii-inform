@@ -2,16 +2,18 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure;
 
+use Monolog\LogRecord;
+
 class RequestIdLogProcessor
 {
     public function __construct(private readonly RequestId $requestId)
     {
     }
 
-    public function __invoke(array $record)
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['context']['request_id'] = $this->requestId->getValue();
+        $context = $record['context'] + ['request_id' => $this->requestId->getValue()];
 
-        return $record;
+        return $record->with(...['context' => $context]);
     }
 }
