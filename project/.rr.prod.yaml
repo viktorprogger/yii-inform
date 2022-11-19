@@ -37,12 +37,12 @@ logs:
   # disables sampling. Stacktraces are automatically included on logs of WarnLevel and above.
   #
   # Default: "development"
-  mode: development
+  mode: production
 
   # Logging level can be "panic", "error", "warn", "info", "debug".
   #
   # Default: "debug"
-  level: debug
+  level: panic
 
   # Encoding format can be "console" or "json" (last is preferred for production usage).
   #
