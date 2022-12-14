@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d19e433c0c6073ef99ee4fac036fe221",
+    "content-hash": "f0c46679038efd1a56a06ca8e056d460",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -5434,12 +5434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/viktorprogger/telegram-bot.git",
-                "reference": "e398f3f78b4c6ea7e78dabad82f58eebc7c490ed"
+                "reference": "c9b77bba16a07e81e5e034579f681a480f20383a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/e398f3f78b4c6ea7e78dabad82f58eebc7c490ed",
-                "reference": "e398f3f78b4c6ea7e78dabad82f58eebc7c490ed",
+                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/c9b77bba16a07e81e5e034579f681a480f20383a",
+                "reference": "c9b77bba16a07e81e5e034579f681a480f20383a",
                 "shasum": ""
             },
             "require": {
@@ -5488,7 +5488,7 @@
                 "issues": "https://github.com/viktorprogger/telegram-bot/issues?state=open",
                 "source": "https://github.com/viktorprogger/telegram-bot"
             },
-            "time": "2022-03-09T21:40:15+00:00"
+            "time": "2022-08-31T20:02:15+00:00"
         },
         {
             "name": "vishnubob/wait-for-it",
@@ -7861,18 +7861,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-queue.git",
-                "reference": "ad8d35d7bc00e93d8f96b72132237435c48a2fe6"
+                "reference": "c0b6143faf91ed6aaae656cedc8a98c185d619f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-queue/zipball/ad8d35d7bc00e93d8f96b72132237435c48a2fe6",
-                "reference": "ad8d35d7bc00e93d8f96b72132237435c48a2fe6",
+                "url": "https://api.github.com/repos/yiisoft/yii-queue/zipball/c0b6143faf91ed6aaae656cedc8a98c185d619f4",
+                "reference": "c0b6143faf91ed6aaae656cedc8a98c185d619f4",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.0",
                 "psr/log": "^2.0|^3.0",
-                "yiisoft/definitions": "^1.0|^2.0",
+                "yiisoft/definitions": "^1.0|^2.0|^3.0",
                 "yiisoft/factory": "^1.0",
                 "yiisoft/friendly-exception": "^1.0",
                 "yiisoft/injector": "^1.0",
@@ -7942,26 +7942,26 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2022-08-07T05:21:20+00:00"
+            "time": "2022-11-28T18:06:22+00:00"
         },
         {
             "name": "yiisoft/yii-queue-amqp",
-            "version": "dev-master",
+            "version": "dev-little-fixes",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii-queue-amqp.git",
-                "reference": "54073f1402986595b6ea53bc230ed1fc245df0f6"
+                "reference": "9bd03eac189d442684e8f5da9fcb435164a85d78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii-queue-amqp/zipball/54073f1402986595b6ea53bc230ed1fc245df0f6",
-                "reference": "54073f1402986595b6ea53bc230ed1fc245df0f6",
+                "url": "https://api.github.com/repos/yiisoft/yii-queue-amqp/zipball/9bd03eac189d442684e8f5da9fcb435164a85d78",
+                "reference": "9bd03eac189d442684e8f5da9fcb435164a85d78",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-sockets": "*",
-                "php": "^7.4|^8.0",
+                "php": "^8.0",
                 "php-amqplib/php-amqplib": "^3.1.0",
                 "yiisoft/factory": "^1.0",
                 "yiisoft/friendly-exception": "^1.0",
@@ -7973,7 +7973,6 @@
                 "spatie/phpunit-watcher": "^1.23",
                 "vimeo/psalm": "^4.18"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -8022,7 +8021,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2022-06-30T07:52:51+00:00"
+            "time": "2022-12-14T22:06:11+00:00"
         },
         {
             "name": "yiisoft/yii-runner",

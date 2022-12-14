@@ -21,7 +21,7 @@ final class RealtimeEventHandler
     ) {
     }
 
-    public function __invoke(MessageInterface $message)
+    public function __invoke(MessageInterface $message): void
     {
         ['event' => $eventId, 'subscriberId' => $subscriberId] = $message->getData();
         $eventId = $this->eventIdFactory->create($eventId);

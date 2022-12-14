@@ -59,7 +59,7 @@
         "yiisoft/yii-event": "^1.0",
         "yiisoft/yii-http": "^1.0",
         "yiisoft/yii-queue": "3.0.x-dev",
-        "yiisoft/yii-queue-amqp": "3.0.x-dev",
+        "yiisoft/yii-queue-amqp": "dev-little-fixes",
         "yiisoft/yii-runner-console": "dev-master",
         "yiisoft/yii-runner-roadrunner": "dev-master",
         "yiisoft/yii-sentry": "^1.0"

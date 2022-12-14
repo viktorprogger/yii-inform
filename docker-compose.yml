@@ -17,6 +17,8 @@ services:
     links:
       - php
       - grafana
+    profiles:
+      - full
 
   php:
     build:
@@ -60,6 +62,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(\"${DOMAIN}\") && Path(`/app`, `/app/{path:.*}`)"
       - "traefik.http.routers.app.entrypoints=web"
+    profiles:
+      - full
+      - console-tools
+    dns: 1.1.1.1
 
   db:
     image: mysql:5.7
@@ -74,6 +80,8 @@ services:
       MYSQL_USER: ${DB_LOGIN}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    profiles:
+      - full
 
   amqp:
     image: rabbitmq:3-management
@@ -85,10 +93,14 @@ services:
       - 5672
     ports:
       - ${AMQP_PORT:-15672}:15672
+    profiles:
+      - full
 
   loki:
     image: grafana/loki:2.4.1
     command: -config.file=/etc/loki/local-config.yaml
+    profiles:
+      - full
 
   promtail:
     image: grafana/promtail:2.4.1
@@ -100,6 +112,8 @@ services:
     command: -config.file=/etc/promtail/config.yml
     links:
       - loki
+    profiles:
+      - full
 
   grafana:
     image: grafana/grafana-oss:latest
@@ -116,3 +130,5 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(\"${DOMAIN}\") && Path(`/grafana`, `/grafana/{path:.*}`)"
       - "traefik.http.routers.grafana.entrypoints=web"
+    profiles:
+      - full

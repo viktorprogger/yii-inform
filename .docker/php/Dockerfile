@@ -3,7 +3,8 @@ FROM php:8.1-cli-alpine
 RUN apk --no-cache add \
         git \
         icu-dev \
-        bash && \
+        bash \
+        linux-headers && \
     docker-php-ext-install \
         intl \
         opcache \

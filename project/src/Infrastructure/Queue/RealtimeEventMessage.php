@@ -2,11 +2,13 @@
 
 namespace Viktorprogger\YiisoftInform\Infrastructure\Queue;
 
-use Yiisoft\Yii\Queue\Message\AbstractMessage;
+use Yiisoft\Yii\Queue\Message\MessageInterface;
 
-final class RealtimeEventMessage extends AbstractMessage
+final class RealtimeEventMessage implements MessageInterface
 {
     public const NAME = 'realtime-github-event';
+
+    private ?string $id = null;
 
     public function __construct(private readonly string $githubId, private readonly string $subscriberId)
     {
@@ -23,5 +25,20 @@ final class RealtimeEventMessage extends AbstractMessage
             'event' => $this->githubId,
             'subscriberId' => $this->subscriberId,
         ];
+    }
+
+    public function setId(?string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getMetadata(): array
+    {
+        return [];
     }
 }
