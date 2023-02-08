@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Viktorprogger\TelegramBot\Infrastructure\Web\Controller\TelegramHookController;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\WebHook\TelegramHookController;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Request\Body\RequestBodyParser;
