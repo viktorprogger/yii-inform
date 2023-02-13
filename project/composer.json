@@ -26,7 +26,7 @@
         "httpsoft/http-message": "^1.0.5",
         "knplabs/github-api": "^3.3.0",
         "monolog/monolog": "^3.2",
-        "psr/container": "^1.0",
+        "psr/container": "^2.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
@@ -125,7 +125,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "yiisoft/config": true,
-            "infection/extension-installer": true
+            "infection/extension-installer": true,
+            "php-http/discovery": true
         }
     }
 }

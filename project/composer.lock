@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72d9dc1f419e2bbf3c2060968b4115ab",
+    "content-hash": "bfc447fa90daa4e303c33a0f5f138b29",
     "packages": [
         {
             "name": "alexkart/curl-builder",
@@ -321,22 +321,22 @@
         },
         {
             "name": "cycle/annotated",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/annotated.git",
-                "reference": "78c8f0e40de09300c52ccf0394222420d2f59c11"
+                "reference": "0e0afb452fdedb0817d28201a1cd493f7ec8b3eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/annotated/zipball/78c8f0e40de09300c52ccf0394222420d2f59c11",
-                "reference": "78c8f0e40de09300c52ccf0394222420d2f59c11",
+                "url": "https://api.github.com/repos/cycle/annotated/zipball/0e0afb452fdedb0817d28201a1cd493f7ec8b3eb",
+                "reference": "0e0afb452fdedb0817d28201a1cd493f7ec8b3eb",
                 "shasum": ""
             },
             "require": {
                 "cycle/orm": "^2.2.0",
-                "cycle/schema-builder": "^2.1.0",
-                "doctrine/annotations": "^1.13",
+                "cycle/schema-builder": "^2.3",
+                "doctrine/annotations": "^1.13 || ^2.0",
                 "doctrine/inflector": "^2.0",
                 "php": ">=8.0",
                 "spiral/attributes": "^2.8|^3.0",
@@ -359,22 +359,22 @@
             "description": "Cycle ORM Annotated Entities generator",
             "support": {
                 "issues": "https://github.com/cycle/annotated/issues",
-                "source": "https://github.com/cycle/annotated/tree/v3.2.0"
+                "source": "https://github.com/cycle/annotated/tree/v3.2.1"
             },
-            "time": "2022-07-05T19:31:01+00:00"
+            "time": "2023-02-01T17:01:38+00:00"
         },
         {
             "name": "cycle/database",
-            "version": "2.2.1",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/database.git",
-                "reference": "bd48dec079d7666dd125e1299be031b123685684"
+                "reference": "9739b63e18b3eef2ba941fe5cf36686da608295d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/database/zipball/bd48dec079d7666dd125e1299be031b123685684",
-                "reference": "bd48dec079d7666dd125e1299be031b123685684",
+                "url": "https://api.github.com/repos/cycle/database/zipball/9739b63e18b3eef2ba941fe5cf36686da608295d",
+                "reference": "9739b63e18b3eef2ba941fe5cf36686da608295d",
                 "shasum": ""
             },
             "require": {
@@ -411,9 +411,9 @@
             "description": "DBAL, schema introspection, migration and pagination",
             "support": {
                 "issues": "https://github.com/cycle/database/issues",
-                "source": "https://github.com/cycle/database/tree/2.2.1"
+                "source": "https://github.com/cycle/database/tree/2.4.0"
             },
-            "time": "2022-07-02T07:49:22+00:00"
+            "time": "2023-02-01T13:05:15+00:00"
         },
         {
             "name": "cycle/migrations",
@@ -460,26 +460,26 @@
         },
         {
             "name": "cycle/orm",
-            "version": "v2.2.0",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/orm.git",
-                "reference": "b69635a37a7eefcf4eb3801013fd62d1e1fcc728"
+                "reference": "daa46ddfd4ce3e571e850983d26513aa3f13c943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/orm/zipball/b69635a37a7eefcf4eb3801013fd62d1e1fcc728",
-                "reference": "b69635a37a7eefcf4eb3801013fd62d1e1fcc728",
+                "url": "https://api.github.com/repos/cycle/orm/zipball/daa46ddfd4ce3e571e850983d26513aa3f13c943",
+                "reference": "daa46ddfd4ce3e571e850983d26513aa3f13c943",
                 "shasum": ""
             },
             "require": {
-                "cycle/database": "^2.2.1",
+                "cycle/database": "^2.3",
                 "doctrine/instantiator": "^1.3.1",
                 "ext-pdo": "*",
                 "php": ">=8.0"
             },
             "require-dev": {
-                "doctrine/collections": "^1.6",
+                "doctrine/collections": "^1.6 || ^2.0",
                 "illuminate/collections": "^8.0",
                 "loophp/collection": "^6.0",
                 "mockery/mockery": "^1.1",
@@ -501,25 +501,26 @@
             "description": "PHP DataMapper ORM and Data Modelling Engine",
             "support": {
                 "issues": "https://github.com/cycle/orm/issues",
-                "source": "https://github.com/cycle/orm/tree/v2.2.0"
+                "source": "https://github.com/cycle/orm/tree/v2.2.2"
             },
-            "time": "2022-07-05T13:05:00+00:00"
+            "time": "2023-02-08T07:53:29+00:00"
         },
         {
             "name": "cycle/schema-builder",
-            "version": "v2.1.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cycle/schema-builder.git",
-                "reference": "4838734b8082bc80abca1221225feda5e72366a3"
+                "reference": "a639f4bf6bf03b855c150afaa8b3c611be47f826"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cycle/schema-builder/zipball/4838734b8082bc80abca1221225feda5e72366a3",
-                "reference": "4838734b8082bc80abca1221225feda5e72366a3",
+                "url": "https://api.github.com/repos/cycle/schema-builder/zipball/a639f4bf6bf03b855c150afaa8b3c611be47f826",
+                "reference": "a639f4bf6bf03b855c150afaa8b3c611be47f826",
                 "shasum": ""
             },
             "require": {
+                "cycle/database": "^2.4",
                 "cycle/orm": "^2.0",
                 "php": ">=8.0",
                 "yiisoft/friendly-exception": "^1.1"
@@ -542,9 +543,9 @@
             "description": "Cycle ORM Schema Builder",
             "support": {
                 "issues": "https://github.com/cycle/schema-builder/issues",
-                "source": "https://github.com/cycle/schema-builder/tree/v2.1.0"
+                "source": "https://github.com/cycle/schema-builder/tree/v2.3.0"
             },
-            "time": "2022-01-11T11:38:48+00:00"
+            "time": "2023-02-01T13:27:36+00:00"
         },
         {
             "name": "cycle/schema-migrations-generator",
@@ -631,31 +632,34 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.13.3",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "648b0343343565c4a056bfc8392201385e8d89f0"
+                "reference": "e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/648b0343343565c4a056bfc8392201385e8d89f0",
-                "reference": "648b0343343565c4a056bfc8392201385e8d89f0",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f",
+                "reference": "e157ef3f3124bbf6fe7ce0ffd109e8a8ef284e7f",
                 "shasum": ""
             },
             "require": {
-                "doctrine/lexer": "1.*",
+                "doctrine/lexer": "^2 || ^3",
                 "ext-tokenizer": "*",
-                "php": "^7.1 || ^8.0",
+                "php": "^7.2 || ^8.0",
                 "psr/cache": "^1 || ^2 || ^3"
             },
             "require-dev": {
-                "doctrine/cache": "^1.11 || ^2.0",
-                "doctrine/coding-standard": "^6.0 || ^8.1",
-                "phpstan/phpstan": "^1.4.10 || ^1.8.0",
-                "phpunit/phpunit": "^7.5 || ^8.0 || ^9.1.5",
-                "symfony/cache": "^4.4 || ^5.2",
+                "doctrine/cache": "^2.0",
+                "doctrine/coding-standard": "^10",
+                "phpstan/phpstan": "^1.8.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "symfony/cache": "^5.4 || ^6",
                 "vimeo/psalm": "^4.10"
+            },
+            "suggest": {
+                "php": "PHP 8.0 or higher comes with attributes, a native replacement for annotations"
             },
             "type": "library",
             "autoload": {
@@ -698,34 +702,34 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.13.3"
+                "source": "https://github.com/doctrine/annotations/tree/2.0.1"
             },
-            "time": "2022-07-02T10:48:51+00:00"
+            "time": "2023-02-02T22:02:53+00:00"
         },
         {
             "name": "doctrine/inflector",
-            "version": "2.0.4",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "8b7ff3e4b7de6b2c84da85637b59fd2880ecaa89"
+                "reference": "d9d313a36c872fd6ee06d9a6cbcf713eaa40f024"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/8b7ff3e4b7de6b2c84da85637b59fd2880ecaa89",
-                "reference": "8b7ff3e4b7de6b2c84da85637b59fd2880ecaa89",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/d9d313a36c872fd6ee06d9a6cbcf713eaa40f024",
+                "reference": "d9d313a36c872fd6ee06d9a6cbcf713eaa40f024",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^8.2",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-                "vimeo/psalm": "^4.10"
+                "doctrine/coding-standard": "^10",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.3",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "vimeo/psalm": "^4.25"
             },
             "type": "library",
             "autoload": {
@@ -775,7 +779,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/2.0.4"
+                "source": "https://github.com/doctrine/inflector/tree/2.0.6"
             },
             "funding": [
                 {
@@ -791,7 +795,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-22T20:16:43+00:00"
+            "time": "2022-10-20T09:10:12+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -865,31 +869,32 @@
         },
         {
             "name": "doctrine/lexer",
-            "version": "1.2.3",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "c268e882d4dbdd85e36e4ad69e02dc284f89d229"
+                "reference": "84a527db05647743d50373e0ec53a152f2cde568"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/c268e882d4dbdd85e36e4ad69e02dc284f89d229",
-                "reference": "c268e882d4dbdd85e36e4ad69e02dc284f89d229",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/84a527db05647743d50373e0ec53a152f2cde568",
+                "reference": "84a527db05647743d50373e0ec53a152f2cde568",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1 || ^8.0"
+                "php": "^8.1"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^9.0",
-                "phpstan/phpstan": "^1.3",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
-                "vimeo/psalm": "^4.11"
+                "doctrine/coding-standard": "^10",
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.5",
+                "psalm/plugin-phpunit": "^0.18.3",
+                "vimeo/psalm": "^5.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Common\\Lexer\\": "lib/Doctrine/Common/Lexer"
+                    "Doctrine\\Common\\Lexer\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -921,7 +926,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/lexer/issues",
-                "source": "https://github.com/doctrine/lexer/tree/1.2.3"
+                "source": "https://github.com/doctrine/lexer/tree/3.0.0"
             },
             "funding": [
                 {
@@ -937,7 +942,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-28T11:07:21+00:00"
+            "time": "2022-12-15T16:57:16+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1408,16 +1413,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "3.2.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "305444bc6fb6c89e490f4b34fa6e979584d7fa81"
+                "reference": "9b5daeaffce5b926cac47923798bba91059e60e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/305444bc6fb6c89e490f4b34fa6e979584d7fa81",
-                "reference": "305444bc6fb6c89e490f4b34fa6e979584d7fa81",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/9b5daeaffce5b926cac47923798bba91059e60e2",
+                "reference": "9b5daeaffce5b926cac47923798bba91059e60e2",
                 "shasum": ""
             },
             "require": {
@@ -1432,16 +1437,16 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "elasticsearch/elasticsearch": "^7 || ^8",
                 "ext-json": "*",
-                "graylog2/gelf-php": "^1.4.2",
-                "guzzlehttp/guzzle": "^7.4",
+                "graylog2/gelf-php": "^1.4.2 || ^2@dev",
+                "guzzlehttp/guzzle": "^7.4.5",
                 "guzzlehttp/psr7": "^2.2",
                 "mongodb/mongodb": "^1.8",
                 "php-amqplib/php-amqplib": "~2.4 || ^3",
-                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan": "^1.9",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
-                "phpstan/phpstan-strict-rules": "^1.1",
-                "phpunit/phpunit": "^9.5.16",
-                "predis/predis": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.4",
+                "phpunit/phpunit": "^9.5.26",
+                "predis/predis": "^1.1 || ^2",
                 "ruflin/elastica": "^7",
                 "symfony/mailer": "^5.4 || ^6",
                 "symfony/mime": "^5.4 || ^6"
@@ -1493,7 +1498,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/3.2.0"
+                "source": "https://github.com/Seldaek/monolog/tree/3.3.1"
             },
             "funding": [
                 {
@@ -1505,7 +1510,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-24T12:00:55+00:00"
+            "time": "2023-02-06T13:46:10+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -1947,38 +1952,44 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.3",
+            "version": "1.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735"
+                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/31d8ee46d0215108df16a8527c7438e96a4d7735",
-                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/5cc428320191ac1d0b6520034c2dc0698628ced5",
+                "reference": "5cc428320191ac1d0b6520034c2dc0698628ced5",
                 "shasum": ""
             },
             "require": {
+                "composer-plugin-api": "^1.0|^2.0",
                 "php": "^7.1 || ^8.0"
             },
             "conflict": {
                 "nyholm/psr7": "<1.0"
             },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "*",
+                "psr/http-factory-implementation": "*",
+                "psr/http-message-implementation": "*"
+            },
             "require-dev": {
+                "composer/composer": "^1.0.2|^2.0",
                 "graham-campbell/phpspec-skip-example-extension": "^5.0",
                 "php-http/httplug": "^1.0 || ^2.0",
                 "php-http/message-factory": "^1.0",
-                "phpspec/phpspec": "^5.1 || ^6.1"
+                "phpspec/phpspec": "^5.1 || ^6.1 || ^7.3",
+                "symfony/phpunit-bridge": "^6.2"
             },
-            "suggest": {
-                "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories"
-            },
-            "type": "library",
+            "type": "composer-plugin",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
+                "class": "Http\\Discovery\\Composer\\Plugin",
+                "plugin-optional": true
             },
             "autoload": {
                 "psr-4": {
@@ -1995,7 +2006,7 @@
                     "email": "mark.sagikazar@gmail.com"
                 }
             ],
-            "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
+            "description": "Finds and installs PSR-7, PSR-17, PSR-18 and HTTPlug implementations",
             "homepage": "http://php-http.org",
             "keywords": [
                 "adapter",
@@ -2004,13 +2015,14 @@
                 "factory",
                 "http",
                 "message",
+                "psr17",
                 "psr7"
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.3"
+                "source": "https://github.com/php-http/discovery/tree/1.15.2"
             },
-            "time": "2022-07-11T14:04:40+00:00"
+            "time": "2023-02-11T08:28:41+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -2481,22 +2493,27 @@
         },
         {
             "name": "psr/container",
-            "version": "1.1.2",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
-                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -2523,9 +2540,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.2"
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
-            "time": "2021-11-05T16:50:12+00:00"
+            "time": "2021-11-05T16:47:00+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -3332,16 +3349,16 @@
         },
         {
             "name": "spiral/attributes",
-            "version": "2.13.1",
+            "version": "2.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/attributes.git",
-                "reference": "bbe67611a3562d76a4c85a0fc159f9b6f9c35d14"
+                "reference": "e5470703d6479935c54a78acd1687f9bd09f4c61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/attributes/zipball/bbe67611a3562d76a4c85a0fc159f9b6f9c35d14",
-                "reference": "bbe67611a3562d76a4c85a0fc159f9b6f9c35d14",
+                "url": "https://api.github.com/repos/spiral/attributes/zipball/e5470703d6479935c54a78acd1687f9bd09f4c61",
+                "reference": "e5470703d6479935c54a78acd1687f9bd09f4c61",
                 "shasum": ""
             },
             "require": {
@@ -3362,7 +3379,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14.x-dev"
+                    "dev-master": "2.15.x-dev"
                 }
             },
             "autoload": {
@@ -3389,20 +3406,20 @@
                 "issues": "https://github.com/spiral/framework/issues",
                 "source": "https://github.com/spiral/attributes"
             },
-            "time": "2022-05-16T19:46:13+00:00"
+            "time": "2022-09-01T21:11:15+00:00"
         },
         {
             "name": "spiral/core",
-            "version": "2.13.1",
+            "version": "2.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/core.git",
-                "reference": "0987729c98a3e764d916d065237e0e491824fb07"
+                "reference": "bbc0a4a1d3c4f14d8d7354d94a05577e60129416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/core/zipball/0987729c98a3e764d916d065237e0e491824fb07",
-                "reference": "0987729c98a3e764d916d065237e0e491824fb07",
+                "url": "https://api.github.com/repos/spiral/core/zipball/bbc0a4a1d3c4f14d8d7354d94a05577e60129416",
+                "reference": "bbc0a4a1d3c4f14d8d7354d94a05577e60129416",
                 "shasum": ""
             },
             "require": {
@@ -3416,7 +3433,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14.x-dev"
+                    "dev-master": "2.15.x-dev"
                 }
             },
             "autoload": {
@@ -3440,7 +3457,7 @@
                 "issues": "https://github.com/spiral/framework/issues",
                 "source": "https://github.com/spiral/core"
             },
-            "time": "2022-05-16T19:46:42+00:00"
+            "time": "2022-09-01T21:11:51+00:00"
         },
         {
             "name": "spiral/files",
@@ -3556,22 +3573,22 @@
         },
         {
             "name": "spiral/logger",
-            "version": "2.13.1",
+            "version": "2.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/logger.git",
-                "reference": "92b9bbdf3d827df98dd816054de711bedccba269"
+                "reference": "14ea05f8a24a5d4ecb3b8811e34948d3a735576e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/logger/zipball/92b9bbdf3d827df98dd816054de711bedccba269",
-                "reference": "92b9bbdf3d827df98dd816054de711bedccba269",
+                "url": "https://api.github.com/repos/spiral/logger/zipball/14ea05f8a24a5d4ecb3b8811e34948d3a735576e",
+                "reference": "14ea05f8a24a5d4ecb3b8811e34948d3a735576e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "psr/log": "1 - 3",
-                "spiral/core": "^2.13.1"
+                "spiral/core": "^2.14.1"
             },
             "require-dev": {
                 "mockery/mockery": "^1.5",
@@ -3580,7 +3597,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14.x-dev"
+                    "dev-master": "2.15.x-dev"
                 }
             },
             "autoload": {
@@ -3604,33 +3621,34 @@
                 "issues": "https://github.com/spiral/framework/issues",
                 "source": "https://github.com/spiral/logger"
             },
-            "time": "2022-05-16T19:49:02+00:00"
+            "time": "2022-09-12T15:13:31+00:00"
         },
         {
             "name": "spiral/pagination",
-            "version": "2.13.1",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/pagination.git",
-                "reference": "d968f4415ec2fedbfb017ed1f54ce1dc17c015b8"
+                "reference": "de7198c56b2cbab0dd2cbd269f7879dd0635d81c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/pagination/zipball/d968f4415ec2fedbfb017ed1f54ce1dc17c015b8",
-                "reference": "d968f4415ec2fedbfb017ed1f54ce1dc17c015b8",
+                "url": "https://api.github.com/repos/spiral/pagination/zipball/de7198c56b2cbab0dd2cbd269f7879dd0635d81c",
+                "reference": "de7198c56b2cbab0dd2cbd269f7879dd0635d81c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "mockery/mockery": "^1.5",
-                "phpunit/phpunit": "^8.5|^9.5"
+                "phpunit/phpunit": "^9.5.20",
+                "vimeo/psalm": "^4.27"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14.x-dev"
+                    "dev-master": "3.5.x-dev"
                 }
             },
             "autoload": {
@@ -3646,6 +3664,18 @@
                 {
                     "name": "Anton Titov (wolfy-j)",
                     "email": "wolfy-j@spiralscout.com"
+                },
+                {
+                    "name": "Pavel Butchnev (butschster)",
+                    "email": "pavel.buchnev@spiralscout.com"
+                },
+                {
+                    "name": "Aleksei Gagarin (roxblnfk)",
+                    "email": "alexey.gagarin@spiralscout.com"
+                },
+                {
+                    "name": "Maksim Smakouz (msmakouz)",
+                    "email": "maksim.smakouz@spiralscout.com"
                 }
             ],
             "description": "Common pagination interfaces",
@@ -3654,7 +3684,7 @@
                 "issues": "https://github.com/spiral/framework/issues",
                 "source": "https://github.com/spiral/pagination"
             },
-            "time": "2022-05-16T19:47:11+00:00"
+            "time": "2022-12-23T13:35:10+00:00"
         },
         {
             "name": "spiral/reactor",
@@ -3943,22 +3973,22 @@
         },
         {
             "name": "spiral/tokenizer",
-            "version": "2.13.1",
+            "version": "2.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spiral/tokenizer.git",
-                "reference": "f5342590915f455a7e7880944e8416a9ff9b651b"
+                "reference": "45f704219f115fb2aa3b384aa83ed8ec34cff9ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spiral/tokenizer/zipball/f5342590915f455a7e7880944e8416a9ff9b651b",
-                "reference": "f5342590915f455a7e7880944e8416a9ff9b651b",
+                "url": "https://api.github.com/repos/spiral/tokenizer/zipball/45f704219f115fb2aa3b384aa83ed8ec34cff9ca",
+                "reference": "45f704219f115fb2aa3b384aa83ed8ec34cff9ca",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
-                "spiral/core": "^2.13.1",
-                "spiral/logger": "^2.13.1",
+                "spiral/core": "^2.14.1",
+                "spiral/logger": "^2.14.1",
                 "symfony/finder": "^5.1|^6.0"
             },
             "require-dev": {
@@ -3967,7 +3997,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.14.x-dev"
+                    "dev-master": "2.15.x-dev"
                 }
             },
             "autoload": {
@@ -3991,7 +4021,7 @@
                 "issues": "https://github.com/spiral/framework/issues",
                 "source": "https://github.com/spiral/tokenizer"
             },
-            "time": "2022-05-16T19:49:39+00:00"
+            "time": "2022-09-12T15:14:10+00:00"
         },
         {
             "name": "symfony/console",
@@ -5107,22 +5137,21 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.5.2",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c"
+                "reference": "aac98028c69df04ee77eb69b96b86ee51fbf4b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
-                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/aac98028c69df04ee77eb69b96b86ee51fbf4b75",
+                "reference": "aac98028c69df04ee77eb69b96b86ee51fbf4b75",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "psr/container": "^1.1",
-                "symfony/deprecation-contracts": "^2.1|^3"
+                "php": ">=8.1",
+                "psr/container": "^2.0"
             },
             "conflict": {
                 "ext-psr": "<1.1|>=2"
@@ -5133,7 +5162,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.5-dev"
+                    "dev-main": "3.3-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -5143,7 +5172,10 @@
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Service\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Test/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5170,7 +5202,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v2.5.2"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.2.0"
             },
             "funding": [
                 {
@@ -5186,7 +5218,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-30T19:17:29+00:00"
+            "time": "2022-11-25T10:21:52+00:00"
         },
         {
             "name": "symfony/string",
@@ -5354,30 +5386,39 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/viktorprogger/telegram-bot.git",
-                "reference": "c9b77bba16a07e81e5e034579f681a480f20383a"
+                "reference": "5add07b2315a500681d790b40f5474934f5b2850"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/c9b77bba16a07e81e5e034579f681a480f20383a",
-                "reference": "c9b77bba16a07e81e5e034579f681a480f20383a",
+                "url": "https://api.github.com/repos/viktorprogger/telegram-bot/zipball/5add07b2315a500681d790b40f5474934f5b2850",
+                "reference": "5add07b2315a500681d790b40f5474934f5b2850",
                 "shasum": ""
             },
             "require": {
                 "cycle/annotated": "^2.4||^3.0",
                 "cycle/orm": "^v1.0.0||^v2.0.0",
-                "php": "^8.1",
+                "php": "^8.2",
+                "php-http/discovery": "^1.15",
+                "psr/container": "^2.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0",
                 "psr/log": "^1.0.0||^2.0.0||^3.0.0",
-                "symfony/http-client": "^6.0",
-                "yiisoft/data-response": "^1.0",
-                "yiisoft/injector": "^1.0",
-                "yiisoft/yii-console": "^1.0"
+                "yiisoft/friendly-exception": "^1.1",
+                "yiisoft/injector": "^1.0"
             },
             "require-dev": {
+                "maglnet/composer-require-checker": "^4.5",
                 "phpunit/phpunit": "^9.5",
                 "roave/infection-static-analysis-plugin": "^1.16",
-                "vimeo/psalm": "^4.18",
-                "yiisoft/test-support": "^1.3"
+                "symfony/console": "^6.2",
+                "symfony/http-client": "^6.2",
+                "vimeo/psalm": "^5.4",
+                "yiisoft/test-support": "^3.0"
+            },
+            "suggest": {
+                "symfony/http-client": "^6.0",
+                "yiisoft/yii-console": "^1.0"
             },
             "default-branch": true,
             "type": "library",
@@ -5408,7 +5449,7 @@
                 "issues": "https://github.com/viktorprogger/telegram-bot/issues?state=open",
                 "source": "https://github.com/viktorprogger/telegram-bot"
             },
-            "time": "2022-08-31T20:02:15+00:00"
+            "time": "2023-02-13T16:34:36+00:00"
         },
         {
             "name": "vishnubob/wait-for-it",
