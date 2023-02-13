@@ -6,20 +6,17 @@ use Cycle\ORM\Relation;
 use Cycle\ORM\SchemaInterface as Schema;
 
 return [
-    'subscriberEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Entity\\Subscriber\\SubscriberEntity',
+    'githubRepositoryEntity' => [
+        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\SubDomain\\GitHub\\Infrastructure\\Entity\\GithubRepository\\GithubRepositoryEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
         Schema::DATABASE => 'default',
-        Schema::TABLE => 'subscriber',
-        Schema::PRIMARY_KEY => ['id'],
-        Schema::FIND_BY_KEYS => ['id'],
+        Schema::TABLE => 'repository',
+        Schema::PRIMARY_KEY => ['name'],
+        Schema::FIND_BY_KEYS => ['name'],
         Schema::COLUMNS => [
-            'id' => 'id',
-            'telegram_chat_id' => 'telegram_chat_id',
-            'settings_realtime' => 'settings_realtime',
-            'settings_summary' => 'settings_summary',
+            'name' => 'name',
         ],
         Schema::RELATIONS => [],
         Schema::SCOPE => null,
@@ -51,17 +48,20 @@ return [
         Schema::SCHEMA => [],
         Schema::TYPECAST_HANDLER => null,
     ],
-    'githubRepositoryEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\SubDomain\\GitHub\\Infrastructure\\Entity\\GithubRepository\\GithubRepositoryEntity',
+    'subscriberEntity' => [
+        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Entity\\Subscriber\\SubscriberEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
         Schema::DATABASE => 'default',
-        Schema::TABLE => 'repository',
-        Schema::PRIMARY_KEY => ['name'],
-        Schema::FIND_BY_KEYS => ['name'],
+        Schema::TABLE => 'subscriber',
+        Schema::PRIMARY_KEY => ['id'],
+        Schema::FIND_BY_KEYS => ['id'],
         Schema::COLUMNS => [
-            'name' => 'name',
+            'id' => 'id',
+            'telegram_chat_id' => 'telegram_chat_id',
+            'settings_realtime' => 'settings_realtime',
+            'settings_summary' => 'settings_summary',
         ],
         Schema::RELATIONS => [],
         Schema::SCOPE => null,
@@ -70,7 +70,7 @@ return [
         Schema::TYPECAST_HANDLER => null,
     ],
     'requestEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\Request\\Cycle\\RequestEntity',
+        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Telegram\\Entity\\Request\\Cycle\\RequestEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',
@@ -93,7 +93,7 @@ return [
         Schema::TYPECAST_HANDLER => null,
     ],
     'userEntity' => [
-        Schema::ENTITY => 'Viktorprogger\\TelegramBot\\Infrastructure\\Entity\\User\\Cycle\\UserEntity',
+        Schema::ENTITY => 'Viktorprogger\\YiisoftInform\\Infrastructure\\Telegram\\Entity\\User\\Cycle\\UserEntity',
         Schema::MAPPER => 'Cycle\\ORM\\Mapper\\Mapper',
         Schema::SOURCE => 'Cycle\\ORM\\Select\\Source',
         Schema::REPOSITORY => 'Cycle\\ORM\\Select\\Repository',

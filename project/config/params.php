@@ -14,6 +14,7 @@ use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\RealtimeAction;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\RealtimeEditAction;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\SummaryAction;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Action\SummaryEditAction;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\WebHook\TelegramHookHandler;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadEventsCommand;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Infrastructure\Console\LoadRepositoriesCommand;
 use Yiisoft\Yii\Cycle\Schema\Conveyor\CompositeSchemaConveyor;
@@ -125,6 +126,7 @@ return [
     ],
     'yiisoft/yii-queue' => [
         'handlers' => [
+            TelegramHookHandler::NAME => TelegramHookHandler::class,
             RealtimeEventMessage::NAME => RealtimeEventHandler::class,
         ],
         'channel-definitions' => [],

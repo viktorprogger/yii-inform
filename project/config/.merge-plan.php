@@ -50,6 +50,9 @@ return [
             'viktorprogger/telegram-bot' => [
                 'config/params.php',
             ],
+            'yiisoft/data-response' => [
+                'config/params.php',
+            ],
             'yiisoft/router-fastroute' => [
                 'config/params.php',
             ],
@@ -59,13 +62,10 @@ return [
             'yiisoft/yii-sentry' => [
                 'config/params.php',
             ],
-            'yiisoft/data-response' => [
+            'yiisoft/aliases' => [
                 'config/params.php',
             ],
             'yiisoft/yii-console' => [
-                'config/params.php',
-            ],
-            'yiisoft/aliases' => [
                 'config/params.php',
             ],
             'yiisoft/yii-queue' => [
@@ -79,10 +79,10 @@ return [
             ],
         ],
         'web' => [
-            'yiisoft/router-fastroute' => [
+            'yiisoft/data-response' => [
                 'config/web.php',
             ],
-            'yiisoft/data-response' => [
+            'yiisoft/router-fastroute' => [
                 'config/web.php',
             ],
             'yiisoft/error-handler' => [

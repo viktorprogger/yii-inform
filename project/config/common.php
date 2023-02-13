@@ -24,6 +24,8 @@ use Sentry\State\HubInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Viktorprogger\TelegramBot\Domain\Client\TelegramClientInterface;
+use Viktorprogger\TelegramBot\Domain\Entity\Request\RequestRepositoryInterface;
+use Viktorprogger\TelegramBot\Domain\Entity\User\UserRepositoryInterface;
 use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Application;
 use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Middleware\MiddlewareDispatcher;
 use Viktorprogger\TelegramBot\Domain\UpdateRuntime\Router;
@@ -38,6 +40,8 @@ use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberIdFac
 use Viktorprogger\YiisoftInform\Infrastructure\Entity\Subscriber\SubscriberRepository;
 use Viktorprogger\YiisoftInform\Infrastructure\GithubEventMessage\Markdown\RealtimeMessageGenerator;
 use Viktorprogger\YiisoftInform\Infrastructure\RequestIdLogProcessor;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Entity\Request\Cycle\RequestRepository;
+use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Entity\User\Cycle\UserRepository;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\NotFoundRequestHandler;
 use Viktorprogger\YiisoftInform\Infrastructure\Telegram\Middleware\SubscriberMiddleware;
 use Viktorprogger\YiisoftInform\SubDomain\GitHub\Domain\Entity\Event\EventIdFactoryInterface;
@@ -78,6 +82,9 @@ return [
         ],
     ],
     TelegramClientLog::class => ['__construct()' => ['logger' => Reference::to('loggerTelegram')]],
+    RequestRepositoryInterface::class => RequestRepository::class,
+    UserRepositoryInterface::class => UserRepository::class,
+
     HttpClientInterface::class => static fn() => HttpClient::create(),
     SubscriberIdFactoryInterface::class => SubscriberIdFactory::class,
     SubscriberRepositoryInterface::class => SubscriberRepository::class,
